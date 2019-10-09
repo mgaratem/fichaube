@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% load static %}
+
+
+{% block content %}       
+        
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Ficha consolidada</h2>
+    </div>
+</div>
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+            <div class="cuadrotrans">
+                <h3>Informaci&oacute;n personal</h3>
+                <h5>Datos personales</h5>
+                </br>
+                </br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6>RUT</h6>
+                                <p>{{ perfil.rut }}</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Nombre</h6>
+                                <p style="text-transform: uppercase;">{{ perfil.apellidos }} {{ perfil.nombre }}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>Generación</h6>
+                                <p>{{ perfil.generacion }}</p>
+                                <!-- BEGIN: Separacion interlineado -->
+                                <p>
+                                    <br><br>
+                                </p>
+                                <!-- END: Separacion interlineado -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Email alumno </h6>
+                                <p>
+                                    <a href="mailto:{{ perfil.email }}">{{ perfil.email }}</a>
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Email personal </h6>
+                                <p>
+                                    <a href="mailto:{{ perfil.emailPersonal }}">{{ perfil.emailPersonal }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

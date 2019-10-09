@@ -1,0 +1,70 @@
+{% load staticfiles %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+        <link rel="icon" type="image/png" href="{% static 'sam/imagen/favicon.png' %}">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>SAM</title>
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <meta name="viewport" content="width=device-width" />
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'sam/bootstrap/3.4.1/css/bootstrap.min.css' %}">
+        <!--  Material Dashboard CSS    -->
+        <link rel="stylesheet" type="text/css" href="{% static 'sam/js/librerias/turbo/assets/css/turbo.css'%}">
+        <!-- Estilo Navegador PUCV CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static 'sam/css/nave.css' %}">
+        <!--     Fonts and icons     -->
+        <link rel="stylesheet" type="text/css" href="{% static 'sam/font-awesome/css/font-awesome.min.css' %}">
+
+        <!-- CUANDO NO SE ENCUENTRA LA PAGINA
+             <link rel="apple-touch-icon" sizes="76x76" href="https://nave13.ucv.cl/js/librerias/turbo/assets/img/apple-icon.png"> -->
+
+       
+        <!--    JQuery UI     -->
+        <link type="text/css" href="{% static 'sam/js/librerias/turbo/assets/vendors/jquery-ui-1.12.0/jquery-ui.css' %}" rel="stylesheet">
+        <link type="text/css" href="{% static 'sam/js/librerias/turbo/assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.css' %}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'sam/js/librerias/turbo/assets/css/css.css' %}" />
+        <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+
+        {% block content %}{% endblock %}
+
+    <footer class="footer">    
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <img src="{% static 'sam/imagen/logoPUCV.png' %}" class="img-responsive" alt="Responsive image">            
+            </nav>
+            <p class="copyright pull-right">
+                &iquest;Tiene alg&uacute;n problema? Env&iacute;e un email a <a href="mailto: macarena.garate.m@mail.pucv.cl" style="color:#fff; font-weight: bold;">macarena.garate.m@mail.pucv.cl</a>
+                <br>
+                Plataforma desarrollada por Estudiantes de Ingenier&iacute;a Ejecuci&oacute;n en Inform&aacute;tica
+            </p>
+        </div>
+    </footer>
+
+    
+    <!--   Core JS Files   -->
+    <script type="text/javascript"  href="{% static 'sam/js/librerias/turbo/assets/vendors/jquery-ui.min.js' %}" ></script>
+    <script type="text/javascript"  href="{% static 'sam/js/librerias/turbo/assets/vendors/material.min.js' %}" ></script>
+    <script type="text/javascript"  href="{% static 'sam/js/librerias/turbo/assets/vendors/perfect-scrollbar.jquery.min.js' %}" ></script>					
+
+    <!-- Material Dashboard javascript methods -->
+    <script  href="{% static 'sam/js/librerias/turbo/assets/js/turbo.js' %}"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script type="text/javascript"  href="{% static 'sam/bootstrap/3.4.1/js/bootstrap.min.js' %}" ></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script type="text/javascript"  href="{% static 'sam/js/librerias/turbo/assets/vendors/jquery-3.4.1.js' %}" ></script> -->
+
+
+
+</body>
+</html>

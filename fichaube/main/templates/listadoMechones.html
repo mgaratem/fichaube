@@ -1,0 +1,114 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Ahijados</h2>
+        </br>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+    {% else %}
+    <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+
+            {% if not mechones %}
+            <br>
+                <center><div class="alert alert-warning col-sm-6" role="alert">
+                    <h4 class="alert-heading">¡No hay ahijados!</h4>
+                    <p>Puede ser que como no hayas hecho la importación, no se han cargado ahijados aún.</p>
+                    <hr>
+                    <p class="mb-0">Para hacer la importación, debes ir al menú principal y seleccionar Importación en la sección Apadrinamiento.</p>
+                </div></center>
+            {% else %}
+
+            <div class="row cuadro-filtro">
+                <div class="col-xs-12 col-md-8">
+                   <a href="{% url 'crear_alumno' %}" class="btn btn-primary btn-sm"> 
+                        <i class="zmdi zmdi-plus-circle" style="font-size:25px; color:#00000;"></i>
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
+                </div>
+            </div>
+
+
+            <div class="cuadro-tabla">
+                <div class="row">
+
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-head">
+                            <th>Rut</th>
+                            <th>Nombre Alumno</th>
+                            <th>Email Alumno</th>
+                            <th>Carrera</th>
+                            <th>Opciones</th>
+                        </thead>
+                        <tbody id="tablaBusqueda">
+                            {% for mechon in mechones %}
+                            <tr>
+                                <td>{{mechon.rut}}</td>
+                                <td>{{mechon.nombre}} {{mechon.apellidos}}</td>
+                                <td>{{mechon.email}}</td>
+                                <td>{{mechon.carrera}}</td>
+                                <td>
+                                    <a href="#" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                    <a href="#modalDelete{{mechon.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                </td>
+
+                                <div id="modalDelete{{mechon.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">¡Atención!</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Está seguro que quiere eliminar al alumno?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a href="{% url 'borrar_alumno' id_alumno=mechon.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

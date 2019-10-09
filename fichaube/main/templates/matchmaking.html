@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>MatchMaking</h2>
+        </br>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+    {% else %}
+    <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+
+        {% if not respuestas %}
+            <br>
+            <center>
+                <div class="alert alert-warning col-sm-6" role="alert">
+                    <h4 class="alert-heading">¡Aún no!</h4>
+                    <p>Puede ser que los alumnos aún no responden la encuesta, ten paciencia.</p>
+                    <hr>
+                    <p class="mb-0">¡Recuerda que no es necesario que todos los alumnos hayan respondido, sólo los que estén interesados!</p>
+                </div>
+            </center>
+        {% else %}
+
+            <div class="cuadrotrans">
+                <center><h3>¡Está todo listo!</h3>
+                    <h5>Haga click en el siguiente botón para comenzar el match:</h5>
+                    </br>
+                    </br>
+                    <a href={% url 'matchmaking:index' %} class="btn btn-primary">EMPAREJAR</a>
+                </center>
+            </div>
+
+        {% endif %}
+
+        </div>
+    </div>
+</div>
+
+    
+{% endblock %}

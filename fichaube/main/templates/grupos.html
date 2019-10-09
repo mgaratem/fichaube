@@ -1,0 +1,111 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Grupos</h2>
+        </br>
+    </div>
+</div>
+
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+    {% else %}
+    <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+            
+            {% if not grupos %}
+            <br>
+                <center><div class="alert alert-warning col-sm-6" role="alert">
+                    <h4 class="alert-heading">¡No hay grupos!</h4>
+                    <p>Puede ser que como no has hecho el matchmaking, no se han creado los grupos aún.</p>
+                    <hr>
+                    <p class="mb-0">Para hacer el emparejamiento, debes ir al menú principal y seleccionar Realizar Emparejamiento en la sección Matchmaking.</p>
+                </div></center>
+            {% else %}
+
+            <div class="cuadro-filtro d-flex justify-content-end">
+                </br>
+                <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
+                </br>
+            </div>
+
+            <div class="cuadro-tabla">
+                </br>
+                <div class="row">
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-head">
+                            <th>Padrino(s) Encargado(s)</th>
+                            <th>Cantidad Mechones</th>
+                            <th>Detalles</th>
+                        </thead>
+                        <tbody id="tablaBusqueda">
+                            {% for a in actividades %}
+                            <tr>
+                                <td>{{a.alumno.nombre}} {{a.alumno.apellidos}}</td>
+                                <td>
+                                {% for g in grupos %}
+                                    {% if g.padrino == a.alumno %}
+                                        {% if forloop.last %}
+                                        {{forloop.counter}}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                </td>
+                                <td>
+                                    <a href="#modalDetalles{{a.id}}" data-toggle="modal" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                </td>
+                                <div id="modalDetalles{{a.id}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Detalles Integrantes Grupo</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item list-group-item-primary">{{a.alumno.nombre}} {{a.alumno.apellidos}} (PADRINO)</li>
+                                                    {% for g in grupos %}
+                                                        {% if g.padrino == a.alumno %}
+                                                        <li class="list-group-item list-group-item-secondary">{{g.ahijado.nombre}} {{g.ahijado.apellidos}}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            
+            {% endif %}
+        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

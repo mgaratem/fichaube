@@ -1,0 +1,10 @@
+.iconoExcel{
+    display: block;
+    margin: 0 5px 0 5px;
+    background-image: url(../css/img/iconoExcel.gif);
+    background-repeat: no-repeat;
+    padding: 0 0 0 17px;
+    height: 16px;        
+    float: right;
+}
+

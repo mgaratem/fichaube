@@ -1,0 +1,1268 @@
+/*
+
+
+	Navegador Académico
+	Dirección de Servicios de Informáica y Comunicaciones - DISC
+	PONTIFICIA UNIVERSIDAD CATÓLICA DE VALPARAÍSO
+	CSS: Pantalla - Responsivo
+
+*/
+
+
+body {
+    background-color: #fff;
+	font-family:'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-size: 14px;
+	color: #4e4a47 !important;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+/***********************************************************************************  ESTRUCTURA ***/
+
+
+h1, .h1 {
+	color: #339fc3;
+	font-size: 3.8em;
+}
+
+h2, .h2 {
+	color: #e87e04;
+	font-size: 2.4em;
+	font-weight: 500;
+	margin-top: 8px !important;
+	margin-bottom: 0px !important;
+}
+
+h3, .h3 {
+	color: #29588c;
+	font-size: 1.65em;
+	font-weight:500;
+	margin: 0px 0 10px !important;
+}
+
+h4, .h4 {
+	color: #e87e04;
+	font-size: 1.5em;
+}
+
+h5, .h5 {
+	color: #29588c;
+	font-size: 1.25em;
+}
+
+h6, .h6 {
+    color: #4e4a47;
+    text-transform: none !important;
+    font-size: 1.10em !important;
+    font-weight: 500;
+	margin: 0 0 0px !important;
+}
+
+p {
+    margin: 0 0 0px;
+}
+
+
+/*------------------------------------- Colores */
+.main-color {
+    height: 100px;
+    color: #fff;
+    padding: 15px 15px;
+    border-radius: 0px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.md-bg-celeste {
+    background: #339fc3 !important;
+}
+
+.md-bg-azul {
+    background: #29588c !important;
+}
+
+.md-bg-naranjo {
+    background: #e87e04 !important;
+}
+
+.md-bg-negro {
+    background: #4e4a47 !important;
+}
+
+.text-warning {
+    color: #FFB300;
+}
+
+
+/*------------------------------------- Login */
+.full-page:before {
+    background-color: #F5F5F5;
+}
+
+/*------------------------------------- Main panel */
+.main-panel > .content {
+    margin-top: 70px;
+    padding: 30px 15px;
+    background-color: #F5F5F5;
+}
+
+
+/*------------------------------------- Navbar */
+.navbar.navbar-default {
+    background-color: #339fc3;
+    border-bottom: 0;
+	position: fixed;
+}
+
+.navbar.navbar-inverse {
+    background-color: #339fc3;
+    color: #ffffff;
+}
+
+.navbar.navbar-inverse .dropdown-menu li > a:hover, .navbar.navbar-inverse .dropdown-menu li > a:focus {
+    color: #339fc3;
+    background-color: #eeeeee;
+}
+
+.navbar .navbar-nav > .active > a, .navbar .navbar-nav > .active > a:hover, .navbar .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar .dropdown-menu li a:hover, .navbar .dropdown-menu li a:focus, .navbar .dropdown-menu li a:active, .navbar.navbar-default .dropdown-menu li a:hover, .navbar.navbar-default .dropdown-menu li a:focus, .navbar.navbar-default .dropdown-menu li a:active, .bootstrap-table .dropdown-menu li a:hover, .bootstrap-table .dropdown-menu li a:focus, .bootstrap-table .dropdown-menu li a:active {
+    background-color: rgba(200, 200, 200, 0.3);
+    color: #339fc3;
+	box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-right {
+    float: right !important;
+    margin-right: 250px;
+}
+
+.navbar-toggle {
+    position: relative;
+    float: left;
+    padding: 9px 10px;
+    margin-top: 8px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.navbar .navbar-nav > li > a {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: none;
+    border-radius: 3px;
+}
+
+.cabecera {
+    color: #fff;
+    font-size: 10px;
+    margin-left: -10px;
+    margin-right: 10px;
+}
+
+
+
+.dropdown-header {
+    display: block;
+    padding: 3px 20px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #777;
+    white-space: normal;
+}
+
+/*------------------------------------- Sidebar */
+.sidebar, .off-canvas-sidebar {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+	float:left;
+}
+
+.sidebar .nav p, .off-canvas-sidebar .nav p {
+    margin: 0;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+	color: #29588c;
+}
+
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+    /*margin: 10px 15px 0;*/
+    border-radius: 3px;
+    color: #29588c;
+}
+
+.sidebar .nav i, .off-canvas-sidebar .nav i {
+    font-size: 24px;
+    float: left;
+    margin-right: 15px;
+	line-height: 30px;
+    width: 30px;
+    text-align: center;
+    color: #29588c;
+}
+
+.icono {
+    font-size: 24px;
+    float: left;
+    margin-right: 15px;
+	margin-left: 20px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+.sidebar .logo .simple-text, .off-canvas-sidebar .logo .simple-text {
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: block;
+    font-size: 18px;
+    color: #4e4a47;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 400;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.sidebar .sidebar-wrapper, .off-canvas-sidebar .sidebar-wrapper {
+    position: fixed;
+    height: calc(100vh - 75px);
+    overflow: auto;
+    width: 260px;
+    z-index: 4;
+    padding-bottom: 30px;
+}
+
+
+
+
+
+/*------------------------------------- Botones */
+.btn.btn-primary, .btn.btn-primary:active, .btn.btn-primary.active, .btn.btn-primary:active:focus,  .btn.btn-primary.active:hover, .open > .btn.btn-primary.dropdown-toggle, .open > .btn.btn-primary.dropdown-toggle:focus, .open > .btn.btn-primary.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn.btn-primary, .navbar .navbar-nav > li > a.btn.btn-primary:hover, .navbar .navbar-nav > li > a.btn.btn-primary:focus, .navbar .navbar-nav > li > a.btn.btn-primary:active, .navbar .navbar-nav > li > a.btn.btn-primary.active, .navbar .navbar-nav > li > a.btn.btn-primary:active:focus, .navbar .navbar-nav > li > a.btn.btn-primary:active:hover, .navbar .navbar-nav > li > a.btn.btn-primary.active:focus, .navbar .navbar-nav > li > a.btn.btn-primary.active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:hover {
+    background-color: #e87e04;
+    color: #FFFFFF;
+	box-shadow: 0 2px 2px 0 rgba(232, 126, 4, 0.14), 0 3px 1px -2px rgba(164, 89, 2, 0.2), 0 1px 5px 0 rgba(209, 116, 10, 0.12);
+	font-weight: bold;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary:active:hover, .btn.btn-primary.active:focus {
+    background-color: #FFA631;
+    color: #FFFFFF;
+	box-shadow: 0 14px 26px -12px rgba(232, 126, 4, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(209, 116, 10, 0.2);
+	font-weight: bold;
+
+}
+
+.btn.btn-lineal, .navbar .navbar-nav > li > a.btn.btn-lineal {
+    background-color: transparent;
+    color: #e87e04;
+    font-weight:bold;
+	box-shadow: none;
+	border: 1px solid #FFA631;
+}
+
+.btn.btn-lineal:hover, .btn.btn-lineal:focus, .btn.btn-simple:active, .navbar .navbar-nav > li > a.btn.btn-lineal:hover, .navbar .navbar-nav > li > a.btn.btn-lineal:focus, .navbar .navbar-nav > li > a.btn.btn-lineal:active {
+    background-color: transparent;
+    color: #FFA631;
+	font-weight:bold;
+	box-shadow: 0 2px 2px 0 rgba(232, 126, 4, 0.14), 0 3px 1px -2px rgba(164, 89, 2, 0.2), 0 1px 5px 0 rgba(209, 116, 10, 0.12);
+}
+
+.btn-icono {
+    background-color: transparent;
+    color: #339fc3;
+    box-shadow: none;
+    display: inline-block !important;
+	border: none;
+    position: relative;
+    padding: 5px 00px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	margin: 0px 5px 0px 5px;
+}
+
+.btn-icono:hover {
+    background-color: transparent;
+    color: #29588c;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.btn {
+	margin: 2px 2px!important;
+}
+
+.btn-celeste {
+    background-color: #FFFFFF;
+    color: #339fc3;
+    border: 1px solid #339fc3;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-celeste:hover, .btn-celeste:focus {
+    background-color: #FFFFFF;
+    color: #339fc3;
+    border: 1px solid #339fc3;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn.btn-info.btn-simple, .navbar .navbar-nav > li > a.btn.btn-info.btn-simple {
+    background-color: transparent;
+    color: #339fc3 !important;
+    box-shadow: none;
+}
+
+.btn.btn-info.btn-simple:hover, .btn.btn-info.btn-simple:focus, .btn.btn-info.btn-simple:active, .navbar .navbar-nav > li > a.btn.btn-info.btn-simple:hover, .navbar .navbar-nav > li > a.btn.btn-info.btn-simple:focus, .navbar .navbar-nav > li > a.btn.btn-info.btn-simple:active {
+    background-color: transparent;
+    color: #29588c !important;
+}
+
+.btn.btn-default {
+    color: #4e4a47;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.btn.btn-default:active,.btn.btn-default:hover,.btn.btn-default:focus {
+    color: #4e4a47;
+    background-color: #e6e6e6;
+    border-color: 1px solid #ccc;
+}
+.btn-select > .btn-default{
+    border: 0px ! important;
+    border-bottom: 1px solid #ccc ! important;    
+    box-shadow: none ! important;
+    color:#4e4a47 ! important;
+    margin-bottom: none ! important;
+    border-radius: 0px ! important;
+    height: 33px ! important;
+} 
+.btn-select > .btn-default:hover{
+    border: 0px ! important;
+    border-bottom: 2px solid #2196F3 ! important;    
+    box-shadow: none ! important;
+    background-color: transparent ! important;
+    color:#4e4a47 ! important;
+}
+.btn-select > .btn-default:active{
+    border: 0px ! important;
+    border-bottom: 1px solid #ccc ! important;    
+    box-shadow: none ! important;
+    background-color: transparent ! important;
+    color:#4e4a47 ! important;    
+}
+.btn-select > .btn-default:focus{
+    border: 0px ! important;
+    border-bottom: 1px solid #ccc ! important;    
+    box-shadow: none ! important;
+    background-color: transparent ! important;
+    color:#4e4a47 ! important;
+}
+
+/*------------------------------------- Link */
+a {
+    color: #339fc3;
+    /*text-transform: uppercase;*/
+    font-size: 0.9em;
+}
+
+a:hover, a:focus {
+    color: #29588c;
+    /*text-transform: uppercase;*/
+    font-size: 0.9em;
+	text-decoration:underline;
+}
+
+/*------------------------------------- Aprobado - Reprobado - Abreviatura */
+.iconoCruz {
+    font-size: 14px;
+    color: #F44336;
+}
+
+.iconoVisto {
+    font-size: 14px;
+    color: #4CAF50;
+}
+
+.iconoPendiente{
+    font-size: 14px;
+    color: #d6a71b;
+}
+
+.abrev {
+    color: #4c8fd3;
+    font-weight: bold;
+}
+
+/*------------------------------------- Card */
+.card .card-header {
+    padding: 15px 0px 0;
+    z-index: 3;
+}
+
+.card-title {
+	color: #e87e04;
+    text-decoration: none;
+}
+
+.main-panel .header {
+    margin-bottom: 0px;
+}
+
+.card img {
+    width: auto;
+    height: auto;
+}
+
+
+/*------------------------------------- Label */
+.label.label-info {
+    background-color: #ddebec;
+}
+
+.label {
+    border-radius: 5px;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #339fc3;
+}
+
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #D2D2D2;
+}
+
+
+/*------------------------------------- Form */
+.form-group {
+    padding-bottom: 10px;
+    margin: 10px 0 0 0;
+}
+
+
+/*------------------------------------- Contador*/
+#count_message {
+ background-color: transparent;
+ margin-top: 0px;
+ margin-right: 5px;
+}
+
+
+/*------------------------------------- Input */
+.select-with-transition {
+    border: 0 !important;
+    background-image: linear-gradient(#339fc3, #339fc3), linear-gradient(#D2D2D2, #D2D2D2);
+    background-size: 0 2px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom, center calc(100% - 1px);
+    background-color: transparent !important;
+    transition: background 0s ease-out !important;
+    float: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    color: #4e4a47 !important;
+    height: 34px;
+    padding-left: 0 !important;
+    padding-bottom: 5px !important;
+}
+
+
+.form-group label.control-label {
+    font-size: 12px;
+    line-height: 1.07143;
+    color: #757575 !important;
+    margin: 16px 0 0 0;
+    font-weight: 500;
+}
+
+.btn-group, .btn-group-vertical {
+    position: relative;
+    margin: 0px 1px;
+}
+
+
+/*------------------------------------- Table responsive */
+.table-responsive {
+    overflow: auto;
+    font-size: small;
+}
+
+.table > tbody > tr {
+    position: relative;
+    color: #4e4a47;
+}
+
+.table-head {
+    color: #fff;
+    background-color: rgba(41, 89, 140, 0.9);
+	font-size: 11px;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #efeded;
+}
+
+/*------------------------------------- Pagination */
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #339fc3;
+    border-color: #339fc3;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(33, 150, 243, 0.14), 0 1px 10px 0 rgba(33, 150, 243, 0.12), 0 2px 4px -1px rgba(33, 150, 243, 0.2);
+}
+
+.pagination.pagination-info > .active > a, .pagination.pagination-info > .active > a:focus, .pagination.pagination-info > .active > a:hover, .pagination.pagination-info > .active > span, .pagination.pagination-info > .active > span:focus, .pagination.pagination-info > .active > span:hover {
+    background-color: #339fc3;
+    border-color: #339fc3;
+    color: #FFFFFF;
+    box-shadow: 0 4px 5px 0 rgba(33, 150, 243, 0.14), 0 1px 10px 0 rgba(33, 150, 243, 0.12), 0 2px 4px -1px rgba(33, 150, 243, 0.2);
+}
+
+/*------------------------------------- Alert  */
+
+.alert.alert-info {
+    background-color: #ddebec;
+    color: #3494b4;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.0), 0 7px 10px -5px rgba(3, 169, 244, 0.0);
+    border: 1px #3494b4 solid;
+}
+
+.alert.alert-info a {
+	color: #247893;
+    font-weight: 500;
+}
+
+.alert.alert-info i {
+    color: #3494b4;
+}
+
+.alert.alert-autoguardado {
+    background-color: #f7e5b2;
+    color: #4e4a47;
+	text-align:center;
+    border-radius: 3px;
+	height: 50px;
+    width: 200px;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 193, 7, 0.4);
+}
+
+
+/*------------------------------------- Panel */
+.panel-default {
+    border-color: rgba(41, 89, 140, 0.9);
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid rgba(41, 89, 140, 0.9);
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel-default > .panel-heading{
+    color: #fff;
+    background-color: rgba(41, 89, 140, 0.9) ;
+    border-color: rgba(41, 89, 140, 0.9);
+}
+.panel-heading {
+    padding: 10px 15px !important;
+    border-bottom: 1px solid transparent;
+        border-bottom-color: transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+.panel-body {
+    padding: 15px !important;
+	text-align: justify;
+}
+
+.panel .panel-heading a:hover, .panel .panel-heading a:active, .panel .panel-heading a[aria-expanded="true"] {
+    color: #fff;
+}
+
+.panel .panel-heading a {
+    color: #fff;
+}
+
+/*------------------------------------- Acordeón */
+.accordion-alt .accordion-header {
+    background: rgba(41, 89, 140, 0.9);
+    padding: 14px 0px 12px 40px !important;
+    border-top: none !important;
+    color: #fff;
+	font-weight: 500;
+}
+
+.ui-accordion .ui-accordion-header {
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+.accordion-alt .accordion-header:first-child {
+    border-top: none !important;
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+.accordion-alt .accordion-header::after {
+	content: '';
+	left: 10px;
+    top: 13px;
+    color: #fff;
+			
+}
+		
+.accordion-alt .accordion-header::before {
+    content: 'add';
+    left: 10px;
+    top: 13px;
+    color: #fff;
+}
+
+/*------------------------------------- Cuadro */
+
+.cuadro {
+	min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+	box-sizing: border-box;
+}
+
+.cuadrotrans {
+	min-height: 10px;
+    padding: 10px;
+    /*margin-bottom: 20px;*/
+    background-color: transparent;
+    border: transparent;  
+}
+
+/*------------------------------------- Modal xl */
+#modalxl{
+  width: 80% !important;
+}
+
+/*------------------------------------- Asterisco */
+.obligatorio {
+    color: #E87E04;
+}
+
+/*------------------------------------- Calendario */
+.input-group-addon {
+    padding: 6px 12px;
+	vertical-align: bottom;
+    font-size: 25px;
+    line-height: 1;
+    color: #555;
+    text-align: left;
+    background-color: transparent;
+    border: transparent;
+    border-radius: 0px;
+}
+
+/*------------------------------------- Radio label */
+.radio label .circle {
+    border: 1px solid rgba(0,0,0, .8);
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+}
+
+/*------------------------------------- Check label */
+.checkbox .checkbox-material .check {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0,0,0, .54);
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 3px;
+}
+
+/*------------------------------------- Img-responsive */
+.img-responsive {
+	display: initial;
+	max-width: 100%;
+}
+
+/*------------------------------------- Footer */
+.footer {
+    background-color: #339fc3;
+    font-size: 10px;
+    color: #fff;
+
+}
+
+.main-panel > .footer {
+    border-top: 0px solid #e7e7e7;
+}
+
+
+/*------------------------------------- PREVISUALIZADOR */
+
+/****************************************************************** responsivo movil y tablet*/
+
+@media (max-width:1920px) {
+	.link-icono {
+            display: none;
+	}
+	.btn-icono {
+            display: inline-block;
+        }
+}
+
+@media (max-width:480px) {
+	.btn-icono {
+            display: none;
+	}
+		
+	.link-icono {
+            display: block;
+	}
+        
+        .link-imprimir{
+             display: none !important;
+        }
+		
+}	
+/*
+*iconos de nav-screen.css
+*/
+.iconoEditarPrograma{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_editar_programa.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoDescargarPrograma{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_descargar_programa.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoEliminarPrograma{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_eliminar_programa.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoAgregarPrograma{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_agregar_programa.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoEditarContenido{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_editar_contenido.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoDescargarContenido{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_descargar_contenido.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoEliminarContenido{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_eliminar_contenido.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+.iconoAgregarContenido{
+	/*ine-height: 30px;*/
+	display: inline-block;
+	background-image: url(../imagen/programacion_asignatura/icono_agregar_contenido.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-left: 25px;
+	padding-bottom:30px;
+
+}
+
+.table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 3px 8px;
+    vertical-align: middle;
+}
+/*.table > tbody > tr > td, .table > tfoot > tr > td > btn{
+    padding: 0px 8px;
+    vertical-align: middle;
+}*/
+
+
+/** Clases especificas para el navegador **/
+td.tdNumero{
+	text-align: right;
+}
+
+.right{
+	display: block;
+	float: right;
+}
+
+/*------------------------------------- width en porcentaje */
+.w2{ width: 2%; }
+.w5{ width: 5%; }
+.w6{ width: 6%; }
+.w7{ width: 7%; }
+.w8{ width: 8%; }
+.w9{ width: 9%; }
+.w10{ width: 10%; }
+.w12{ width: 12%; }
+.w14{ width: 14%; }
+.w15{ width: 15%; }
+.w20{ width: 20%; }
+.w25{ width: 25%; }
+.w30{ width: 30%; }
+.w35{ width: 35%; }
+.w40{ width: 40%; }
+.w45{ width: 45% !important; } /*agregado el 20180416 por Fernando Velasco Perez.*/
+.w50{ width: 50%; }
+.w60{ width: 60%; }
+.w70{ width: 70%; }
+.w75{ width: 75%; }
+.w80{ width: 80%; }
+.w90{ width: 90%; }
+.w95{ width: 95%; }
+.w98{ width: 98%; }
+.w100{ width: 100%; }
+
+
+/*----------------------------------- Le indica a las opciones del perfil en el encabezado con son elementos de linea . pschmidt 02-04-2018 */
+
+.correccion-menu
+{
+	display: inline !important;
+}
+
+
+/*----------------------------------- Css Menu lateral que deja activa la selección. pschmidt 02-04-2018 */
+
+.nav li.acti a:hover
+{
+	color: #E75900;
+}
+
+.nav li.acti{
+	font-weight: bold;
+	background-image: none;
+}
+
+.nav li.acti:hover{
+	background-color: inherit;
+}
+
+.nav li.acti a{
+	color: #E87E04;
+}
+
+.eliminar-bordes
+{
+	border: 1px solid #FFF !important;
+	padding: 10px !important;
+	padding-left: 0px !important;
+	padding-top: 15px !important;
+	background: #FFF;
+	color: #000;
+	text-transform: capitalize;
+}
+
+.fotoroster
+{
+	width: 150px !important;
+	height: 171px !important;
+}
+
+/*----------------------------------- Sobreescritura de css (turbo.css). Menu lateral se esconda completamente al seleccionar la opción. pschmidt 29-03-2018 */
+
+/*** esconde el menu al momento de minimizarlo con la opcion en el encabezado **/
+.sidebar-mini .sidebar 
+{
+    width: 0px;  /** Valor anterior 80px **/
+    display: none; /** Valor anterior block **/
+    font-weight: 200;
+    z-index: 3; 
+}
+
+/** Le indica al layout que ocupe el espacio que ocupaba el menu minimizado **/
+.sidebar-mini .main-panel 
+{
+    width: calc(100%); /** Valor anterior 100% -80px **/
+	margin-left: 0px; /** Valor anterior 80px **/
+}
+
+
+/*----------------------------------- Sobreescritura de css (turbo.css). Menu movil aparezca y se esconda por el lado izquiero. pschmidt 2018-03-29 */
+@media (max-width: 991px) 
+{
+	/** left 0, le indica al layout que aparesca en la pantalla y los valores -260px hacen que se desplace completamente al lado contrario de los 260px, en este caso al lado izquiero  **/
+	.sidebar,.off-canvas-sidebar 
+	{
+		position: fixed;
+		display: block;
+		top: 0;
+		height: 100vh;
+		width: 260px;
+		right: 0;
+		left: 0; /** Valor anterior auto **/
+		z-index: 1032;
+		visibility: visible;
+		background-color: #FFFFFF;
+		overflow-y: visible;
+		border-top: none;
+		text-align: left;
+		padding-right: 0px;
+		padding-left: 0;
+		-webkit-transform: translate3d(-260px, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		-moz-transform: translate3d(-260px, 0, 0);  /** Valor anterior translate3d(260px, 0, 0) **/
+		-o-transform: translate3d(-260px, 0, 0);   /** Valor anterior translate3d(260px, 0, 0) **/
+		-ms-transform: translate3d(-260px, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		transform: translate3d(-260px, 0, 0);   /** Valor anterior translate3d(260px, 0, 0) **/
+		-webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+		-moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+		-o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+		-ms-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+		transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1); 
+	}
+
+
+	/** los valores 0 le indican al layout del contenedor, que se mantenda a la vista de la pantalla sin moverse, de este modo se hace el efecto de que el menu se sobre pone al contenedor  **/
+	.nav-open .main-panel,
+	.nav-open .wrapper-full-page,
+	.nav-open .navbar .container 
+	{
+		left: 0;
+		-webkit-transform: translate3d(0, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		-moz-transform: translate3d(0, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		-o-transform: translate3d(0, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		-ms-transform: translate3d(0, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+		transform: translate3d(0, 0, 0); /** Valor anterior translate3d(260px, 0, 0) **/
+	}
+	
+}
+
+
+/*----------------------------------- Sobreescritura de css (turbo.css). Se acortan los margenes en el menu en versiones moviles o resoluciones menores a 480px. pschmidt 2018-03-29 */
+
+@media (max-width: 480px)
+{
+	.main-panel > .content {
+		margin-top: 70px;
+		padding: 0px 0px;
+		background-color: #F5F5F5;
+	}
+	
+	/** Unicamente dentro de la clase content, la clase .container-fluid  tendra 0px en el los padding, porque  .container-fluid  tambien se ocupa en el encabezado **/
+	.content > .container-fluid 
+	{
+		padding-right: 0px;
+		padding-left: 0px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	
+	/*----------------------------------- Le indica a las opciones del perfil en el encabezado con son elementos de linea . pschmidt 02-04-2018 */
+	.correccion-menu
+	{
+		display: block !important;
+	}
+	
+	.eliminar-bordes
+	{
+		border: 1px solid #FFF !important;
+		padding: 10px !important;
+		padding-left: 0px !important;
+		padding-top: 15px !important;
+		background: #FFF;
+		color: #000;
+		text-transform: capitalize;
+	}
+}
+
+/* Fernando.Velasco 20180426 */
+.azulSinBordes {
+
+    color: #2196F3 !important;
+    border: 0 !important;
+    font-size: 15px !important;
+    background-color: white !important;
+
+}
+
+.spinner {
+  -webkit-animation: rotator 1.4s linear infinite;
+          animation: rotator 1.4s linear infinite;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+          animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #339fc3;
+  }
+  25% {
+    stroke: #339fc3;
+  }
+  50% {
+    stroke: #339fc3;
+  }
+  75% {
+    stroke: #339fc3;
+  }
+  100% {
+    stroke: #339fc3;
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+
+
+.ocultarImpresion
+{
+    display: inline;
+}
+
+.mostrarImpresion
+{
+    display: none;
+}
+
+.nav > li > a 
+{
+	position: relative;
+	display: block;
+	padding: 0px 10px;
+}
+
+/** Permite que el menú este siempre visible la primera vez **/
+.ps-container > .ps-scrollbar-y-rail
+{
+	top: 0px;
+	display:block;
+    opacity: 0.6 !important;
+}
+
+.ps-scrollbar-y
+{
+	display:block;
+	height:1000px;
+}
+
+/** Fin modificaciones para el menú **/
+
+/* MAT 20180613 Estilos para el modulo de pre requisitos */
+.just-padding {
+  padding: 15px;
+}
+
+#ap >.list-group.list-group-root {
+  padding: 0;
+  overflow: hidden;
+}
+
+#ap >.list-group.list-group-root .list-group {
+  margin-bottom: 0;
+}
+
+#ap >.list-group.list-group-root .list-group-item {
+  border-radius: 0;
+  border-width: 1px 0 0 0;
+}
+
+#ap >.list-group.list-group-root > .list-group-item:first-child {
+  border-top-width: 0;
+}
+
+#ap >.list-group.list-group-root > .list-group > .list-group-item:before {
+    font-family: Material Icons;
+    content: "subdirectory_arrow_right"
+ ;   display: inline-block;
+    padding-right: 3px;
+   vertical-align: middle;
+  /*padding-left: 30px;*/
+}
+
+/* Tercer Nivel*/
+#ap >.list-group.list-group-root > .list-group > .list-group > .list-group-item:before {
+    font-family: Material Icons;
+    content: "subdirectory_arrow_right";
+    display: inline-block;
+    padding-right: 3px;
+   vertical-align: middle;
+    padding-left: 16px;
+}
+
+/* Cuarto Nivel*/
+#ap >.list-group.list-group-root > .list-group > .list-group > .list-group > .list-group-item:before {
+  font-family: Material Icons;
+    content: "subdirectory_arrow_right";
+    display: inline-block;
+    padding-right: 3px;
+   vertical-align: middle;
+  padding-left: 32px;
+}
+
+/* Quinto Nivel*/
+#ap >.list-group.list-group-root > .list-group > .list-group > .list-group > .list-group > .list-group-item:before {
+    font-family: Material Icons;
+    content: "subdirectory_arrow_right";
+    display: inline-block;
+    padding-right: 3px;
+   vertical-align: middle;
+  padding-left: 48px;
+}
+.errorTree{
+    color: #D8000C;
+    background-color: #FFD2D2;
+}

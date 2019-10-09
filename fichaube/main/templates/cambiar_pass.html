@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Cambiar Contrase&ntilde;a</h2>
+        </br>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+    {% else %}
+    <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+            
+            <div class="cuadro-form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="inputPassVieja">Ingrese Contrase&ntilde;a Actual:</label>
+                        <input type="password" class="form-control mx-sm-3" id="inputPassVieja" name="inputPassVieja">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassNueva">Ingrese Contrase&ntilde;a Nueva:</label>
+                        <input type="password" class="form-control mx-sm-3" id="inputPassNueva" name="inputPassNueva">
+                        <small id="passwordHelpInline" class="text-muted">
+                            Debe de tener un mínimo de 6 caracteres de largo.
+                        </small>
+                        <small class="text-info" id="msgPass"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassConfirmada">Repita Contrase&ntilde;a Nueva:</label>
+                        <input type="password" class="form-control mx-sm-3" id="inputPassConfirmada" name="inputPassConfirmada">
+                    </div>
+                    <button id="botonCambiarPass" type="submit" class="btn btn-primary" disabled>Cambiar</button>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
