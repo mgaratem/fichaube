@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="icon" type="image/png" href="{% static 'sam/imagen/favicon.png' %}">
-    <title>SAM</title>
+    <link rel="icon" type="image/png" href="{% static 'fichaube/imagen/favicon.png' %}">
+    <title>Fichaube</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
 
 
@@ -15,14 +15,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static 'sam/css/home-style.css' %}">
+    <link rel="stylesheet" href="{% static 'fichaube/css/home-style.css' %}">
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="{% static 'sam/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fichaube/font-awesome/css/font-awesome.min.css' %}">
     <!-- Material -->
     <link type="text/css"
-        href="{% static 'sam/js/librerias/turbo/assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.css' %}"
+        href="{% static 'fichaube/js/librerias/turbo/assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.css' %}"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'sam/js/librerias/turbo/assets/css/css.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fichaube/js/librerias/turbo/assets/css/css.css' %}" />
 
 </head>
 
@@ -34,7 +34,7 @@
             <div class="sidebar-header">
                 <div class="logo">
                     <a href="{% url 'home' %}" class="simple-text">
-                        <img src="{% static 'sam/imagen/SAM_thumbnail(2).png' %}" class="img-responsive"
+                        <img src="{% static 'fichaube/imagen/logo-fichaube.png' %}" class="img-responsive"
                             alt="Responsive image">
                     </a>
                 </div>
@@ -43,77 +43,56 @@
             <ul class="list-unstyled components">
                 <li class="divider"></li>
                 {% if request.user.is_superuser %}
-                {% else %}
                 <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Ficha Consolidada</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
                     <ul class="collapse list-unstyled show" id="homeSubmenu">
                         <li>
-                            <a href="{% url 'perfil' %}">Datos Personales</a>
+                            <a href="#">Buscar alumno</a>
                         </li>
                          <li>
-                            <a href="{% url 'cambiar_pass' %}">Cambiar Contrase&ntilde;a</a>
+                            <a href="#">Crear nueva ficha</a>
                         </li>
+                        <li>
+                           <a href="">Agregar nuevo alumno</a>
+                       </li>
                     </ul>
                 </li>
                 {% endif %}
-                
-                <li>
-                    <a href="#encuestaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Encuesta</a>
-                    <ul class="collapse list-unstyled show" id="encuestaSubmenu">
-                        
-                        {% if request.user.is_superuser %}
-                        <li>
-                            <a href="{% url 'encuestas' %}">Ver Encuestas</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'resultadosEncuestas' %}">Resultados por Alumno</a>
-                        </li>
 
-                        {% else %}
-                        <li>
-                            <a href="{% url 'encuesta' %}">Realizar tu Encuesta</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'resultadoEncuesta' %}">Respuestas</a>
-                        </li>
-                        {% endif %}
-
-                    </ul>
-                </li>
-                <li>
-                    <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Apadrinamiento</a>
-                    <ul class="collapse list-unstyled show" id="grupoSubmenu">
-                        {% if request.user.is_superuser %}
-                        <li>
-                            <a href="{% url 'grupos' %}">Grupos</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'padrinos' %}">Padrinos</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'mechones' %}">Ahijados</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'import_users' %}">Importación</a>
-                        </li>
-                        {% else %}
-                        <li>
-                            <a href="{% url 'grupo' %}">Tu Grupo</a>
-                        </li>
-                        {% endif %}
-
-                    </ul>
-                </li>
                 {% if request.user.is_superuser %}
                 <li>
-                    <a href="#matchmakingSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Matchmaking</a>
-                    <ul class="collapse list-unstyled show" id="matchmakingSubmenu">
+                    <a href="#encuestaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
+                    <ul class="collapse list-unstyled show" id="encuestaSubmenu">
                         <li>
-                            <a href="{% url 'emparejamiento' %}">Realizar Emparejamiento</a>
+                            <a href="#">Generar reporte fichas</a>
                         </li>
                     </ul>
                 </li>
                 {% endif %}
+                {% if request.user.is_superuser %}
+                <li>
+                    <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
+                    <ul class="collapse list-unstyled show" id="grupoSubmenu">
+
+                        <li>
+                            <a href="#">Profesionales</a>
+                        </li>
+                        <li>
+                            <a href="#">Administrativos</a>
+                        </li>
+                        <li>
+                            <a href="#">Áreas</a>
+                        </li>
+                        <li>
+                            <a href="#">Especialidades</a>
+                        </li>
+                        <li>
+                            <a href="#">Cargar Alumnos</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </li>
             </ul>
         </nav>
 
@@ -135,8 +114,8 @@
                     </button>
 
                     <div class="navbar-header">
-                        <img src="{% static 'sam/imagen/logoPUCV.png' %}" class="img-responsive"
-                            alt="Responsive image" width="150">
+                        <img src="{% static 'fichaube/imagen/dae-PUCV.png' %}" class="img-responsive"
+                            alt="Responsive image" width="200">
                     </div>
 
                     <div class="collapse navbar-collapse">
@@ -186,25 +165,14 @@
 
             <div class="jumbotron">
                 <h1>¡Bienvenido! </h1>
-                 </br>
-                    <img src="{% static 'sam/imagen/SAM_logo.png' %}" class="img-responsive"
-                            alt="Responsive image" width="150" align="top">
                 </br>
-                </br>
-                <h3>Sistema de Acompañamiento Mechón</h3>
-                <p>SAM es un sistema de emparejamiento virtual que, mediante un práctico cuestionario personal, genera un perfil único por cada estudiante. 
-                    Esto facilitará el agrupamiento entre padrinos y mechones, en base a las similitudes entre sus perfiles (gustos, intereses y pasatiempos) 
-                    medidos en puntuaciones. 
-                <p>Mientras más cercana es la puntuación, mayor es la compatibilidad entre perfiles. De esta forma se generará un “match” 
-                    certero entre los individuos, con la finalidad que esta perdure durante sus años de carrera, y así, cumplir con el objetivo principal del Programa de Acompañamiento Mechón.</p>
-                <p>SAM es desarrollado por estudiantes de la Escuela de Ingeniería Informática para el ramo de Taller de Ingeniería de Software dictado el primer semestre del año 2019.</p>
-            </div>
-            {% endblock %}   
+              </div>
+            {% endblock %}
 
             </div>
 
             <div class="line"></div>
-            
+
         </div>
     </div>
 
@@ -222,9 +190,9 @@
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="{% static 'sam/js/validarut.js' %}"></script>
-    <script type="text/javascript" src="{% static 'sam/js/validapass.js' %}"></script>
-    <script type="text/javascript" src="{% static 'sam/js/agregapregunta.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fichaube/js/validarut.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fichaube/js/validapass.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fichaube/js/agregapregunta.js' %}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

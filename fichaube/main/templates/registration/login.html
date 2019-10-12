@@ -10,11 +10,12 @@
     <nav class="navbar navbar-default navbar-absolute">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="{% static 'sam/imagen/logoPUCV.png' %}" class="img-responsive" alt="Responsive image"></a>
+                <a class="navbar-brand" href="#"><img src="{% static 'fichaube/imagen/Dae-PUCV.png' %}" class="img-responsive"
+                  alt="Responsive image" width="250"></a>
             </div>
         </div>
-    </nav> 
-    
+    </nav>
+
     <div class="wrapper wrapper-full-page">
         <div class="full-page login-page" data-color="blue">
             <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
@@ -23,15 +24,12 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
 
-                            <h2>Ingreso</h2>
-
 
                             <form class="form-signin" name="form_ingreso" id="form_ingreso" method="post" action="{% url 'login' %}" role="ingreso" >
                                 {% csrf_token %}
                                 <div class="card card-login">
                                     <div class="card-header text-center">
-                                        <img src="{% static 'sam/imagen/SAM_thumbnail(2).png' %}" class="img-responsive" 
-                                            alt="Responsive image" width="100">
+                                      <h2>Ingreso</h2>
                                     </div>
                                     <div class="card-content">
                                         <div class="input-group">
@@ -49,25 +47,25 @@
                                             <div class="form-group">
                                                 <label class="control-label">Contrase&ntilde;a</label>
                                                 <input type="password" class="form-control" name="password" id="id_password">
-                                                <span class="material-icons form-control-feedback">clear</span> 
+                                                <span class="material-icons form-control-feedback">clear</span>
                                             </div>
                                         </div>
-                                        
-                                        {% if form.errors %}            
-                                        
+
+                                        {% if form.errors %}
+
                                             <div class="alert alert-warning" >
                                                 <span id="spn_texto">Tu usuario y contraseña no coinciden. Por favor trata nuevamente.</span>
                                             </div>
-                                                
+
                                         {% endif %}
 
-                                        
+
                                     </div>
                                     <div class="text-center">
                                         <button class="btn btn-primary" type="submit">Ingresar</button>
                                         <br><br>
                                     </div>
-                                </div> 
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -78,4 +76,3 @@
 
 
 {% endblock content %}
-
