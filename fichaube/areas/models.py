@@ -10,6 +10,7 @@ class Area(models.Model):
   def __str__(self):
       return self.nombreArea
 
+
 ########### CLASE ESPECIALIDAD #########################
 
 class Especialidad(models.Model):
@@ -17,6 +18,9 @@ class Especialidad(models.Model):
   area = models.ForeignKey(Area, on_delete = models.SET_NULL)
   def __str__(self):
       return self.nombreEspecialidad
+
+
+########### CLASE USUARIO-ESPECIALIDAD #########################
 
 class UsuarioEspecialidad(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
