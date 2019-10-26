@@ -13,4 +13,6 @@ urlpatterns = [
     # HANDLERS
     path('404/', views.handler404, name="404"),
     path('500/', views.handler500, name="500"),
+    path('testarea', views.testpancho, name="nameTestpancho"),
+    path('agregarArea', views.agregarArea, name='agregarArea'),
 ]
