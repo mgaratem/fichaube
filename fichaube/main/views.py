@@ -110,13 +110,3 @@ def cambiar_pass(request):
         return HttpResponseRedirect(reverse("cambiar_pass"))
 
     #return render(request, 'cambiar_pass.html')
-
-
-# test de pancho
-def testpancho(request):
-    return render(request, 'testpancho.html',{})
-
-def agregarArea(request):
-    if request.method == 'POST':
-        area = request.POST.get("area")
-        
