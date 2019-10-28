@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <form action="agregarArea" method="post"> {% csrf_token %}
+      {{ form.as_p }}
+      <label for="area">Ingrese area: </label>
+      <br>
+      <input id="area" type="text" name="area">
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

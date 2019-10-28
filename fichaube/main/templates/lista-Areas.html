@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <table style="width:50%">
+      <tr>
+        <th>Nombre Area</th>
+        <th>Borrar</th>
+        <th>Editar</th>
+      </tr>
+      {% for area in areas %}
+      <tr>
+        <td>{{area.nombreArea}}</td>
+        <td>Borrar</td>
+        <td>Editar</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
