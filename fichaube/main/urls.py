@@ -16,10 +16,12 @@ urlpatterns = [
     path('404/', views.handler404, name="404"),
     path('500/', views.handler500, name="500"),
 
+
     # html's
     path('agregar-Area', areas.views.testpancho01, name="agregar-Area"),
 
     # controladores
     path('agregarArea', areas.views.agregarArea, name='agregarArea'),
     path('lista-Areas', areas.views.listarArea, name="lista-Areas"),
+
 ]

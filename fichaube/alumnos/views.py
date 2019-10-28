@@ -14,6 +14,8 @@ import logging
 from django.urls import reverse
 from django.template import *
 
+from alumnos.models import Alumno
+
 # Create your views here.
 
 #############---------FUNCION CREAR------#################
@@ -49,7 +51,8 @@ def crear_alumno(request):
 
                 alumno = Alumno()
                 alumno.nombre = nombre_alumno.upper()
-                alumno.apellidos = apellidos_alumno.upper()
+                alumno.apellido_paterno = apellidos_paterno.upper()
+                alumno.apellido_materno = apellidos_materno.upper()
                 alumno.rut = rut
                 alumno.tipoDocumento = tipoDocumento
                 alumno.fecha_nacimiento = fecha_nacimiento
@@ -78,27 +81,19 @@ def crear_alumno(request):
         return HttpResponseRedirect(reverse("crear_alumno"))
 
 
+
+
 #############---------FUNCION BORRAR------#################
 
-def borrar_alumno(request, id_alumno=None): #Elimina alumno completamente, junto con user y actividad
-
-    tipoAlumno = None
+def borrarAlumno(request, id_alumno=None):
 
     if request.method == 'GET':
         try:
             alumno = Alumno.objects.get(id=id_alumno)
-            tipoAlumno = alumno.es_Mechon
-            id_usuario = alumno.usuario_id
-            user = User.objects.get(id=id_usuario)
-            user.delete()
             alumno.delete()
 
-            if tipoAlumno:
-                messages.success(request, '¡Alumno eliminado con éxito!')
-                return HttpResponseRedirect(reverse("mechones"))
-            else:
-                messages.success(request, '¡Alumno eliminado con éxito!')
-                return HttpResponseRedirect(reverse("padrinos"))
+            messages.success(request, '¡Alumno eliminado con éxito!')
+            return HttpResponseRedirect(reverse("mechones"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
@@ -106,14 +101,74 @@ def borrar_alumno(request, id_alumno=None): #Elimina alumno completamente, junto
 
 
 
+
 #############---------FUNCION MODIFICAR------#################
 
-def updateAlumno(request): #Actualizar datos alumnos
-    template = "crear_encuesta.html"
+def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
+    template = "actualizar_alumno.html"
 
     if request.method == 'GET':
-        return render(request, template)
+        try:
+            alumno = Alumno.objects.get(id = id_alumno)
+            return render(request, template, {'alumno': alumno})
+
+        except Exception as e:
+            messages.error(request,"No fue posible modificar alumno. "+repr(e))
+            return HttpResponseRedirect(reverse("listarAlumnos"))
 
     if request.method == 'POST':
+        try:
+            alumno = Alumno.objects.get(id = id_alumno)
 
-    return redirect()
+            alumno.nombre = request.POST.get('inputNombre')
+            alumno.apellido_paterno = request.POST.get('inputApellidoPaterno')
+            alumno.apellido_materno = request.POST.get('inputApellidoMaterno')
+            alumno.sexo = request.POST.get('inputSexo')
+            alumno.correo = request.POST.get('inputCorreo')
+            alumno.carrera = request.POST.get('inputCarrera')
+            alumno.domicilio = request.POST.get('inputDomicilio')
+            alumno.ocupacion = request.POST.get('inputOcupacion')
+            alumno.representante = request.POST.get('inputRepresentante')
+            alumno.prevision = request.POST.get('inputPrevision')
+
+            alumno.save()
+            return verAlumno('get', id_alumno)
+
+        except Exception as e:
+            messages.error(request,"No fue posible modificar alumno. "+repr(e))
+            return verAlumno('get', id_alumno)
+
+
+
+
+
+#############---------FUNCION MOSTRAR------#################
+
+def verAlumno(request, id_alumno=None):
+
+    template = "ver_alumno.html"
+    if request.method == 'GET':
+        try:
+            alumno = Alumno.objects.get(id = id_alumno)
+            return render(request, template, {'alumno': alumno})
+
+        except Exception as e:
+            messages.error(request,"No fue posible mostrar alumno. "+repr(e))
+            return render(request, listarAlumnos)
+
+
+
+
+#############---------FUNCION LISTAR------#################
+
+def listarAlumnos(request):
+
+    template = "listar_alumnos.html"
+    if request.method == 'GET':
+        try:
+            alumnos = Alumno.objects.all()
+            return render(request, template, {'alumnos': alumnos})
+
+        except Exception as e:
+            messages.error(request,"No fue posible listar alumnos. "+repr(e))
+            return render(request, "home.html")
