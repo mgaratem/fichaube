@@ -43,3 +43,5 @@ fichaube/areas/__pycache__/models.cpython-37.pyc
 fichaube/alumnos/__pycache__/models.cpython-37.pyc
 fichaube/usuarios/__pycache__/models.cpython-37.pyc
 *.pyc
+fichaube/administrativo/migrations/__pycache__/__init__.cpython-37.pyc
+*.pyc
