@@ -22,6 +22,7 @@ urlpatterns = [
 
     # controladores
     path('agregarArea', areas.views.agregarArea, name='agregarArea'),
+    path(r'^ajax/validarArea/$', areas.views.validarArea, name='validarArea'),
     path('lista-Areas', areas.views.listarArea, name="lista-Areas"),
 
 ]

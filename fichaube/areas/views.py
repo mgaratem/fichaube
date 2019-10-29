@@ -24,6 +24,14 @@ def agregarArea(request):
         del nuevaArea
         return HttpResponseRedirect(reverse('lista-Areas'))
 
+# funcion para corroborar si el area ya existe
+def validarArea(request):
+    area = request.GET.get('area', None)
+    data = {
+        'is_taken': User.objects.filter(area__iexact=area).exists()
+    }
+    return JsonResponse(data)
+
 
 # funcion y html para listar Areas
 def listarArea(request):
