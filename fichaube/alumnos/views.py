@@ -21,7 +21,7 @@ from alumnos.models import Alumno
 #############---------FUNCION CREAR------#################
 
 def crear_alumno(request):
-    template = "crear_usuario.html"
+    template = "crear_alumno.html"
 
     if request.method == 'GET':
         return render(request, template)
@@ -93,11 +93,11 @@ def borrarAlumno(request, id_alumno=None):
             alumno.delete()
 
             messages.success(request, '¡Alumno eliminado con éxito!')
-            return HttpResponseRedirect(reverse("mechones"))
+            return HttpResponseRedirect(reverse("listarAlumnos"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
-            return HttpResponseRedirect(reverse("handler500"))
+            return HttpResponseRedirect(reverse("listarAlumnos"))
 
 
 
@@ -120,9 +120,9 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
         try:
             alumno = Alumno.objects.get(id = id_alumno)
 
-            alumno.nombre = request.POST.get('inputNombre')
-            alumno.apellido_paterno = request.POST.get('inputApellidoPaterno')
-            alumno.apellido_materno = request.POST.get('inputApellidoMaterno')
+            alumno.nombre = request.POST.get('inputNombre').upper()
+            alumno.apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
+            alumno.apellido_materno = request.POST.get('inputApellidoMaterno').upper()
             alumno.sexo = request.POST.get('inputSexo')
             alumno.correo = request.POST.get('inputCorreo')
             alumno.carrera = request.POST.get('inputCarrera')
@@ -132,7 +132,9 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
             alumno.prevision = request.POST.get('inputPrevision')
 
             alumno.save()
-            return verAlumno('get', id_alumno)
+            messages.success(request, '¡Alumno modificado exitosamente!')
+            return HttpResponseRedirect(reverse("updateAlumno"))
+            #return verAlumno('get', id_alumno)
 
         except Exception as e:
             messages.error(request,"No fue posible modificar alumno. "+repr(e))
