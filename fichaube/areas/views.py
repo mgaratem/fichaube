@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from areas.models import Area
+from django.http import JsonResponse
 
 # Create your views here.
 
 
-# test de pancho
 
 # html para agregar area
 def testpancho01(request):
@@ -28,7 +28,8 @@ def agregarArea(request):
 def validarArea(request):
     area = request.GET.get('area', None)
     data = {
-        'is_taken': User.objects.filter(area__iexact=area).exists()
+        'is_taken': Area.objects.filter(nombreArea=area).exists()
+        #'is_taken': True
     }
     return JsonResponse(data)
 

@@ -8,14 +8,14 @@
       <input type="submit" value="Submit">
     </form>
 
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     {% block javascript %}
       <script>  // AJAX para corroborar que el area ya existe
         $("#area").change(function () {
-          // console.log("wena los k");
+          // console.log($(this).val());
           var area = $(this).val();
           $.ajax({
-            url: '/ajax/validarArea',
+            url: 'ajax/validarArea',
             data: {
               'area': area
             },

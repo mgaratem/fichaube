@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 # revisar esto, ya que tengo dudas con los import de views************************************************************************
 import areas.views
 
+
 urlpatterns = [
     path('home/', views.index, name='home'),
     path('login/', auth_views.LoginView.as_view(), name="login"),
@@ -22,7 +23,7 @@ urlpatterns = [
 
     # controladores
     path('agregarArea', areas.views.agregarArea, name='agregarArea'),
-    path(r'^ajax/validarArea/$', areas.views.validarArea, name='validarArea'),
+    path('ajax/validarArea', areas.views.validarArea, name='validarArea'),
     path('lista-Areas', areas.views.listarArea, name="lista-Areas"),
 
 ]
