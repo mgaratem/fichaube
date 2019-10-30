@@ -41,7 +41,7 @@ def crear_alumno(request):
             correo = request.POST.get('inputCorreo')
             carrera = request.POST.get('inputCarrera')
             domicilio = request.POST.get('inputDomicilio')
-            ocupacion = request.POST.get('inputOcupacion')
+            #ocupacion = request.POST.get('inputOcupacion')
             representante = request.POST.get('inputRepresentante')
             prevision = request.POST.get('inputPrevision')
 
@@ -61,7 +61,7 @@ def crear_alumno(request):
                 alumno.correo = correo
                 alumno.carrera = carrera
                 alumno.domicilio = domicilio
-                alumno.ocupacion = ocupacion
+                #alumno.ocupacion = ocupacion
                 alumno.representante_legal = representante
                 alumno.prevision = prevision
 

@@ -32,8 +32,9 @@
 
                     <div class="form-group row">
                         <label for="inputTipoDocumento" class="col-sm-2 col-form-label">Elija tipo de documento:</label>
-                        <div class="col-sm-2">
-                            <select class="custom-select mr-sm-2" id="inputTipoDocumento" name="inputTipoDocumento" onchange='CheckDocumento(this.value);' required>
+                        <div class="col-sm-3">
+                            <select class="custom-select mr-sm-2" id="inputTipoDocumento"
+                              name="inputTipoDocumento" onchange='CheckDocumento(this.value);' required>
                                 <option value="" selected>Elegir...</option>
                                 <option value="CEDULA">Cédula de Identidad</option>
                                 <option value="PASAPORTE">Pasaporte</option>
@@ -42,17 +43,19 @@
                     </div>
 
                     <div class="form-group row" name="groupRut" id="groupRut" style='display:none;'>
-                        <label for="inputRut" class="col-sm-2 col-form-label">Ingrese su Rut:</label>
-                        <div class="col-sm-6">
-                            <input disabled type="text" class="form-control" id="inputRut" name="inputRut"  placeholder="p.e. 12345678-9"  required autofocus>
+                        <label for="inputRut" class="col-sm-3 col-form-label">Ingrese su Rut:</label>
+                        <div class="col-sm-7">
+                            <input disabled type="text" class="form-control" id="inputRut"
+                              name="inputRut"  placeholder="p.e. 12345678-9"  required autofocus>
                         </div>
                         <small class="text-info" id="msgRut"></small>
                     </div>
 
                     <div class="form-group row" name="groupPasaporte" id="groupPasaporte" style='display:none;'>
                         <label for="inputPasaporte" class="col-sm-2 col-form-label">Ingrese su Pasaporte:</label>
-                        <div class="col-sm-6">
-                            <input disabled type="text" class="form-control" id="inputPasaporte" name="inputPasaporte"  placeholder="p.e. P01234567"  required autofocus>
+                        <div class="col-sm-7">
+                            <input disabled type="text" class="form-control" id="inputPasaporte"
+                              name="inputPasaporte"  placeholder="p.e. P01234567"  required autofocus>
                         </div>
                     </div>
 
@@ -61,9 +64,10 @@
 
 
                     <div class="form-group row">
-                        <label for="inputNombre" class="col-md-2 col-form-label">Nombres:</label>
+                        <label for="inputNombre" class="col-sm-2 col-form-label">Nombres:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombres" required>
+                            <input type="text" class="form-control" id="inputNombre"
+                              name="inputNombre" placeholder="Nombres" required>
                         </div>
                     </div>
 
@@ -85,17 +89,10 @@
 
 
                     <div class="form-group row">
-                        <label for="inputEmail1" class="col-sm-2 col-form-label">Email institucional:</label>
+                        <label for="inputCorreo" class="col-sm-2 col-form-label">Correo:</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="inputEmail1" name="inputEmail1" placeholder="Email" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <label for="inputEmail2" class="col-sm-2 col-form-label">Email personal:</label>
-                        <div class="col-sm-8">
-                            <input type="email" class="form-control" id="inputEmail2" name="inputEmail2" placeholder="Email Personal" value="">
+                            <input type="email" class="form-control" id="inputCorreo"
+                            name="inputCorreo" placeholder="email@example.com" required>
                         </div>
                     </div>
 
@@ -104,36 +101,77 @@
 
 
                    <div class="form-group row">
-                        <label for="inputGeneracion" class="col-sm-2 col-form-label">Ingrese a&ntilde;o de ingreso:</label>
-                        <div class="col-sm-6">
-                            <input type="number" class="form-control" id="inputGeneracion" name="inputGeneracion" placeholder="p.e. 2019" min="2000" required>
+                        <label for="inputGeneracion" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control" id="inputFechaNacimiento"
+                              name="inputFechaNacimiento" required>
                         </div>
-                        <label for="inputCarrera" class="col-sm-2 col-form-label">Elija Carrera:</label>
+                    </div>
+
+
+                    </br>
+
+
+                    <div class="form-group row">
+                        <label for="inputSexo" class="col-sm-2 col-form-label">Sexo:</label>
                         <div class="col-sm-2">
-                            <select class="custom-select mr-sm-2" id="inputCarrera" name="inputCarrera" required>
+                            <select class="custom-select mr-sm-2" id="inputSexo" name="inputSexo" required>
                                 <option value="" selected>Elegir...</option>
-                                <option value="ICI">ICI</option>
-                                <option value="INF">INF</option>
+                                <option value="Mujer">Mujer</option>
+                                <option value="Hombre">Hombre</option>
                             </select>
                         </div>
                     </div>
 
 
+                    </br>
+
+
                     <div class="form-group row">
-                        <label for="inputTipo" class="col-sm-2 col-form-label">Elija Rol:</label>
-                        <div class="col-sm-2">
-                            <select class="custom-select mr-sm-2" id="inputTipo" name="inputTipo" required>
-                                <option value="" selected>Elegir...</option>
-                                <option value="PADRINO">Padrino</option>
-                                <option value="MECHON">Ahijado</option>
-                            </select>
+                        <label for="inputDomicilio" class="col-sm-2 col-form-label">Domicilio:</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="inputDomicilio"
+                            name="inputDomicilio"  placeholder="Calle, N°, Depto, Villa, Ciudad" required>
+                        </div>
+                    </div>
+
+
+                    </br>
+
+
+                    <div class="form-group row">
+                        <label for="inputCarrera" class="col-sm-2 col-form-label">Carrera:</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="inputCarrera"
+                            name="inputCarrera"  placeholder="Ingrese la carrera del alumno" required>
+                        </div>
+                    </div>
+
+
+                    </br>
+
+
+                    <div class="form-group row">
+                        <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" id="inputRepresentante"
+                            name="inputRepresentante"  placeholder="Ingrese el nombre del apoderado" required>
                         </div>
                     </div>
 
                     </br>
 
 
-                    <button id="botonRegistrarse" type="submit" class="btn btn-primary" disabled>Registrarse</button>
+                    <div class="form-group row">
+                      <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputPrevision"
+                          name="inputPrevision"  placeholder="Fonasa, Isapre, Capredena..." required>
+                      </div>
+                    </div>
+
+
+                    <button id="botonRegistrarse" type="submit" class="btn btn-primary" disabled>Registrar</button>
                 </form>
             </div>
         </div>
