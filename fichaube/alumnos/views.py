@@ -13,6 +13,7 @@ from datetime import date, datetime
 import logging
 from django.urls import reverse
 from django.template import *
+from django.db.models import Q
 
 from alumnos.models import Alumno
 
@@ -71,14 +72,14 @@ def crear_alumno(request):
             else:
                 messages.error(request,'¡Este usuario ya existe!')
                 del alumno
-                return HttpResponseRedirect(reverse("crear_alumno"))
+                return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
         except Exception as e:
             messages.error(request,"No fue posible crear alumno. "+repr(e))
             del alumno
-            return HttpResponseRedirect(reverse("crear_alumno"))
+            return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
-        return HttpResponseRedirect(reverse("crear_alumno"))
+        return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
 
 
@@ -93,11 +94,11 @@ def borrarAlumno(request, id_alumno=None):
             alumno.delete()
 
             messages.success(request, '¡Alumno eliminado con éxito!')
-            return HttpResponseRedirect(reverse("listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
-            return HttpResponseRedirect(reverse("listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
 
 
 
@@ -114,7 +115,7 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 
         except Exception as e:
             messages.error(request,"No fue posible modificar alumno. "+repr(e))
-            return HttpResponseRedirect(reverse("listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
 
     if request.method == 'POST':
         try:
@@ -133,7 +134,7 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 
             alumno.save()
             messages.success(request, '¡Alumno modificado exitosamente!')
-            return HttpResponseRedirect(reverse("updateAlumno"))
+            return HttpResponseRedirect(reverse("alumnos:updateAlumno"))
             #return verAlumno('get', id_alumno)
 
         except Exception as e:
@@ -174,3 +175,31 @@ def listarAlumnos(request):
         except Exception as e:
             messages.error(request,"No fue posible listar alumnos. "+repr(e))
             return render(request, "home.html")
+
+
+#############---------FUNCION LISTAR------#################
+
+def buscarAlumno(request):
+
+    template = "buscar_alumno.html"
+    if request.method == 'GET':
+        return render(request, template)
+
+    if request.method == "POST":
+        try:
+            filtro = request.GET.get('inputSearch', '')
+            querys = (Q(nombre__icontains=filtro) | Q(apellido_materno__icontains=filtro))
+            querys |= Q(apellido_paterno__icontains=filtro)
+            querys |= Q(rut__icontains=filtro)
+
+            alumnos = Alumno.objects.filter(querys)
+
+            if not alumnos:
+                messages.info(request,"No se encontró ningún alumno.")
+                return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+            else:
+                return render(request, template, {'alumnos': alumnos})
+
+        except Exception as e:
+            messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
+            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))

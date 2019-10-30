@@ -10,4 +10,5 @@ urlpatterns = [
     path('actualizar_alumno/<int:id_alumno>', views.updateAlumno, name="updateAlumno"),
     path('ver_alumno/<int:id_alumno>', views.verAlumno, name="verAlumno"),
     path('listar_alumnos/', views.listarAlumnos, name="listarAlumnos"),
+    path('buscar_alumnos/', views.buscarAlumno, name="buscarAlumno"),
 ]

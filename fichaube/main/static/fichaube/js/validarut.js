@@ -8,12 +8,12 @@ var Fn = {
 
         var res = rutCompleto.replace(/\./g, '');
         var tmp = res.split('-');
-        var digv = tmp[1]; 
+        var digv = tmp[1];
         var rut = tmp[0];
         if ( digv == 'K' ){
              digv = 'k' ;
         }
-        
+
         return (Fn.dv(rut) == digv );
     },
     dv : function(T){

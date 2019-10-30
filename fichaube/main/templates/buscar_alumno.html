@@ -5,7 +5,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
     <div class="header text-center">
-        <h2>Padrinos</h2>
+        <h2>Buscar Alumnos</h2>
         </br>
     </div>
 </div>
@@ -13,39 +13,41 @@
 {% if messages %}
     {% for message in messages %}
     {% if  message.tags == "error" %}
-    <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert">
+    {% elif message.tags == "info" %}
+      <div class="alert alert-info" role="alert">
     {% else %}
-    <div class="alert alert-success" role="alert">
+      <div class="alert alert-success" role="alert">
     {% endif %}
         {{message}}
-    </div>
+      </div>
     {% endfor %}
 {% endif %}
 
 <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
         <div class="card-content">
-        
-            {% if not padrinos %}
-            <br>
-                <center><div class="alert alert-warning col-sm-6" role="alert">
-                    <h4 class="alert-heading">¡No hay padrinos!</h4>
-                    <p>Puede ser que como no hayas hecho la importación, no se han cargado padrinos aún.</p>
-                    <hr>
-                    <p class="mb-0">Para hacer la importación, debes ir al menú principal y seleccionar Importación en la sección Apadrinamiento.</p>
-                </div></center>
-            {% else %}
+
+          <form method="POST">
+            {% csrf_token %}
+            <div class="cuadro-wrap">
+               <div class="cuadro-search">
+                  <input name="inputSearch" type="text" class="searchTerm" placeholder="Buscar...">
+                  <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                 </button>
+               </div>
+            </div>
+          </form>
+
+          {% if alumnos %}
 
             <div class="row cuadro-filtro">
-                <div class="col-xs-12 col-md-8">
-                   <a href="{% url 'crear_alumno' %}" class="btn btn-primary btn-sm"> 
-                        <i class="zmdi zmdi-plus-circle" style="font-size:25px; color:#00000;"></i>
-                    </a>
-                </div>
                 <div class="col-xs-6 col-md-4">
                     <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
                 </div>
             </div>
+
 
             <div class="cuadro-tabla">
                 <div class="row">
@@ -54,27 +56,24 @@
                         <thead class="table-head">
                             <th>Rut</th>
                             <th>Nombre Alumno</th>
-                            <th>Email Alumno</th>
                             <th>Carrera</th>
-                            <th>Opciones</th>
                         </thead>
                         <tbody id="tablaBusqueda">
-                            {% for padrino in padrinos %}
+                            {% for alumno in alumnos %}
                             <tr>
-                                <td>{{padrino.rut}}</td>
-                                <td>{{padrino.nombre}} {{padrino.apellidos}}</td>
-                                <td>{{padrino.email}}</td>
-                                <td>{{padrino.carrera}}</td>
+                                <td>{{alumno.rut}}</td>
+                                <td>{{alumno.nombre}} {{alumno.apellido_paterno}}  {{alumno.apellidos_materno}}</td>
+                                <td>{{alumno.carrera}}</td>
                                 <td>
                                     <a href="#" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
                                         <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
                                     </a>
-                                    <a href="#modalDelete{{padrino.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                    <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
                                         <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
                                     </a>
                                 </td>
 
-                                <div id="modalDelete{{padrino.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <!-- Modal content-->
                                         <div class="modal-content">
@@ -89,12 +88,12 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a href="{% url 'borrar_alumno' id_alumno=padrino.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                                                <a href="{% url 'alumnos:borrar_alumno' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </tr>
                             {% endfor %}
 
@@ -103,7 +102,7 @@
 
                 </div>
             </div>
-            
+
             {% endif %}
 
         </div>

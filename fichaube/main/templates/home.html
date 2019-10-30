@@ -47,13 +47,13 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
                     <ul class="collapse list-unstyled show" id="homeSubmenu">
                         <li>
-                            <a href="#">Buscar alumno</a>
+                            <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
                         </li>
                          <li>
                             <a href="#">Crear nueva ficha</a>
                         </li>
                         <li>
-                           <a href="">Agregar nuevo alumno</a>
+                           <a href="{% url 'alumnos:crear_alumno' %}">Agregar nuevo alumno</a>
                        </li>
                     </ul>
                 </li>
@@ -192,7 +192,7 @@
 
     <script type="text/javascript" src="{% static 'fichaube/js/validarut.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/validapass.js' %}"></script>
-    <script type="text/javascript" src="{% static 'fichaube/js/agregapregunta.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fichaube/js/activadorRutPasaporte.js' %}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
