@@ -3,227 +3,195 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="icon" type="image/png" href="{% static 'fichaube/imagen/favicon.png' %}">
-    <title>Fichaube</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="icon" type="image/png" href="{% static 'fichaube/imagen/favicon.png' %}">
+  <title>Fichaube</title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
 
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="{% static 'fichaube/css/home-style.css' %}">
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="{% static 'fichaube/font-awesome/css/font-awesome.min.css' %}">
-    <!-- Material -->
-    <link type="text/css"
-        href="{% static 'fichaube/js/librerias/turbo/assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.css' %}"
-        rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'fichaube/js/librerias/turbo/assets/css/css.css' %}" />
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="{% static 'fichaube/css/home-style.css' %}">
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="{% static 'fichaube/font-awesome/css/font-awesome.min.css' %}">
+  <!-- Material -->
+  <link type="text/css" href="{% static 'fichaube/js/librerias/turbo/assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'fichaube/js/librerias/turbo/assets/css/css.css' %}" />
 
 </head>
 
 <body>
 
-    <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <a href="{% url 'home' %}" class="simple-text">
-                        <img src="{% static 'fichaube/imagen/logo-fichaube.png' %}" class="img-responsive"
-                            alt="Responsive image">
-                    </a>
-                </div>
-            </div>
+  <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <a href="{% url 'home' %}" class="simple-text">
+            <img src="{% static 'fichaube/imagen/logo-fichaube.png' %}" class="img-responsive" alt="Responsive image">
+          </a>
+        </div>
+      </div>
 
-            <ul class="list-unstyled components">
-                <li class="divider"></li>
-                {% if request.user.is_superuser %}
-                <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
-                    <ul class="collapse list-unstyled show" id="homeSubmenu">
-                        <li>
-                            <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
-                        </li>
-                         <li>
-                            <a href="#">Crear nueva ficha</a>
-                        </li>
-                        <li>
-                           <a href="{% url 'alumnos:crear_alumno' %}">Agregar nuevo alumno</a>
-                       </li>
-                    </ul>
-                </li>
-                {% endif %}
+      <ul class="list-unstyled components">
+        <li class="divider"></li>
+        {% if request.user.is_superuser %}
+        <li>
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
+          <ul class="collapse list-unstyled show" id="homeSubmenu">
+            <li>
+              <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
+            </li>
+            <li>
+              <a href="#">Crear nueva ficha</a>
+            </li>
+            <li>
+              <a href="{% url 'alumnos:crear_alumno' %}">Agregar nuevo alumno</a>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
 
-                {% if request.user.is_superuser %}
-                <li>
-                    <a href="#encuestaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
-                    <ul class="collapse list-unstyled show" id="encuestaSubmenu">
-                        <li>
-                            <a href="#">Generar reporte fichas</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                {% if request.user.is_superuser %}
-                <li>
-                    <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
-                    <ul class="collapse list-unstyled show" id="grupoSubmenu">
+        {% if request.user.is_superuser %}
+        <li>
+          <a href="#encuestaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
+          <ul class="collapse list-unstyled show" id="encuestaSubmenu">
+            <li>
+              <a href="#">Generar reporte fichas</a>
+            </li>
+          </ul>
+        </li>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <li>
+          <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
+          <ul class="collapse list-unstyled show" id="grupoSubmenu">
 
-                        <li>
-                            <a href="#">Profesionales</a>
-                        </li>
-                        <li>
-                            <a href="#">Administrativos</a>
-                        </li>
-                        <li>
-                            <a href="#">Áreas</a>
-                        </li>
-                        <li>
-                            <a href="#">Especialidades</a>
-                        </li>
-                        <li>
-                            <a href="#">Cargar Alumnos</a>
-                        </li>
-                        {% endif %}
-
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Page Content Holder -->
-        <div id="content">
-
-            <nav id="navegador-superior" class="navbar navbar-expand-lg bg">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="navbar-btn">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="navbar-header">
-                        <img src="{% static 'fichaube/imagen/dae-PUCV.png' %}" class="img-responsive"
-                            alt="Responsive image" width="200">
-                    </div>
-
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="material-icons">person</i><b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-header">
-                                        Hola
-                                        <br>
-                                        <p>{{ user.get_full_name }}</p>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="{% url 'logout' %}" style="font-weight:400; color:#339fc3;">
-                                            <i class="zmdi zmdi-sign-in" style="font-size:20px; color:#339fc3;"></i>
-                                            Cerrar Sesi&oacute;n
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                </ul>
-                            </li>
-                            <li class="separator hidden-lg hidden-md"></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="container-fluid d-flex flex-column">
-
-            {% block content %}
-
-             {% if messages %}
-                {% for message in messages %}
-                    {% if  message.tags == "error" %}
-                        <div class="alert alert-danger" role="alert">
-                    {% else %}
-                    <div class="alert alert-success" role="alert">
-                    {% endif %}
-                    {{message}}
-                    </div>
-                {% endfor %}
+            <li>
+              <a href="#">Profesionales</a>
+            </li>
+            <li>
+              <a href="#">Administrativos</a>
+            </li>
+            <li>
+              <a href="#">Áreas</a>
+            </li>
+            <li>
+              <a href="#">Especialidades</a>
+            </li>
+            <li>
+              <a href="#">Cargar Alumnos</a>
+            </li>
             {% endif %}
 
-            <div class="jumbotron">
-                <h1>¡Bienvenido! </h1>
-                </br>
-              </div>
-            {% endblock %}
+          </ul>
+        </li>
+      </ul>
+    </nav>
 
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <nav id="navegador-superior" class="navbar navbar-expand-lg bg">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="navbar-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="navbar-header">
+            <img src="{% static 'fichaube/imagen/dae-PUCV.png' %}" class="img-responsive" alt="Responsive image" width="200">
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 ml-sm-auto">
+              <a href="{% url 'logout' %}" style="font-weight:50; color:#ffff;">
+                <i class="zmdi zmdi-sign-in" style="font-size:25px; color:#ffff;"></i>Cerrar Sesion
+              </a>
             </div>
+            <div class="col-md-2 ml-sm-auto"></div>
+          </div>
 
-            <div class="line"></div>
 
         </div>
+      </nav>
+
+      <div class="container-fluid d-flex flex-column">
+
+        {% block content %}
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if  message.tags == "error" %}
+        <div class="alert alert-danger" role="alert">
+          {% else %}
+          <div class="alert alert-success" role="alert">
+            {% endif %}
+            {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <div class="jumbotron">
+            <h1>¡Bienvenido! </h1>
+            </br>
+          </div>
+          {% endblock %}
+
+        </div>
+
+        <div class="line"></div>
+
+      </div>
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="{% static 'fichaube/js/validarut.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/validapass.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/activadorRutPasaporte.js' %}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                $(this).toggleClass('active');
-            });
-
-            $('li > a').click(function() {
-                $('li').removeClass('active');
-                $(this).parent().addClass('active');
-            });
-
-            $('a[href$="#modalDelete"]').on( "click", function() {
-                $('#modalDelete').modal('show');
-            });
-
-            $('a[rel$="popover"]').popover();
-
+      $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+          $('#sidebar').toggleClass('active');
+          $(this).toggleClass('active');
         });
+
+        $('li > a').click(function() {
+          $('li').removeClass('active');
+          $(this).parent().addClass('active');
+        });
+
+        $('a[href$="#modalDelete"]').on("click", function() {
+          $('#modalDelete').modal('show');
+        });
+
+        $('a[rel$="popover"]').popover();
+
+      });
     </script>
 
     <script>
-        $(document).ready(function(){
-            $("#filtroTabla").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#tablaBusqueda tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
+      $(document).ready(function() {
+        $("#filtroTabla").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#tablaBusqueda tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
         });
+      });
     </script>
 
 </body>

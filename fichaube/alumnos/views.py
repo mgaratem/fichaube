@@ -187,7 +187,7 @@ def buscarAlumno(request):
 
     if request.method == "POST":
         try:
-            filtro = request.GET.get('inputSearch', '')
+            filtro = request.POST.get('inputSearch')
             querys = (Q(nombre__icontains=filtro) | Q(apellido_materno__icontains=filtro))
             querys |= Q(apellido_paterno__icontains=filtro)
             querys |= Q(rut__icontains=filtro)
