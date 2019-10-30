@@ -1,0 +1,136 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Buscar Usuarios</h2>
+        </br>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+      <div class="alert alert-danger" role="alert">
+    {% elif message.tags == "info" %}
+      <div class="alert alert-info" role="alert">
+    {% else %}
+      <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+      </div>
+    {% endfor %}
+{% endif %}
+
+{% if not usuarios %}
+
+<form method="POST">
+  {% csrf_token %}
+  <div class="cuadro-wrap">
+     <div class="cuadro-search">
+        <input name="inputSearch" type="text" class="searchTerm" placeholder="Buscar...">
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+       </button>
+     </div>
+  </div>
+</form>
+
+{% else %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+
+            <div class="row cuadro-filtro">
+                <div class="col-xs-6 col-md-4">
+                    <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
+                </div>
+            </div>
+
+
+            <div class="cuadro-tabla">
+                <div class="row">
+
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-head">
+                            <th>Rut</th>
+                            <th>Nombre Usuario</th>
+                            <th>Tipo de Usuario</th>
+                            <th>Acciones</th>
+                        </thead>
+                        <tbody id="tablaBusqueda">
+                            {% for usuario in usuarios %}
+                            <tr>
+                                <td>{{usuario.rut}}</td>
+                                <td>{{usuario.nombre}} {{usuario.apellidos}}</td>
+                                {% if usuario.coordinador %}
+                                <td>Coordinador</td>
+                                {% elif usuario.profesional %}
+                                <td>Profesional</td>
+                                {% elif usuario.administrativo %}
+                                <td>Administrativo</td>
+                                {% elif usuario.mantenedor %}
+                                <td>Mantenedor</td>
+                                {% else %}
+                                <td>Asistente Social</td>
+                                {% endif %}
+                                <td>
+                                    <a href="{% url 'usuarios:verUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                    <a href="#modalDelete{{usuario.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                </td>
+
+                                <div id="modalDelete{{usuario.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">¡Atención!</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Está seguro que quiere eliminar al usuario?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a href="{% url 'usuarios:borrarUsuario' id_usuario=usuario.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+              </div>
+              <div class="col-md-3 ml-md-auto">
+                <a href="{% url 'usuarios:buscarUsuario' %}" role="button" class="btn btn-secondary">Atrás</a>
+              </div>
+            </div>
+
+          </br>
+
+
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}

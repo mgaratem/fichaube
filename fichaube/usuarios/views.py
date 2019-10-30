@@ -11,10 +11,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from areas.models import Especialidad, Area, UsuarioEspecialidad
+from usuarios.models import Usuario
 from datetime import date, datetime
 import logging
 from django.urls import reverse
 from django.template import *
+from django.db.models import Q
 
 # Create your views here.
 
@@ -104,49 +106,57 @@ def crear_usuario(request):
     if request.method == 'POST':
         try:
 
-            nombre = request.POST.get('inputNombre')
-            apellidos_paterno = request.POST.get('inputApellidoPaterno')
-            apellidos_materno = request.POST.get('inputApellidoMaterno')
+            nombre = request.POST.get('inputNombre').upper()
+            apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
+            apellido_materno = request.POST.get('inputApellidoMaterno').upper()
             txt_rut =  request.POST.get('inputRut')
             rut = txt_rut.replace(".", "")
             tipoUsuario = request.POST.get('inputTipoUsuario')
             correo = request.POST.get('inputCorreo')
-            #FALTA AGREGAR ESPECIALIDADES
+            especialidadesElegidas = request.POST.getlist('inputEspecialidad')
+            #print (especialidadesElegidas)
+
             usuarioExiste = Usuario.objects.filter(rut=rut)
 
             if not usuarioExiste:
 
                 usuario = Usuario()
-                usuario.nombre = nombre_alumno.upper()
-                usuario.apellidos = apellidos_paterno.upper() + apellidos_materno.upper()
+                usuario.nombre = nombre.upper()
+                usuario.apellidos = apellido_paterno.upper() + apellido_materno.upper()
                 usuario.rut = rut
 
-                if tipoUsuario == 1:
-                    usuario.coordinador = True
-                elif tipoUsuario == 2:
+                if tipoUsuario == "1":
                     usuario.profesional = True
-                elif tipoUsuario == 3:
+                elif tipoUsuario == "2":
                     usuario.administrativo = True
-                elif tipoUsuario == 4:
+                elif tipoUsuario == "3":
                     usuario.mantenedor = True
-                else:
+                elif tipoUsuario == "4":
                     usuario.asistente_social = True
 
-                usuario.user = crearUser('post', nombre, apellidos_paterno, correo)
+                usuario.user = crearUser('post', nombre, apellido_paterno, correo)
                 usuario.save()
+
+                if especialidadesElegidas:
+                    for e in especialidadesElegidas:
+                        obj = UsuarioEspecialidad()
+                        especialidad = Especialidad.objects.get(id=e)
+                        obj.especialidad = especialidad
+                        obj.usuario = usuario
+                        obj.save()
+
+
                 messages.success(request, '¡Usuario agregado con éxito!')
                 del usuario
-                return HttpResponseRedirect(reverse("crear_usuario"))
+                return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
             else:
                 messages.error(request,'¡Este usuario ya existe!')
-                del usuario
-                return HttpResponseRedirect(reverse("crear_usuario"))
+                return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
         except Exception as e:
             messages.error(request,"No fue posible crear usuario. "+repr(e))
-            del usuario
-            return HttpResponseRedirect(reverse("crear_usuario"))
+            return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
 
 
@@ -161,11 +171,11 @@ def borrarUsuario(request, id_usuario=None):
             user.delete()
 
             messages.success(request, '¡Usuario eliminado con éxito!')
-            return HttpResponseRedirect(reverse("listarUsuarios"))
+            return HttpResponseRedirect(reverse("usuarios:listarUsuarios"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al usuario correctamente!')
-            return HttpResponseRedirect(reverse("listarUsuarios"))
+            return HttpResponseRedirect(reverse("usuarios:listarUsuarios"))
 
 
 
@@ -259,12 +269,40 @@ def verUsuario(request, id_usuario=None):
 
 def listarUsuarios(request):
 
-    template = "listar_usuarios.html"
+    template = "listar_profesionales.html"
     if request.method == 'GET':
         try:
-            usuarios = Usuario.objects.all()
+            usuarios = Usuario.objects.filter(tipoUsuario )
             return render(request, template, {'usuarios': usuarios})
 
         except Exception as e:
             messages.error(request,"No fue posible listar usuarios. "+repr(e))
             return render(request, "home.html")
+
+
+
+#############---------FUNCION BUSCAR------#################
+
+def buscarUsuario(request):
+
+    template = "buscar_usuario.html"
+    if request.method == 'GET':
+        return render(request, template)
+
+    if request.method == "POST":
+        try:
+            filtro = request.POST.get('inputSearch')
+            querys = (Q(nombre__icontains=filtro) | Q(apellidos__icontains=filtro))
+            querys |= Q(rut__icontains=filtro)
+
+            usuarios = Usuario.objects.filter(querys)
+
+            if not usuarios:
+                messages.info(request,"No se encontró ningún usuario.")
+                return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+            else:
+                return render(request, template, {'usuarios': usuarios})
+
+        except Exception as e:
+            messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
+            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))

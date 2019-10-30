@@ -5,7 +5,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
     <div class="header text-center">
-        <h2>Ahijados</h2>
+        <h2>Profesionales</h2>
         </br>
     </div>
 </div>
@@ -26,7 +26,7 @@
     <div class="card">
         <div class="card-content">
 
-            {% if not mechones %}
+            {% if not usuarios %}
             <br>
                 <center><div class="alert alert-warning col-sm-6" role="alert">
                     <h4 class="alert-heading">¡No hay ahijados!</h4>
@@ -38,7 +38,7 @@
 
             <div class="row cuadro-filtro">
                 <div class="col-xs-12 col-md-8">
-                   <a href="{% url 'crear_alumno' %}" class="btn btn-primary btn-sm"> 
+                   <a href="{% url 'crear_alumno' %}" class="btn btn-primary btn-sm">
                         <i class="zmdi zmdi-plus-circle" style="font-size:25px; color:#00000;"></i>
                     </a>
                 </div>
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </tr>
                             {% endfor %}
 

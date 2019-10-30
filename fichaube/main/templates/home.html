@@ -72,10 +72,10 @@
           <ul class="collapse list-unstyled show" id="grupoSubmenu">
 
             <li>
-              <a href="#">Profesionales</a>
+              <a href="{% url 'usuarios:buscarUsuario' %}">Buscar Usuarios</a>
             </li>
             <li>
-              <a href="#">Administrativos</a>
+              <a href="{% url 'usuarios:crear_usuario' %}">Agregar Usuarios</a>
             </li>
             <li>
               <a href="#">Áreas</a>
@@ -161,6 +161,7 @@
     <script type="text/javascript" src="{% static 'fichaube/js/validarut.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/validapass.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/activadorRutPasaporte.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fichaube/js/activadorAreaEspecialidad.js' %}"></script>
 
     <script type="text/javascript">
       $(document).ready(function() {

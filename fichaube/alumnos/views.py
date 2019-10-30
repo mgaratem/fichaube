@@ -177,7 +177,7 @@ def listarAlumnos(request):
             return render(request, "home.html")
 
 
-#############---------FUNCION LISTAR------#################
+#############---------FUNCION BUSCAR------#################
 
 def buscarAlumno(request):
 
