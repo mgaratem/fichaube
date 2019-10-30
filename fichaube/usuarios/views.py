@@ -122,7 +122,7 @@ def crear_usuario(request):
 
                 usuario = Usuario()
                 usuario.nombre = nombre.upper()
-                usuario.apellidos = apellido_paterno.upper() + apellido_materno.upper()
+                usuario.apellidos = apellido_paterno.upper() + " " + apellido_materno.upper()
                 usuario.rut = rut
 
                 if tipoUsuario == "1":
@@ -134,7 +134,7 @@ def crear_usuario(request):
                 elif tipoUsuario == "4":
                     usuario.asistente_social = True
 
-                usuario.user = crearUser('post', nombre, apellido_paterno, correo)
+                #usuario.user = crearUser('post', nombre, apellido_paterno, correo)
                 usuario.save()
 
                 if especialidadesElegidas:
@@ -147,8 +147,9 @@ def crear_usuario(request):
 
 
                 messages.success(request, '¡Usuario agregado con éxito!')
+                id = usuario.id
                 del usuario
-                return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
+                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id] ))
 
             else:
                 messages.error(request,'¡Este usuario ya existe!')
@@ -255,8 +256,9 @@ def verUsuario(request, id_usuario=None):
     template = "ver_usuario.html"
     if request.method == 'GET':
         try:
+            especialidadesUsuario = UsuarioEspecialidad.objects.filter(usuario_id = id_usuario)
             usuario = Usuario.objects.get(id = id_usuario)
-            return render(request, template, {'usuario': usuario})
+            return render(request, template, {'usuario': usuario, 'especialidades': especialidadesUsuario})
 
         except Exception as e:
             messages.error(request,"No fue posible mostrar usuario. "+repr(e))

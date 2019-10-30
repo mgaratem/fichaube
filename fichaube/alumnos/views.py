@@ -66,8 +66,10 @@ def crear_alumno(request):
                 alumno.prevision = prevision.upper()
 
                 alumno.save()
-                messages.success(request, '¡Alumno agregado con éxito!')
+                id = alumno.id
                 del alumno
+                messages.success(request, '¡Alumno agregado con éxito!')
+                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id]))
 
             else:
                 messages.error(request,'¡Este usuario ya existe!')
