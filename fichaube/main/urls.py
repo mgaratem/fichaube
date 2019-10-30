@@ -18,13 +18,15 @@ urlpatterns = [
     path('500/', views.handler500, name="500"),
 
 
-    # html's
+    # html's, estos despues se eliminaran
     path('agregar-Area', areas.views.testpancho01, name="agregar-Area"),
+    path('editar-Area/<int:idArea>', areas.views.testpancho02, name='editar-Area'),
 
     # controladores
     path('agregarArea', areas.views.agregarArea, name="agregarArea"),
     path('ajax/validarArea', areas.views.validarArea, name="validarArea"),
     path('lista-Areas', areas.views.listarArea, name="lista-Areas"),
-    path('eliminarArea/<int:idArea>', areas.views.eliminarArea, name="eliminarArea")
+    path('eliminarArea/<int:idArea>', areas.views.eliminarArea, name="eliminarArea"),
+    path('editarArea', areas.views.editarArea, name="editarArea"),
 
 ]

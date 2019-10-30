@@ -10,7 +10,7 @@
       <tr>
         <td>{{area.nombreArea}}</td>
         <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
-        <td>Editar</td>
+        <td><a href="{% url 'editar-Area' idArea=area.id %}">Editar</a></td>
       </tr>
       {% endfor %}
     </table>
