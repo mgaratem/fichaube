@@ -22,8 +22,9 @@ urlpatterns = [
     path('agregar-Area', areas.views.testpancho01, name="agregar-Area"),
 
     # controladores
-    path('agregarArea', areas.views.agregarArea, name='agregarArea'),
-    path('ajax/validarArea', areas.views.validarArea, name='validarArea'),
+    path('agregarArea', areas.views.agregarArea, name="agregarArea"),
+    path('ajax/validarArea', areas.views.validarArea, name="validarArea"),
     path('lista-Areas', areas.views.listarArea, name="lista-Areas"),
+    path('eliminarArea/<int:idArea>', areas.views.eliminarArea, name="eliminarArea")
 
 ]

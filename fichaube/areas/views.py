@@ -38,3 +38,9 @@ def validarArea(request):
 def listarArea(request):
     listaAreas = Area.objects.all()
     return render(request, 'lista-Areas.html', {"areas": listaAreas})
+
+# funcion para eliminar una Area dado un ID
+def eliminarArea(request, idArea):
+    # idArea = request.GET.get("idArea")
+    Area.objects.filter(id=idArea).delete()
+    return HttpResponseRedirect(reverse('lista-Areas'))

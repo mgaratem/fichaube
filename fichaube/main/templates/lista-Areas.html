@@ -9,7 +9,7 @@
       {% for area in areas %}
       <tr>
         <td>{{area.nombreArea}}</td>
-        <td>Borrar</td>
+        <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
         <td>Editar</td>
       </tr>
       {% endfor %}
