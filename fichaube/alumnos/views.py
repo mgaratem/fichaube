@@ -59,11 +59,11 @@ def crear_alumno(request):
                 alumno.fecha_nacimiento = fecha_nacimiento
                 alumno.sexo = sexo
                 alumno.correo = correo
-                alumno.carrera = carrera
-                alumno.domicilio = domicilio
+                alumno.carrera = carrera.upper()
+                alumno.domicilio = domicilio.upper()
                 #alumno.ocupacion = ocupacion
-                alumno.representante_legal = representante
-                alumno.prevision = prevision
+                alumno.representante_legal = representante.upper()
+                alumno.prevision = prevision.upper()
 
                 alumno.save()
                 messages.success(request, '¡Alumno agregado con éxito!')
