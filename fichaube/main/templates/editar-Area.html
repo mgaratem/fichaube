@@ -1,0 +1,16 @@
+<html>
+  <body>
+    <p>Nombre actual Area: {{ nombreArea }} </p>
+
+    <!-- aqui tambien tengo que ver lo de que se repitan -->
+
+    <form action="editarArea" method="post"> {% csrf_token %}
+      {{ form.as_p }}
+      <label for="area">Ingrese nuevo nombre de Area: </label>
+      <br>
+      <input id="area" type="text" name="area">
+      <input type="hidden" id="idArea" type="number" name="idArea" value="{{ idArea }}" >
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

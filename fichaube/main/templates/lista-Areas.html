@@ -9,8 +9,8 @@
       {% for area in areas %}
       <tr>
         <td>{{area.nombreArea}}</td>
-        <td>Borrar</td>
-        <td>Editar</td>
+        <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
+        <td><a href="{% url 'editar-Area' idArea=area.id %}">Editar</a></td>
       </tr>
       {% endfor %}
     </table>

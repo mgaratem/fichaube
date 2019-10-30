@@ -7,5 +7,28 @@
       <input id="area" type="text" name="area">
       <input type="submit" value="Submit">
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% block javascript %}
+      <script>  // AJAX para corroborar que el area ya existe
+        $("#area").change(function () {
+          // console.log($(this).val());
+          var area = $(this).val();
+          $.ajax({
+            url: 'ajax/validarArea',
+            data: {
+              'area': area
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken){
+                alert('La Area ingresada ya se encuentra registrada')
+              }
+            }
+          });
+        });
+        // aqui deberia ir el codigo para deshabilitar algun boton submit o etc
+      </script>
+    {% endblock %}
   </body>
 </html>
