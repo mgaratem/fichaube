@@ -24,3 +24,6 @@ class Alumno(models.Model):
 
   def __str__(self):
     return 'Rut={0}, Nombre={1}, ApellidoPaterno={2}, ApellidoMaterno={3}, Carrera={4}, Domicilio={5}, Ocupacion={6}, Representante={7}, Prevision={8}'.format(self.rut, self.nombre, self.apellido_paterno, self.apellido_materno, self.carrera, self.domicilio, self.ocupacion, self.representante_legal, self.prevision)
+
+  def get_fecha(self):
+     return self.fecha_nacimiento.strftime('%d/%m/%Y')

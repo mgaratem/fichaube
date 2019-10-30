@@ -24,25 +24,25 @@
     {% endfor %}
 {% endif %}
 
+{% if not alumnos %}
+
+<form method="POST">
+  {% csrf_token %}
+  <div class="cuadro-wrap">
+     <div class="cuadro-search">
+        <input name="inputSearch" type="text" class="searchTerm" placeholder="Buscar...">
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+       </button>
+     </div>
+  </div>
+</form>
+
+{% else %}
+
 <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
         <div class="card-content">
-
-          {% if not alumnos %}
-
-          <form method="POST">
-            {% csrf_token %}
-            <div class="cuadro-wrap">
-               <div class="cuadro-search">
-                  <input name="inputSearch" type="text" class="searchTerm" placeholder="Buscar...">
-                  <button type="submit" class="searchButton">
-                    <i class="fa fa-search"></i>
-                 </button>
-               </div>
-            </div>
-          </form>
-
-          {% else %}
 
             <div class="row cuadro-filtro">
                 <div class="col-xs-6 col-md-4">
@@ -104,10 +104,11 @@
                 </div>
             </div>
 
-            {% endif %}
 
         </div>
     </div>
 </div>
+
+{% endif %}
 
 {% endblock content %}

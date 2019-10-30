@@ -1,42 +1,104 @@
 {% extends 'home.html' %}
 {% load static %}
 
-<!-- {% csrf_token %} -> Cross Site Request Forgery Protection -->
-<!--  -> Pasa por todas las preguntas -->
 
 {% block content %}
 
+
 <div class="col-sm-12 col-sm-offset-1">
     <div class="header text-center">
-        <h2>Encuestas periodo</h2>
-        <p> Estado Encuesta: </p>
+        <h2>Ficha Alumno</h2>
     </div>
 </div>
 
 <div class="col-sm-12 col-sm-offset-1">
-
     <div class="card">
-            
-            <div class="card-content">
-                <div class="cuadro-pregunta">
-                    </br>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <center><h3>Ejemplo Pregunta 1</h3></center>
+        <div class="card-content">
+            <div class="cuadrotrans">
+                <h3>Datos personales</h3>
+                <div class="row">
+                  <div class="col-auto mr-auto"></div>
+                  <div class="col-auto">
+                    <a href="{% url 'alumnos:updateAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
+                      <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
+                    </a>
+                  </div>
+                </div>
+                </br>
+                </br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Nombre</h6>
+                                <p style="text-transform: uppercase;">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }} {{ alumno.nombre }}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>RUT/PASAPORTE</h6>
+                                <p>{{ alumno.rut }}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>Carrera</h6>
+                                <p>{{ alumno.carrera }}</p>
+                                <!-- BEGIN: Separacion interlineado -->
+                                <p>
+                                    <br><br>
+                                </p>
+                                <!-- END: Separacion interlineado -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Correo alumno</h6>
+                                <p>
+                                    <a href="mailto:{{ alumno.correo }}">{{ alumno.correo }}</a>
+                                </p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>Fecha Nacimiento</h6>
+                                <p>{{ alumno.get_fecha }}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>Sexo</h6>
+                                <p>{{ alumno.sexo }}</p>
+                                <!-- BEGIN: Separacion interlineado -->
+                                <p>
+                                    <br><br>
+                                </p>
+                                <!-- END: Separacion interlineado -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Domicilio</h6>
+                                <p>{{ alumno.domicilio }}</p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6>Prevision</h6>
+                                <p>{{ alumno.prevision }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-           
         </div>
     </div>
-    
-    <div class="col-sm-12 col-sm-offset-1">
-       <center><button class="btn btn-primary" type="submit">Terminar Encuesta</button></center>
+</div>
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+            <div class="cuadrotrans">
+                <h3>Ficha Clínica</h3>
+                </br>
+                </br>
+
+
+            </div>
+        </div>
     </div>
-    
+</div>
 
-</form>
-
-
-{% endblock %} 
+{% endblock content %}

@@ -4,74 +4,134 @@
 {% block content %}
 
 <div class="col-sm-12 col-sm-offset-1">
-    <div class="header text-center">
-        <h2>Crear Encuesta</h2>
-    </div>
+  <div class="header text-center">
+    <h2>Editar Alumno</h2>
+  </div>
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-    {% if  message.tags == "error" %}
-    <div class="alert alert-danger" role="alert">
-    {% else %}
-    <div class="alert alert-success" role="alert">
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
     {% endif %}
-        {{message}}
-    </div>
-    {% endfor %}
-{% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
 
-<div class="col-sm-12 col-sm-offset-1">
+  <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
-        <div class="card-content">
-            
-            <div class="cuadro-form">
+      <div class="card-content">
 
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-group row">
-                        <label for="inputAnno" class="col-sm-2 col-form-label">Ingrese Año de Encuesta:</label>
-                        <div class="col-sm-6">
-                            <input type="number" class="form-control" id="inputAnno" name="inputAnno" placeholder="p.e. 2019" min="2019" required>
-                        </div>
-                    </div>
-                    </br>
-                   <div class="form-group row">
-                        <label for="inputActivado" class="col-sm-6 col-form-label">¿Desea dejar esta encuesta como "activada"?</label>
-                        <div class="col-sm-2">
-                            <select class="custom-select mr-sm-2" id="inputActivo" name="inputActivo" required>
-                                <option value="" selected>Elegir...</option>
-                                <option value="0">No</option>
-                                <option value="1">Sí, deseo dejarla como la Encuesta activa</option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="cuadro-form">
 
-                    <div class="element-wrapper">
-                        <!-- ROW A DUPLICAR -->
-                        <div class="form-group row pregunta">
+          <form method="POST" name="menuForm">
+            {% csrf_token %}
 
-                            <label class="col-sm-2 col-form-label">Ingrese Pregunta:</label>
-                            <div class="col-sm-6">
-                                <input type="text" name="inputPregunta" class="form-control" placeholder="¿...?" required>
-                            </div>
-
-                            <button class="btn-remove-row">Eliminar Pregunta</button>
-        
-                        </div>
-                    </div>
-                    <br>
-                    <button class="btn-adding-row">Agregar Pregunta</button>
-                    </br>
-                    </br>
-
-                    <button id="botonAgregar" type="submit" class="btn btn-primary" disabled>Crear</button>
-                </form>
-
+            <div class="form-group row" name="groupRut" id="groupRut">
+              <label for="inputRut" class="col-sm-3 col-form-label">Rut/Pasaporte:</label>
+              <div class="col-sm-7">
+                <input disabled type="text" class="form-control" id="inputRut" name="inputRut" value="{{ alumno.rut }}" autofocus>
+              </div>
+              <small class="text-info" id="msgRut"></small>
             </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputNombre" class="col-sm-2 col-form-label">Nombres:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputNombre" name="inputNombre" value="{{ alumno.nombre }}" required>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label for="inputNombre" class="col-sm-2 col-form-label">Apellidos:</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="inputApellidoPaterno" name="inputApellidoPaterno" value="{{ alumno.apellido_paterno }}" required>
+              </div>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="inputApellidoMaterno" name="inputApellidoMaterno" value="{{ alumno.apellido_materno }}" required>
+              </div>
+            </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputCorreo" class="col-sm-2 col-form-label">Correo:</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" value="{{ alumno.correo }}" required>
+              </div>
+            </div>
+
+
+
+            </br>
+
+
+
+            <div class="form-group row">
+              <label for="inputDomicilio" class="col-sm-2 col-form-label">Domicilio:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" value="{{ alumno.domicilio }}" required>
+              </div>
+            </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputCarrera" class="col-sm-2 col-form-label">Carrera:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputCarrera" name="inputCarrera" value="{{ alumno.carrera }}" required>
+              </div>
+            </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" value="{{ alumno.representante_legal }}" required>
+              </div>
+            </div>
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" value="{{ alumno.prevision }}" required>
+              </div>
+            </div>
+
+            </br>
+            </br>
+
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <button id="botonGuardar" type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+              <div class="col-md-3 ml-md-auto">
+                <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" role="button" class="btn btn-secondary">Atrás</a>
+              </div>
+            </div>
+
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
-
-{% endblock content %}
+  {% endblock content %}

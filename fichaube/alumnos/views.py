@@ -94,11 +94,11 @@ def borrarAlumno(request, id_alumno=None):
             alumno.delete()
 
             messages.success(request, '¡Alumno eliminado con éxito!')
-            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
-            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
 
 
 
@@ -115,7 +115,7 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 
         except Exception as e:
             messages.error(request,"No fue posible modificar alumno. "+repr(e))
-            return HttpResponseRedirect(reverse("alumnos:listarAlumnos"))
+            return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
 
     if request.method == 'POST':
         try:
@@ -124,17 +124,17 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
             alumno.nombre = request.POST.get('inputNombre').upper()
             alumno.apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
             alumno.apellido_materno = request.POST.get('inputApellidoMaterno').upper()
-            alumno.sexo = request.POST.get('inputSexo')
+            #alumno.sexo = request.POST.get('inputSexo')
             alumno.correo = request.POST.get('inputCorreo')
             alumno.carrera = request.POST.get('inputCarrera')
             alumno.domicilio = request.POST.get('inputDomicilio')
-            alumno.ocupacion = request.POST.get('inputOcupacion')
-            alumno.representante = request.POST.get('inputRepresentante')
+            #alumno.ocupacion = request.POST.get('inputOcupacion')
+            alumno.representante_legal = request.POST.get('inputRepresentante')
             alumno.prevision = request.POST.get('inputPrevision')
 
             alumno.save()
             messages.success(request, '¡Alumno modificado exitosamente!')
-            return HttpResponseRedirect(reverse("alumnos:updateAlumno"))
+            return HttpResponseRedirect(reverse("alumnos:updateAlumno", args=[id_alumno]))
             #return verAlumno('get', id_alumno)
 
         except Exception as e:
@@ -157,7 +157,7 @@ def verAlumno(request, id_alumno=None):
 
         except Exception as e:
             messages.error(request,"No fue posible mostrar alumno. "+repr(e))
-            return render(request, listarAlumnos)
+            return render(request, buscarAlumno)
 
 
 
