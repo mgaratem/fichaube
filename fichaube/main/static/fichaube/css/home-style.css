@@ -99,6 +99,8 @@ p {
 
 a, a:hover, a:focus {
   text-decoration: none;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  font-weight: bold !important;
 }
 
 .navbar {
