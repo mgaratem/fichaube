@@ -41,8 +41,8 @@
         <li class="divider"></li>
         {% if request.user.is_superuser %}
         <li>
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
-          <ul class="collapse list-unstyled show" id="homeSubmenu">
+          <a href="#fichasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
+          <ul class="collapse list-unstyled show" id="fichasSubmenu">
             <li>
               <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
             </li>
@@ -58,8 +58,8 @@
 
         {% if request.user.is_superuser %}
         <li>
-          <a href="#encuestaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
-          <ul class="collapse list-unstyled show" id="encuestaSubmenu">
+          <a href="#reporteSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
+          <ul class="collapse list-unstyled show" id="reporteSubmenu">
             <li>
               <a href="#">Generar reporte fichas</a>
             </li>
@@ -68,8 +68,8 @@
         {% endif %}
         {% if request.user.is_superuser %}
         <li>
-          <a href="#grupoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
-          <ul class="collapse list-unstyled show" id="grupoSubmenu">
+          <a href="#mantenedorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
+          <ul class="collapse list-unstyled show" id="mantenedorSubmenu">
 
             <li>
               <a href="{% url 'usuarios:buscarUsuario' %}">Buscar Usuarios</a>
@@ -88,6 +88,15 @@
             </li>
             {% endif %}
 
+          </ul>
+        </li>
+
+        <li>
+          <a href="#cuentaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cuenta</a>
+          <ul class="collapse list-unstyled show" id="cuentaSubmenu">
+            <li>
+              <a href="{% url 'cambiar_pass' %}">Cambiar Contraseña</a>
+            </li>
           </ul>
         </li>
       </ul>

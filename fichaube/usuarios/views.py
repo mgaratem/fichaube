@@ -17,41 +17,55 @@ import logging
 from django.urls import reverse
 from django.template import *
 from django.db.models import Q
+from django.core.mail import send_mail
 
 # Create your views here.
 
 #############---------FUNCION CREATE USER DJANGO------#################
 
-def crear_user(request, nombre=None, apellido=None, email=None, rut=None):
+def crear_user(request, nombre=None, apellido=None, email=None):
+    if request.method == 'POST':
+        try:
+            a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
+            trans = str.maketrans(a,b)
+            nombre_nuevo = nombre.translate(trans)
+            apellido_nuevo = apellido.translate(trans)
 
-    a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
-    trans = str.maketrans(a,b)
-    nombre_nuevo = nombre.translate(trans)
-    apellido_nuevo = apellido.translate(trans)
+            first_letra = nombre_nuevo[:1].lower()
+            apellidoSplit = apellido_nuevo.split(" ")
+            first_apellido = apellidoSplit[0].lower()
+            second_apellido = apellidoSplit[1][:1].lower()
 
-    first_letra = nombre_nuevo[:1].lower()
-    apellidoSplit = apellido_nuevo.split(" ")
-    first_apellido = apellidoSplit[0].lower()
-    second_apellido = apellidoSplit[1][:1].lower()
+            primerNombre = nombre_nuevo.split(" ")[0]
+            primerApellido =apellidoSplit[0]
 
-    primerNombre = nombre_nuevo.split(" ")[0]
-    primerApellido =apellidoSplit[0]
+            userName = first_letra + first_apellido + second_apellido
+            userExiste = User.objects.filter(username=userName)
+            if not userExiste:
+                password = User.objects.make_random_password()
+                userEmail = email
 
-    userName = first_letra + first_apellido + second_apellido
-    userExiste = User.objects.filter(username=userName)
-    if not userExiste:
-        password = User.objects.make_random_password()
-        userEmail = email
+                user = User.objects.create_user(username=userName,
+                                                email=userEmail,
+                                                password=password,
+                                                first_name=primerNombre,
+                                                last_name=primerApellido)
+                user.save()
+                send_mail(
+                    'Password FichaUbe',
+                    'Acá tiene su contraseña de su cuenta en FichaUbe: ' + password,
+                    'from@example.com',
+                    ['to@example.com'],
+                    fail_silently=False,
+                )
 
-        user = User.objects.create_user(username=userName,
-                                        email=userEmail,
-                                        password=password,
-                                        first_name=primerNombre,
-                                        last_name=primerApellido)
-        user.save()
-        return user
+                return user
 
-    return userExiste[0]
+            return userExiste[0]
+
+        except Exception as e:
+                messages.error(request,"No fue posible crear usuario. "+repr(e))
+                return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
 
 
@@ -114,6 +128,7 @@ def crear_usuario(request):
             tipoUsuario = request.POST.get('inputTipoUsuario')
             correo = request.POST.get('inputCorreo')
             especialidadesElegidas = request.POST.getlist('inputEspecialidad')
+            apellidos =  apellido_paterno.upper() + " " + apellido_materno.upper()
             #print (especialidadesElegidas)
 
             usuarioExiste = Usuario.objects.filter(rut=rut)
@@ -122,7 +137,7 @@ def crear_usuario(request):
 
                 usuario = Usuario()
                 usuario.nombre = nombre.upper()
-                usuario.apellidos = apellido_paterno.upper() + " " + apellido_materno.upper()
+                usuario.apellidos = apellidos
                 usuario.rut = rut
 
                 if tipoUsuario == "1":
@@ -134,7 +149,7 @@ def crear_usuario(request):
                 elif tipoUsuario == "4":
                     usuario.asistente_social = True
 
-                #usuario.user = crearUser('post', nombre, apellido_paterno, correo)
+                usuario.user = crear_user(request, nombre, apellidos, correo)
                 usuario.save()
 
                 if especialidadesElegidas:
@@ -168,15 +183,16 @@ def borrarUsuario(request, id_usuario=None):
 
     if request.method == 'GET':
         try:
-            user = User.objects.get(id=id_usuario)
+            usuario = Usuario.objects.get(id=id_usuario)
+            user = User.objects.get(id=usuario.user_id)
             user.delete()
 
             messages.success(request, '¡Usuario eliminado con éxito!')
-            return HttpResponseRedirect(reverse("usuarios:listarUsuarios"))
+            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al usuario correctamente!')
-            return HttpResponseRedirect(reverse("usuarios:listarUsuarios"))
+            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
 
 
@@ -185,65 +201,59 @@ def borrarUsuario(request, id_usuario=None):
 
 def updateUsuario(request, id_usuario=None):
     template = "actualizar_usuario.html"
+    areas = Area.objects.all()
+    especialidades = Especialidad.objects.all()
+    usuario = Usuario.objects.get(id = id_usuario)
+    userEsp = UsuarioEspecialidad.objects.filter(usuario = usuario)
 
     if request.method == 'GET':
         try:
-            usuario = Usuario.objects.get(id = id_usuario)
-            return render(request, template, {'usuario': usuario})
+            return render(request, template, {'usuario': usuario, 'areas': areas, 'especialidades': especialidades, 'usuarioEspecialidades': userEsp})
 
         except Exception as e:
             messages.error(request,"No fue posible modificar usuario. "+repr(e))
-            return HttpResponseRedirect(reverse("listarUsuarios"))
+            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
 
     if request.method == 'POST':
         try:
-            usuario = Usuario.objects.get(id = id_usuario)
 
-            usuario.nombre = request.POST.get('inputNombre').upper()
-            apellido_paterno = request.POST.get('inputApellidoPaterno')
-            apellido_materno = request.POST.get('inputApellidoMaterno')
-            usuario.apellidos = apellido_paterno.upper() + " " + apellido_materno.upper()
-            tipoUsuario = request.POST.get('inputTipoUsuario')
+            especialidadesElegidas = request.POST.getlist('inputEspecialidad')
+            correo = request.POST.get('inputCorreo')
 
-            if tipoUsuario == 1:
-                usuario.coordinador = True
-                usuario.profesional = False
-                usuario.administrativo = False
-                usuario.mantenedor = False
-                usuario.asistente_social = False
-            elif tipoUsuario == 2:
-                usuario.coordinador = False
-                usuario.profesional = True
-                usuario.administrativo = False
-                usuario.mantenedor = False
-                usuario.asistente_social = False
-            elif tipoUsuario == 3:
-                usuario.coordinador = False
-                usuario.profesional = False
-                usuario.administrativo = True
-                usuario.mantenedor = False
-                usuario.asistente_social = False
-            elif tipoUsuario == 4:
-                usuario.coordinador = False
-                usuario.profesional = False
-                usuario.administrativo = False
-                usuario.mantenedor = True
-                usuario.asistente_social = False
-            else:
-                usuario.coordinador = False
-                usuario.profesional = False
-                usuario.administrativo = False
-                usuario.mantenedor = False
-                usuario.asistente_social = True
+            if especialidadesElegidas:
 
-            usuario.save()
+                #SI SE AGREGA NUEVA ESPECIALIDAD
+                for e in especialidadesElegidas:
+                    query1 =  userEsp.filter(especialidad=e)
+                    if not query1:
+                        obj = UsuarioEspecialidad()
+                        especialidad = Especialidad.objects.get(id=e)
+                        obj.especialidad = especialidad
+                        obj.usuario = usuario
+                        obj.save()
+
+                #SI SE QUITA UNA ESPECIALIDAD
+                query2 = UsuarioEspecialidad.objects.filter(usuario = usuario)
+                for e in especialidadesElegidas:
+                    query2 = query2.exclude(especialidad=e)
+
+                for esp in query2:
+                    esp.delete()
+
+            user = User.objects.filter(id=usuario.user_id)
+
+            if user:
+                user[0].email = correo
+                user[0].save()
+
+            #usuario.save()
             messages.success(request, '¡Usuario modificado exitosamente!')
-            return HttpResponseRedirect(reverse("updateUsuario"))
+            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
             #return verUsuario('get', id_usuario)
 
         except Exception as e:
             messages.error(request,"No fue posible modificar usuario. "+repr(e))
-            return verUsuario('get', id_usuario)
+            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
 
 
 
@@ -262,7 +272,7 @@ def verUsuario(request, id_usuario=None):
 
         except Exception as e:
             messages.error(request,"No fue posible mostrar usuario. "+repr(e))
-            return render(request, listarUsuarios)
+            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
 
 

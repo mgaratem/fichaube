@@ -17,6 +17,8 @@ urlpatterns = [
     path('404/', views.handler404, name="404"),
     path('500/', views.handler500, name="500"),
 
+    path('cambiar_pass/', views.cambiar_pass, name="cambiar_pass"),
+
 
     # html's, estos despues se eliminaran
     path('agregar-Area', areas.views.testpancho01, name="agregar-Area"),

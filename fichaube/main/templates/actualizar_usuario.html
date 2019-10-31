@@ -4,74 +4,124 @@
 {% block content %}
 
 <div class="col-sm-12 col-sm-offset-1">
-    <div class="header text-center">
-        <h2>Crear Encuesta</h2>
-    </div>
+  <div class="header text-center">
+    <h2>Editar Usuario</h2>
+  </div>
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-    {% if  message.tags == "error" %}
-    <div class="alert alert-danger" role="alert">
-    {% else %}
-    <div class="alert alert-success" role="alert">
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
     {% endif %}
-        {{message}}
-    </div>
-    {% endfor %}
-{% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
 
-<div class="col-sm-12 col-sm-offset-1">
+  <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
-        <div class="card-content">
-            
-            <div class="cuadro-form">
+      <div class="card-content">
 
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-group row">
-                        <label for="inputAnno" class="col-sm-2 col-form-label">Ingrese Año de Encuesta:</label>
-                        <div class="col-sm-6">
-                            <input type="number" class="form-control" id="inputAnno" name="inputAnno" placeholder="p.e. 2019" min="2019" required>
-                        </div>
-                    </div>
-                    </br>
-                   <div class="form-group row">
-                        <label for="inputActivado" class="col-sm-6 col-form-label">¿Desea dejar esta encuesta como "activada"?</label>
-                        <div class="col-sm-2">
-                            <select class="custom-select mr-sm-2" id="inputActivo" name="inputActivo" required>
-                                <option value="" selected>Elegir...</option>
-                                <option value="0">No</option>
-                                <option value="1">Sí, deseo dejarla como la Encuesta activa</option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="cuadro-form">
 
-                    <div class="element-wrapper">
-                        <!-- ROW A DUPLICAR -->
-                        <div class="form-group row pregunta">
+          <form method="POST" name="menuForm">
+            {% csrf_token %}
 
-                            <label class="col-sm-2 col-form-label">Ingrese Pregunta:</label>
-                            <div class="col-sm-6">
-                                <input type="text" name="inputPregunta" class="form-control" placeholder="¿...?" required>
-                            </div>
-
-                            <button class="btn-remove-row">Eliminar Pregunta</button>
-        
-                        </div>
-                    </div>
-                    <br>
-                    <button class="btn-adding-row">Agregar Pregunta</button>
-                    </br>
-                    </br>
-
-                    <button id="botonAgregar" type="submit" class="btn btn-primary" disabled>Crear</button>
-                </form>
-
+            <div class="form-group row" name="groupRut" id="groupRut">
+              <label for="inputRut" class="col-sm-2 col-form-label">Rut:</label>
+              <div class="col-sm-5">
+                <input disabled type="text" class="form-control" id="inputRut" name="inputRut" value="{{ usuario.rut }}" autofocus>
+              </div>
             </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputNombre" class="col-sm-2 col-form-label">Nombres:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputNombre" name="inputNombre" value="{{ usuario.nombre }}" disabled>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label for="inputApellidos" class="col-sm-2 col-form-label">Apellidos:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputApellidos" name="inputApellidos" value="{{ usuario.apellidos }}" disabled>
+              </div>
+            </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputCorreo" class="col-sm-2 col-form-label">Correo:</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" value="{{ usuario.user.email }}">
+              </div>
+            </div>
+
+
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputTipoUsuario" class="col-sm-2 col-form-label">Tipo de usuario:</label>
+              <div class="col-sm-4">
+                <select class="custom-select mr-sm-2" id="inputTipoUsuario" name="inputTipoUsuario" disabled>
+                  <option value="1" {% if usuario.profesional %} selected {% endif %}>Profesional</option>
+                  <option value="2" {% if usuario.administrativo %} selected {% endif %}>Administrativo</option>
+                  <option value="3" {% if usuario.mantenedor %} selected {% endif %}>Mantenedor</option>
+                  <option value="4" {% if usuario.asistente_social %} selected {% endif %}>Asistente Social</option>
+                </select>
+              </div>
+            </div>
+
+            {% if usuario.profesional %}
+            </br>
+
+
+            <div class="form-group row">
+              <label for="inputEspecialidad" class="col-sm-2 col-form-label">Especialidades:</label>
+              <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-12">
+                  {% for a in areas %}
+                  <p style="font-weight: bold !important;">{{ a.nombreArea }}</p>
+                  {% for e in especialidades %}
+                  {% if e.area == a %}
+                  <input type="checkbox" name="inputEspecialidad" value="{{ e.id }}" {% for ue in usuarioEspecialidades %} {% if ue.especialidad == e %} checked {% endif %} {% endfor %}> {{ e.nombreEspecialidad }}</br>
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            {% endif %}
+
+            </br>
+            </br>
+
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <button id="botonGuardar" type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+              <div class="col-md-3 ml-md-auto">
+                <a href="{% url 'usuarios:verUsuario' id_usuario=usuario.id %}" role="button" class="btn btn-secondary">Atrás</a>
+              </div>
+            </div>
+
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
-
-{% endblock content %}
+  {% endblock content %}

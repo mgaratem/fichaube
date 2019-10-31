@@ -81,9 +81,11 @@
                                     <a href="{% url 'usuarios:verUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
                                         <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
                                     </a>
-                                    <a href="#modalDelete{{usuario.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                    {% if usuario.user_id %}
+                                    <a href="#modalDelete{{usuario.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar Cuenta" rel="popover" data-placement="bottom" data-trigger="hover">
                                         <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
                                     </a>
+                                    {% endif %}
                                 </td>
 
                                 <div id="modalDelete{{usuario.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
@@ -97,7 +99,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>¿Está seguro que quiere eliminar al usuario?</p>
+                                                <p>¿Está seguro que quiere eliminar la cuenta del usuario?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
