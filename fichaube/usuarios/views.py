@@ -40,12 +40,12 @@ def crear_user(request, nombre=None, apellido=None, email=None, rut=None):
     userName = first_letra + first_apellido + second_apellido
     userExiste = User.objects.filter(username=userName)
     if not userExiste:
-        userPass = userName + '99'
+        password = User.objects.make_random_password()
         userEmail = email
 
         user = User.objects.create_user(username=userName,
                                         email=userEmail,
-                                        password=userPass,
+                                        password=password,
                                         first_name=primerNombre,
                                         last_name=primerApellido)
         user.save()
