@@ -1,6 +1,6 @@
 <html>
   <body>
-    <form action="agregarArea" method="post"> {% csrf_token %}
+    <form action="agregarArea" method="post" onsubmit="return validarFormulario()"> {% csrf_token %}
       {{ form.as_p }}
       <label for="area">Ingrese area: </label>
       <br>
@@ -8,7 +8,7 @@
       <input type="submit" value="Submit">
     </form>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     {% block javascript %}
       <script>  // AJAX para corroborar que el area ya existe
         $("#area").change(function () {
@@ -27,7 +27,21 @@
             }
           });
         });
-        // aqui deberia ir el codigo para deshabilitar algun boton submit o etc
+
+
+        // funcion para validar que el campo no esta vacio
+        function validarFormulario(){
+          area = document.getElementById('area').value
+          // console.log(area);
+          if (area == null || area == ""){
+            alert('Debe ingresar un Área');
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+
       </script>
     {% endblock %}
   </body>
