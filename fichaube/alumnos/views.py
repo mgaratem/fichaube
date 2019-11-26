@@ -14,6 +14,9 @@ import logging
 from django.urls import reverse
 from django.template import *
 from django.db.models import Q
+import csv
+import codecs
+import re
 
 from alumnos.models import Alumno
 
@@ -21,6 +24,7 @@ from alumnos.models import Alumno
 
 #############---------FUNCION CREAR------#################
 
+@login_required()
 def crear_alumno(request):
     template = "crear_alumno.html"
 
@@ -88,6 +92,7 @@ def crear_alumno(request):
 
 #############---------FUNCION BORRAR------#################
 
+@login_required()
 def borrarAlumno(request, id_alumno=None):
 
     if request.method == 'GET':
@@ -107,6 +112,7 @@ def borrarAlumno(request, id_alumno=None):
 
 #############---------FUNCION MODIFICAR------#################
 
+@login_required()
 def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
     template = "actualizar_alumno.html"
 
@@ -149,6 +155,7 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 
 #############---------FUNCION MOSTRAR------#################
 
+@login_required()
 def verAlumno(request, id_alumno=None):
 
     template = "ver_alumno.html"
@@ -166,6 +173,7 @@ def verAlumno(request, id_alumno=None):
 
 #############---------FUNCION LISTAR------#################
 
+@login_required()
 def listarAlumnos(request):
 
     template = "listar_alumnos.html"
@@ -181,6 +189,7 @@ def listarAlumnos(request):
 
 #############---------FUNCION BUSCAR------#################
 
+@login_required()
 def buscarAlumno(request):
 
     template = "buscar_alumno.html"
@@ -205,3 +214,129 @@ def buscarAlumno(request):
         except Exception as e:
             messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
             return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+
+
+#############---------FUNCION CARGAR DATOS CSV------#################
+
+@login_required()
+def importAlumnos(request): #Importar alumnos nuevos desde archivo .csv
+
+    template = "alumnos_upload.html"
+
+    if request.method == 'GET':
+        return render(request, template)
+
+    if request.method == 'POST':
+        try:
+            csv_file = request.FILES["file"]
+            if not csv_file.name.endswith('csv'):
+                messages.error(request,'ERROR - ¡No es un archivo .csv!')
+                return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+            #if csv_file.multiple_chunks():
+            #    messages.error(request,"Archivo es demasiado grande (%.2f MB)." % (csv_file.size/(1000*1000),))
+            #    return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+            file_data = csv.reader(codecs.iterdecode(csv_file, 'utf-8'),  delimiter='\t', quoting=csv.QUOTE_NONE)
+            row_count = 0
+            headers_final = []
+            header_split = []
+            for row in file_data:
+                #print(row)
+                row_count += 1
+                if 7 > row_count > 3 :
+                    header_split = header_split + row[0].split(';')
+                if row_count == 6:
+                    for h in header_split:
+                        string = h.replace('"', '')
+                        if string == '(Fijo / Movil)' or string == '':
+                            continue
+                        headers_final.append(string)
+
+                    #print(headers_final)
+                    #print(len(headers_final))
+
+                if row_count > 7:
+
+                    if row[0] == ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;":
+                        break
+                    
+                    dato = row[0].split(";")
+                    #print (dato)
+                    #print (len(dato)) #deben ser 30
+                    cedula = ""
+                    primer_nombre = ""
+                    segundo_nombre = ""
+                    ap_paterno = ""
+                    ap_materno = ""
+                    correo = ""
+                    sexo = ""
+                    carrera = ""
+                    for header in headers_final:
+                        if header == "Carrera":
+                            carrera = dato[headers_final.index(header)]
+                            #print(carrera)
+                        if header == "Rut":
+                            rut = dato[headers_final.index(header)]
+                            cedula = rut
+                            #print(rut)
+                        if header == "Dv":
+                            dv = dato[headers_final.index(header)]
+                            cedula = cedula + "-" + dv
+                            #print(dv)
+                        if header == "1er Nombre":
+                            primer_nombre = dato[headers_final.index(header)]
+                            #print(primer_nombre)
+                        if header == "2do Nombre":
+                            segundo_nombre = dato[headers_final.index(header)]
+                            #print(segundo_nombre)
+                        if header == "Ap. Paterno":
+                            ap_paterno = dato[headers_final.index(header)]
+                            #print(ap_paterno)
+                        if header == "Ap. Materno":
+                            ap_materno = dato[headers_final.index(header)]
+                            #print(ap_materno)
+                        if header == "Email Personal":
+                            correo = dato[headers_final.index(header)]
+                            #print(correo)
+                        if header == "Sexo":
+                            sexo = dato[headers_final.index(header)]
+                            #print(sexo)
+
+                    alumnoExiste = Alumno.objects.filter(rut=cedula)
+                    if not alumnoExiste:
+                        alumno = Alumno()
+                        alumno.nombre = primer_nombre
+                        if segundo_nombre != "":
+                            alumno.nombre = alumno.nombre + " " + segundo_nombre
+                        alumno.apellido_paterno = ap_paterno
+                        alumno.apellido_materno = ap_materno
+                        alumno.rut = cedula
+                        alumno.tipoDocumento = "CEDULA"
+                        if sexo == "F":
+                            alumno.sexo = "Mujer"
+                        else:
+                            alumno.sexo = "Hombre"
+                        alumno.correo = correo
+                        alumno.carrera = carrera
+                        print(alumno)
+                        alumno.save()
+                        del alumno
+                        print("Guardó al alumno número" + " " + str((row_count-7)))
+                    else:
+                        alumnoExiste[0].carrera = carrera
+                        alumnoExiste[0].save()
+                        print("Guardó al alumno número" + " " + str((row_count-7)))
+                        del alumnoExiste
+
+
+                #if row_count == 8:
+                    #break
+
+            messages.success(request, '¡Importación exitosa!')
+
+        except Exception as e:
+            logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+            messages.error(request,"ERROR - No se pudo subir archivo. "+repr(e))
+            return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+
+
+        return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
