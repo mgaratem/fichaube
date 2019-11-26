@@ -258,7 +258,7 @@ def importAlumnos(request): #Importar alumnos nuevos desde archivo .csv
 
                     if row[0] == ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;":
                         break
-                    
+
                     dato = row[0].split(";")
                     #print (dato)
                     #print (len(dato)) #deben ser 30
@@ -328,8 +328,8 @@ def importAlumnos(request): #Importar alumnos nuevos desde archivo .csv
                         del alumnoExiste
 
 
-                #if row_count == 8:
-                    #break
+                #if row_count == 1:
+                #    break
 
             messages.success(request, '¡Importación exitosa!')
 

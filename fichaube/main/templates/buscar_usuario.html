@@ -30,13 +30,29 @@
   {% csrf_token %}
   <div class="cuadro-wrap">
      <div class="cuadro-search">
-        <input name="inputSearch" type="text" class="searchTerm" placeholder="Buscar...">
-        <button type="submit" class="searchButton">
+        <input name="inputSearch" type="text" class="searchTerm" placeholder="Ingrese rut o apellidos...">
+        <button type="submit" class="searchButton" id="botonBuscar">
           <i class="fa fa-search"></i>
        </button>
      </div>
   </div>
 </form>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row align-items-end">
+      <div class="col-6 col-md-5"></div>
+      <div class="col-6 col-md-5">
+        <div id="loading" class="spinner-border text-primary" style="display: none; width: 2rem; height: 2rem;"></div>
+      </div>
+      <div class="col-6 col-md-3"></div>
+    </div>
+</div>
 
 {% else %}
 
@@ -134,5 +150,12 @@
 </div>
 
 {% endif %}
+
+<script>
+  document.getElementById("botonBuscar").addEventListener("click", function() {
+    var div_loading = document.getElementById('loading');
+    div_loading.style.display='block';
+  });
+</script>
 
 {% endblock content %}

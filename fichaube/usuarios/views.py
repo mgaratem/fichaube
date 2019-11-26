@@ -23,6 +23,7 @@ from django.core.mail import send_mail
 
 #############---------FUNCION CREATE USER DJANGO------#################
 
+@login_required()
 def crear_user(request, nombre=None, apellido=None, email=None):
     if request.method == 'POST':
         try:
@@ -109,6 +110,7 @@ def cambiar_pass(request):
 
 #############---------FUNCION CREAR------#################
 
+@login_required()
 def crear_usuario(request):
     template = "crear_usuario.html"
 
@@ -179,6 +181,7 @@ def crear_usuario(request):
 
 #############---------FUNCION BORRAR------#################
 
+@login_required()
 def borrarUsuario(request, id_usuario=None):
 
     if request.method == 'GET':
@@ -199,6 +202,7 @@ def borrarUsuario(request, id_usuario=None):
 
 #############---------FUNCION MODIFICAR------#################
 
+@login_required()
 def updateUsuario(request, id_usuario=None):
     template = "actualizar_usuario.html"
     areas = Area.objects.all()
@@ -268,6 +272,7 @@ def updateUsuario(request, id_usuario=None):
 
 #############---------FUNCION MOSTRAR------#################
 
+@login_required()
 def verUsuario(request, id_usuario=None):
 
     template = "ver_usuario.html"
@@ -286,6 +291,7 @@ def verUsuario(request, id_usuario=None):
 
 #############---------FUNCION LISTAR------#################
 
+@login_required()
 def listarUsuarios(request):
 
     template = "listar_profesionales.html"
@@ -302,6 +308,7 @@ def listarUsuarios(request):
 
 #############---------FUNCION BUSCAR------#################
 
+@login_required()
 def buscarUsuario(request):
 
     template = "buscar_usuario.html"

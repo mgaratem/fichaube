@@ -4,50 +4,54 @@
 {% block content %}
 
 <div class="col-sm-12 col-sm-offset-1">
-    <div class="header text-center">
-        <h2>Importar Datos Alumnos</h2>
-        </br>
-    </div>
+  <div class="header text-center">
+    <h2>Importar Datos Alumnos</h2>
+    </br>
+  </div>
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-    {% if  message.tags == "error" %}
-    <div class="alert alert-danger" role="alert">
-    {% else %}
-    <div class="alert alert-success" role="alert">
-    {% endif %}
-        {{message}}
-    </div>
-    {% endfor %}
-{% endif %}
-
-<div class="col-sm-12 col-sm-offset-1">
-    <div class="card">
-        <div class="card-content">
-                <div class="cuadro-tabla">
-            <form method="post" enctype="multipart/form-data">{% csrf_token %}
-                <div class="form-group">
-                    <label for="exampleInputFile">Archivo CSV:</label>
-                    <input type='file' name="file" id="exampleInputFile" aria-describedby="exampleInputFile"
-                        placeholder="Seleccione un archivo" required>
-                    <small id="emailHelp" class="form-text text-muted">Seleccione el archivo .csv con los datos de los alumnos</small>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button class="btn btn-primary" type="submit">Cargar</button>
-                    </div>
-                </div>
-            </form>
-                </div>
-        </div>
-    </div>
-</div>
-{% if message %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
 <div class="alert alert-danger" role="alert">
-        {{message}}
-      </div>
-{% endif %}
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
 
-{% endblock content %}
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+        <div class="cuadro-tabla">
+          <form method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputFile">Archivo CSV:</label>
+              <input type='file' name="file" id="exampleInputFile" aria-describedby="exampleInputFile" placeholder="Seleccione un archivo" required>
+              <small id="emailHelp" class="form-text text-muted">
+                Seleccione el archivo .csv con los datos de los alumnos matriculados</small>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-5">
+                <button class="btn btn-primary" type="submit" onclick="cargando()">Cargar</button>
+                <small class="form-text text-muted">La carga puede tardar unos minutos</small>
+              </div>
+              <div class="col-md-5">
+                <div id="loading" class="spinner-border text-primary" style="display: none; width: 5rem; height: 5rem;"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      function cargando(val){
+        var div_loading = document.getElementById('loading');
+        div_loading.style.display='block';
+      }
+  </script>
+  {% endblock content %}
