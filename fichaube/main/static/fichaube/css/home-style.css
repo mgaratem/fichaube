@@ -594,19 +594,36 @@ button#botonRegistrarse {
 }
 
 /*------------------------------------- Modal */
-.modal-dialog {
+
+
+/*.modal-dialog {
   margin: 2px auto;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}*/
+
+.modal {
+    position: relative;
+    z-index: 99999;
+    float: left;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .modal-backdrop {
-  z-index: -1;
-  opacity: 0.8;
-  background-color: #333333;
+    /* bug fix - no overlay */
+    display: none;
+    z-index: -1;
+
 }
 
+/*
 div#modalDetalles .modal-dialog {
   top: 30%;
 }
+*/
 
 /*------------------------------------- Img-responsive */
 .img-responsive {
