@@ -32,8 +32,6 @@ def agregarArea(request):
         del nuevaArea
         return HttpResponseRedirect(reverse('lista-Areas'))
 
-
-
 # funcion para corroborar si el area ya existe
 def validarArea(request):
     area = request.GET.get('area', None)
@@ -43,14 +41,10 @@ def validarArea(request):
     }
     return JsonResponse(data)
 
-
-
 # funcion y html para listar Areas
 def listarArea(request):
     listaAreas = Area.objects.all()
     return render(request, 'lista-Areas.html', {"areas": listaAreas})
-
-
 
 # funcion para eliminar una Area dado un ID
 def eliminarArea(request, idArea):
@@ -58,7 +52,11 @@ def eliminarArea(request, idArea):
     Area.objects.filter(id=idArea).delete()
     return HttpResponseRedirect(reverse('lista-Areas'))
 
-
-
 def editarArea(request):
-    return HttpResponseRedirect(reverse('lista-Areas'))
+    if request.method == 'POST':
+        idArea = request.POST.get("idArea")
+        nuevoNombreArea = request.POST.get("nuevoNombreArea")
+        area = Area.objects.get(pk=idArea)
+        area.nombreArea = nuevoNombreArea
+        area.save()
+        return HttpResponseRedirect(reverse('lista-Areas'))
