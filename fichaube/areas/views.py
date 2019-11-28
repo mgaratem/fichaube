@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from areas.models import Area
+from areas.models import Especialidad
 from django.http import JsonResponse
 
 # Create your views here.
@@ -14,12 +15,13 @@ def testpancho01(request):
 
 # html para editar area
 def testpancho02(request, idArea):
-    area = Area.objects.get(pk=idArea)
+    area = Area.objects.get(pk = idArea)
     nombreArea = area.nombreArea
     return render(request, 'editar-Area.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
-
-
+# html para agregar especialidad
+def testpancho03(request, idArea):
+    return HttpResponseRedirect(reverse(request, 'agregar-Especialidad.html', {'idArea': idArea}))
 
 
 
@@ -42,7 +44,7 @@ def validarArea(request):
     return JsonResponse(data)
 
 # funcion y html para listar Areas
-def listarArea(request):
+def listarAreas(request):
     listaAreas = Area.objects.all()
     return render(request, 'lista-Areas.html', {"areas": listaAreas})
 
@@ -60,3 +62,12 @@ def editarArea(request):
         area.nombreArea = nuevoNombreArea
         area.save()
         return HttpResponseRedirect(reverse('lista-Areas'))
+
+
+
+def listarEspecialidades(request, idArea):
+    listaEspecialides = Especialidad.objects.filter(area_id = idArea)
+    return render(request, 'lista-Especialidades.html', {"especialidades": listaEspecialides})
+
+def agregarEspecialidad(request):
+    return True

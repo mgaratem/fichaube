@@ -2,19 +2,23 @@
   <body>
     <table style="width:50%">
       <tr>
-        <th>Nombre Area</th>
+        <th>Nombre Especialidad</th>
         <th>Borrar</th>
         <th>Editar</th>
-        <th>Especialidades</th>
       </tr>
-      {% for area in areas %}
+      {% for especialidad in especialidades %}
       <tr>
         <td>{{area.nombreArea}}</td>
         <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
         <td><a href="{% url 'editar-Area' idArea=area.id %}">Editar</a></td>
-        <td><a href="{% url 'listar-Especialidades' idArea=area.id %}">Especialidades</a></td>
       </tr>
       {% endfor %}
     </table>
+    <br>
+    <form action="agregar-Especialidad" method="post">
+      <input type="hidden" value={{ idArea }} name="idArea">
+      <input type="submit" value="Agregar Especialidad">
+    </form>
+
   </body>
 </html>
