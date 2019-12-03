@@ -25,6 +25,7 @@ def testpancho03(request, idArea):
 
 
 
+
 # funcion para agregar areas
 def agregarArea(request):
     if request.method == 'POST':
@@ -53,6 +54,8 @@ def eliminarArea(request, idArea):
     # idArea = request.GET.get("idArea")
     Area.objects.filter(id=idArea).delete()
     return HttpResponseRedirect(reverse('lista-Areas'))
+#******************FALTA eliminar en cascada
+
 
 def editarArea(request):
     if request.method == 'POST':
