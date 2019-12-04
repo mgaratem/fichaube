@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.urls import include, re_path
 from . import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -28,6 +29,7 @@ urlpatterns = [
     # controladores
     path('agregarArea', areas.views.agregarArea, name="agregarArea"),
     path('ajax/validarArea', areas.views.validarArea, name="validarArea"),
+    path('editar-Area/ajax/validarArea', areas.views.validarArea, name="validarArea"), # esta URL deberia eliminarla, y aprovechar la de arriba usando regex !!!
     path('lista-Areas', areas.views.listarAreas, name="lista-Areas"),
     path('eliminarArea/<int:idArea>', areas.views.eliminarArea, name="eliminarArea"),
     path('editarArea', areas.views.editarArea, name="editarArea"),

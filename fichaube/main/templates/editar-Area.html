@@ -4,7 +4,7 @@
 
     <!-- aqui tambien tengo que ver lo de que se repitan -->
 
-    <form action={% url 'editarArea' %} method="post" onsubmit="return validarFormulario()"> {% csrf_token %}
+    <form id="formularioNuevoNombreArea" action={% url 'editarArea' %} method="post"> {% csrf_token %}
       {{ form.as_p }}
       <label for="area">Ingrese nuevo nombre de Area: </label>
       <br>
@@ -17,10 +17,20 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
      {% block javascript %}
-       <script>  // AJAX para corroborar que el nuevo nombre del area no existe
-         $("#nuevoNombreArea").change(function () {
-           // console.log($(this).val());
-           var area = $(this).val();
+       <script>
+
+       //  validar formulario
+       $('#formularioNuevoNombreArea').submit(function(e){
+         e.preventDefault();
+         var form = this;
+         var area = $('#nuevoNombreArea').val();
+         // formulario no esta vacio
+         if (area == null || area == ""){
+           alert('Debe ingresar un nombre para el Area');
+           return false;
+         }
+         else{
+           // codigo AJAX  para comprobar si el area existe previamente
            $.ajax({
              url: 'ajax/validarArea',
              data: {
@@ -29,25 +39,16 @@
              dataType: 'json',
              success: function (data) {
                if (data.is_taken){
-                 alert('El Area ingresada ya se encuentra registrada')
+                 alert('El Area ingresada ya se encuentra registrada');
+                 return false;
                }
-             }
-           });
-         });
-
-
-         // funcion para validar que el campo no esta vacio
-         function validarFormulario(){
-           area = document.getElementById("nuevoNombreArea").value
-           // console.log(area);
-           if (area == null || area == ""){
-             alert('Debe ingresar un nuevo nombre para el Área');
-             return false;
+               else{
+                 form.submit();
+               }
            }
-           else {
-             return true;
-           }
-         }
+         }); // fin AJAX
+       }
+     });
 
        </script>
      {% endblock %}
