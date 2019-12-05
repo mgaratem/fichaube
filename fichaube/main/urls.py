@@ -26,13 +26,17 @@ urlpatterns = [
     path('editar-Area/<int:idArea>', areas.views.testpancho02, name='editar-Area'),
     path('agregar-Especialidad', areas.views.testpancho03, name="agregar-Especialidad"),
 
-    # controladores
+    # controladores de Areas
     path('agregarArea', areas.views.agregarArea, name="agregarArea"),
     path('ajax/validarArea', areas.views.validarArea, name="validarArea"),
-    path('editar-Area/ajax/validarArea', areas.views.validarArea, name="validarArea"), # esta URL deberia eliminarla, y aprovechar la de arriba usando regex !!!
     path('lista-Areas', areas.views.listarAreas, name="lista-Areas"),
     path('eliminarArea/<int:idArea>', areas.views.eliminarArea, name="eliminarArea"),
     path('editarArea', areas.views.editarArea, name="editarArea"),
-    path('listar-Especialidades/<int:idArea>', areas.views.listarEspecialidades, name="listar-Especialidades")
+    path('editar-Area/ajax/validarArea', areas.views.validarArea, name="validarArea"), # esta URL deberia eliminarla, y aprovechar la de mas arriba usando regex !!!
+
+    # controladores de Especialidades
+    path('lista-Especialidades/<int:idArea>', areas.views.listarEspecialidades, name="lista-Especialidades"),
+    path('agregarEspecialidad', areas.views.agregarEspecialidad, name="agregarEspecialidad")
+
 
 ]

@@ -8,14 +8,14 @@
       </tr>
       {% for especialidad in especialidades %}
       <tr>
-        <td>{{area.nombreArea}}</td>
-        <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
-        <td><a href="{% url 'editar-Area' idArea=area.id %}">Editar</a></td>
+        <td>{{especialidad.nombreEspecialidad}}</td>
+        <td><a href="">Borrar</a> </td>
+        <td><a href="">Editar</a></td>
       </tr>
       {% endfor %}
     </table>
     <br>
-    <form action="agregar-Especialidad" method="post">
+    <form action="{% url 'agregar-Especialidad' %}" method="post"> {% csrf_token %}
       <input type="hidden" value={{ idArea }} name="idArea">
       <input type="submit" value="Agregar Especialidad">
     </form>
