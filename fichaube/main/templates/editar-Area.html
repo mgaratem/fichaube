@@ -24,6 +24,7 @@
          e.preventDefault();
          var form = this;
          var area = $('#nuevoNombreArea').val();
+         area = area.trim();
          // formulario no esta vacio
          if (area == null || area == ""){
            alert('Debe ingresar un nombre para el Area');

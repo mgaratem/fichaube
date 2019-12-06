@@ -23,7 +23,9 @@
        $('#formularioNuevoNombreEspecialidad').submit(function(e){
          e.preventDefault();
          var form = this;
+         // var direccion = "fichaube/editar-Especialidad/" + {{ idEspecialidad }} +"/ajax/validarEspecialidad"
          var especialidad = $('#nuevoNombreEspecialidad').val();
+         especialidad = especialidad.trim();
          // formulario no esta vacio
          if (especialidad == null || especialidad == ""){
            alert('Debe ingresar un nombre para la Especialidad');
@@ -32,7 +34,7 @@
          else{
            // codigo AJAX  para comprobar si la Especialidad existe previamente
            $.ajax({
-             url: 'ajax/validarEspecialidad',
+             url: "ajax/validarEspecialidad",
              data: {
                'especialidad': especialidad
              },

@@ -41,7 +41,7 @@ urlpatterns = [
     path('ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad"),
     path('eliminarEspecialidad/<int:idEspecialidad>/<int:idArea>', areas.views.eliminarEspecialidad, name="eliminarEspecialidad"),
     path('editarEspecialidad', areas.views.editarEspecialidad, name="editarEspecialidad"),
-    re_path(r'^editar-Especialidad/(?P<idEspecialidad>[0-9]+)/ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad")
+    re_path(r'^editar-Especialidad/[0-9]+/ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad")
 
 
 ]
