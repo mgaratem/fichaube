@@ -28,6 +28,17 @@ def testpancho03(request):
         nombreArea = area.nombreArea
         return render(request, 'agregar-Especialidad.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
+# html para editar una especialidad
+def testpancho04(request, idEspecialidad, idArea):
+    especialidad = Especialidad.objects.get(pk = idEspecialidad)
+    nombreEspecialidad = especialidad.nombreEspecialidad
+    return render(request, 'editar-Especialidad.html',{'idArea': idArea, 'nombreEspecialidad': nombreEspecialidad, 'idEspecialidad': idEspecialidad})
+
+
+
+
+
+
 
 
 # funcion para agregar areas
@@ -72,6 +83,16 @@ def editarArea(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
 # funcion para listar todas las especialidades
 def listarEspecialidades(request, idArea):
     listaEspecialides = Especialidad.objects.filter(area_id = idArea)
@@ -99,3 +120,21 @@ def validarEspecialidad(request):
         'is_taken': Especialidad.objects.filter(nombreEspecialidad=especialidad).exists()
     }
     return JsonResponse(data)
+
+# funcion para eliminar una Especialidad dado un ID
+def eliminarEspecialidad(request, idEspecialidad, idArea):
+    Especialidad.objects.filter(id=idEspecialidad).delete()
+    direccion = "/fichaube/lista-Especialidades/" + str(idArea)
+    return redirect(direccion)
+
+# funcion para editar el nombre de una especialidad
+def editarEspecialidad(request):
+    if request.method == 'POST':
+        idArea = request.POST.get("idArea")
+        nuevoNombreEspecialidad = request.POST.get("nuevoNombreEspecialidad")
+        idEspecialidad = request.POST.get("idEspecialidad")
+        especialidad = Especialidad.objects.get(pk=idEspecialidad)
+        especialidad.nombreEspecialidad = nuevoNombreEspecialidad
+        especialidad.save()
+        direccion = "/fichaube/lista-Especialidades/" + str(idArea)
+        return redirect(direccion)

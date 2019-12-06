@@ -20,6 +20,7 @@
         e.preventDefault();
         var form = this;
         var especialidad = $('#especialidad').val();
+        especialidad = especialidad.trim();
         // formulario no esta vacio
         if (especialidad == null || especialidad == ""){
           alert('Debe ingresar una Especialidad');

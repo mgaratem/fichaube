@@ -17,6 +17,7 @@
           e.preventDefault();
           var form = this;
           var area = $('#area').val();
+          area = area.trim(area);
           // formulario no esta vacio
           if (area == null || area == ""){
             alert('Debe ingresar un Area');

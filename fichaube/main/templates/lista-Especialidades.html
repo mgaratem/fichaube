@@ -9,8 +9,8 @@
       {% for especialidad in especialidades %}
       <tr>
         <td>{{especialidad.nombreEspecialidad}}</td>
-        <td><a href="">Borrar</a> </td>
-        <td><a href="">Editar</a></td>
+        <td><a href="{% url 'eliminarEspecialidad' idEspecialidad=especialidad.id idArea=idArea %}">Borrar</a> </td>
+        <td><a href="{% url 'editar-Especialidad' idEspecialidad=especialidad.id idArea=idArea %}">Editar</a></td>
       </tr>
       {% endfor %}
     </table>

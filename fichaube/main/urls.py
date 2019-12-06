@@ -25,6 +25,7 @@ urlpatterns = [
     path('agregar-Area', areas.views.testpancho01, name="agregar-Area"),
     path('editar-Area/<int:idArea>', areas.views.testpancho02, name='editar-Area'),
     path('agregar-Especialidad', areas.views.testpancho03, name="agregar-Especialidad"),
+    path('editar-Especialidad/<int:idEspecialidad>/<int:idArea>', areas.views.testpancho04, name="editar-Especialidad"),
 
     # controladores de Areas
     path('agregarArea', areas.views.agregarArea, name="agregarArea"),
@@ -36,7 +37,11 @@ urlpatterns = [
 
     # controladores de Especialidades
     path('lista-Especialidades/<int:idArea>', areas.views.listarEspecialidades, name="lista-Especialidades"),
-    path('agregarEspecialidad', areas.views.agregarEspecialidad, name="agregarEspecialidad")
+    path('agregarEspecialidad', areas.views.agregarEspecialidad, name="agregarEspecialidad"),
+    path('ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad"),
+    path('eliminarEspecialidad/<int:idEspecialidad>/<int:idArea>', areas.views.eliminarEspecialidad, name="eliminarEspecialidad"),
+    path('editarEspecialidad', areas.views.editarEspecialidad, name="editarEspecialidad"),
+    re_path(r'^editar-Especialidad/(?P<idEspecialidad>[0-9]+)/ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad")
 
 
 ]
