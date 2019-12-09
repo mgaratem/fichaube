@@ -5,14 +5,18 @@
         <th>Nombre Area</th>
         <th>Borrar</th>
         <th>Editar</th>
+        <th>Especialidades</th>
       </tr>
       {% for area in areas %}
       <tr>
         <td>{{area.nombreArea}}</td>
         <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
         <td><a href="{% url 'editar-Area' idArea=area.id %}">Editar</a></td>
+        <td><a href="{% url 'lista-Especialidades' idArea=area.id %}">Especialidades</a></td>
       </tr>
       {% endfor %}
     </table>
+    <button onclick="window.location.href = 'agregar-Area';">Agregar Area</button>
+   </body>
   </body>
 </html>
