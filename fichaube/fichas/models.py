@@ -11,8 +11,13 @@ class Ficha(models.Model):
   fecha_creacion = models.DateTimeField(auto_now_add=True)
   alumno = models.OneToOneField(Alumno, null=True, on_delete=models.PROTECT)
 
+
+  def get_fecha(self):
+      return self.fecha_creacion.strftime('%d/%m/%Y')
+
   def __str__(self):
-    return 'Alumno={0}, Fecha={1}'.format(self.alumno, self.fecha_creacion)
+      return 'Alumno={0}, Fecha={1}'.format(self.alumno, self.fecha_creacion)
+
 
 
 ########### CLASE REGISTRO #########################
@@ -27,3 +32,6 @@ class Registro(models.Model):
 
     profesional = models.ForeignKey(Usuario, on_delete = models.PROTECT)
     ficha = models.ForeignKey(Ficha, on_delete=models.CASCADE)
+
+    def get_fecha(self):
+        return self.fecha_creacion.strftime('%d/%m/%Y')

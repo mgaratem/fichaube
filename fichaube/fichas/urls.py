@@ -6,4 +6,5 @@ app_name = 'fichas'
 
 urlpatterns = [
     path('crear_ficha/', views.crearFicha, name="crearFicha"),
+    path('confirmacion_ficha/<int:id_alumno>', views.confirmarCreacionFicha, name="confirmarCreacionFicha"),
 ]

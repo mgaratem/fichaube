@@ -103,12 +103,11 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Está a punto de crear una ficha para el alumno {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.materno}}.</p>
-                                                <p>Debe completar los siguientes datos restantes: </p>
+                                                <p>Está a punto de crear una ficha para el alumno {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a href="#" role="button" class="btn btn-primary">¡Seguro!</a>
+                                                <a href="{% url 'fichas:confirmarCreacionFicha' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
                                             </div>
                                         </div>
                                     </div>

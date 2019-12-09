@@ -108,9 +108,61 @@
                 <h3>Ficha Clínica</h3>
                 </br>
                 </br>
+                {% if not ficha %}
                 <p>Este alumno aún no tiene ficha clínica creada.</p>
 
                 <p>¡Ups! Usted no tiene permisos para visualizar la ficha clínica.</p>
+                {% else %}
+                <div class="row">
+
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-head">
+                            <th>Fecha</th>
+                            <th>Motivo de Atención</th>
+                            <th>Observaciones</th>
+                            <th>Profesional (Rut)</th>
+                        </thead>
+                        <tbody>
+                            {% for registro in registros %}
+                            <tr>
+                                <td>{{alumno.rut}}</td>
+                                <td>{{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}</td>
+                                <td>
+                                    <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                    <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                </td>
+
+                                <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">¡Atención!</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Está seguro que quiere eliminar al alumno?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a href="{% url 'alumnos:borrarAlumno' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                {% endif %}
             </div>
         </div>
     </div>

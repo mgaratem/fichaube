@@ -17,8 +17,7 @@ from django.db.models import Q
 
 from django.contrib.auth.models import User
 from alumnos.models import Alumno
-from fichas.models import Ficha
-from fichas.models import Registro
+from fichas.models import Ficha, Registro
 
 # Create your views here.
 
@@ -26,7 +25,7 @@ from fichas.models import Registro
 #############---------FUNCION CREAR------#################
 
 @login_required()
-def crearFicha(request, id_alumno=None):
+def crearFicha(request):
     template = "crear_ficha.html"
 
     if request.method == 'GET':
@@ -34,7 +33,7 @@ def crearFicha(request, id_alumno=None):
 
     if request.method == "POST":
         try:
-            alumnos_sin_ficha = Alumno.objects.filter(ficha__alumno__isnull=True)#.values_list('id', 'nombre', 'apellido_paterno', 'apellido_materno', 'rut')
+            alumnos_sin_ficha = Alumno.objects.filter(ficha__alumno__isnull=True) #LEFT JOIN
             #print(alumnos.query)
             filtro = request.POST.get('inputSearch')
             querys = (Q(nombre__icontains=filtro) | Q(apellido_materno__icontains=filtro))
@@ -46,6 +45,70 @@ def crearFicha(request, id_alumno=None):
         except Exception as e:
             messages.error(request,"No fue posible encontrar alumnos sin fichas clínicas. "+repr(e))
             return render(request, "home.html")
+
+
+@login_required()
+def confirmarCreacionFicha(request, id_alumno=None):
+    template = "confirmacion_ficha.html"
+
+    if request.method == 'GET':
+        alumno = Alumno.objects.get(id = id_alumno)
+
+        try:
+            if not alumno.domicilio or not alumno.prevision or not alumno.representante_legal or not alumno.fecha_nacimiento:
+                return render(request, template, {'alumno': alumno})
+
+            fichaExiste = Ficha.objects.filter(alumno = id_alumno)
+            if not fichaExiste:
+                ficha = Ficha()
+                ficha.alumno = alumno
+                ficha.save()
+                del ficha
+                del alumno
+                messages.success(request, '¡Ficha creada con éxito!')
+                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+            del alumno
+            messages.error(request,"Este alumno ya posee una ficha creada.")
+            return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+        except Exception as e:
+            messages.error(request,"No fue posible crear la ficha clínica. "+repr(e))
+            return render(request, "crear_ficha.html")
+
+    if request.method == 'POST':
+        try:
+            alumno = Alumno.objects.get(id = id_alumno)
+
+            fecha_nacimiento = request.POST.get('inputFechaNacimiento')
+            domicilio = request.POST.get('inputDomicilio')
+            representante = request.POST.get('inputRepresentante')
+            prevision = request.POST.get('inputPrevision')
+
+            if fecha_nacimiento:
+                alumno.fecha_nacimiento = fecha_nacimiento
+            if domicilio:
+                alumno.domicilio = domicilio
+            if representante:
+                alumno.representante_legal = representante
+            if prevision:
+                alumno.prevision = prevision
+
+            alumno.save()
+
+            ficha = Ficha()
+            ficha.alumno = alumno
+            ficha.save()
+
+            del ficha
+            del alumno
+
+            messages.success(request, '¡Ficha creada con éxito!')
+            return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+        except Exception as e:
+            messages.error(request,"No fue posible crear la ficha clínica. "+repr(e))
+            return render(request, "crear_ficha.html")
 
 
 #############---------FUNCION BORRAR------#################

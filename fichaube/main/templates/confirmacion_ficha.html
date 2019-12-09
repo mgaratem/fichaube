@@ -1,0 +1,105 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Crear Ficha Alumno</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+
+        <div class="cuadro-form">
+
+          <p> Antes de crear la ficha, se requieren de los siguientes datos del alumno:</p>
+          <br>
+          <form method="POST" name="menuForm">
+            {% csrf_token %}
+
+            {% if not alumno.fecha_nacimiento %}
+            <div class="form-group row">
+              <label for="inputGeneracion" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
+              <div class="col-sm-3">
+                <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento" required>
+              </div>
+            </div>
+
+
+            </br>
+
+            {% endif %}
+
+            {% if not alumno.domicilio %}
+
+            <div class="form-group row">
+              <label for="inputDomicilio" class="col-sm-2 col-form-label">Domicilio:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" placeholder="Calle, N°, Depto, Villa, Ciudad" required>
+              </div>
+            </div>
+
+
+
+            </br>
+
+            {% endif %}
+
+            {% if not alumno.representante_legal %}
+
+            <div class="form-group row">
+              <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado" required>
+              </div>
+            </div>
+
+            </br>
+
+            {% endif %}
+
+            {% if not alumno.prevision %}
+
+            <div class="form-group row">
+              <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Nombre Isapre o Capredena" required>
+              </div>
+            </div>
+
+
+            </br>
+
+            {% endif %}
+
+            </br>
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <button id="botonRegistrarse" type="submit" class="btn btn-primary">Registrar</button>
+              </div>
+              <div class="col-md-3 ml-md-auto"></div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}

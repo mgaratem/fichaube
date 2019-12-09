@@ -36,11 +36,16 @@
 
             <div class="form-group row">
               <div class="col-md-5">
-                <button class="btn btn-primary" type="submit" onclick="cargando()">Cargar</button>
-                <small class="form-text text-muted">La carga puede tardar unos minutos</small>
+                <button class="btn btn-primary" type="submit" onclick="cargando()" id="cargar" style="display: block;">Cargar</button>
               </div>
-              <div class="col-md-5">
-                <div id="loading" class="spinner-border text-primary" style="display: none; width: 5rem; height: 5rem;"></div>
+              <div class="col-md-5" id="loading" style="display: none;">
+                <br>
+                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;"></div>
+                <br>
+                <br>
+                <center>
+                  <small class="form-text text-muted">La carga puede tardar unos minutos</small>
+                </center>
               </div>
             </div>
           </form>
@@ -52,6 +57,8 @@
       function cargando(val){
         var div_loading = document.getElementById('loading');
         div_loading.style.display='block';
+        var boton = document.getElementById('cargar');
+        boton.style.display='none';
       }
   </script>
   {% endblock content %}
