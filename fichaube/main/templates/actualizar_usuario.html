@@ -112,10 +112,10 @@
 
             <div class="row">
               <div class="col-md-3">
-                <label for="inputDesactivar">¿Desea desactivar la cuenta del usuario?:</label>
+                <label for="inputDesactivar">Personal Vigente:</label>
               </div>
               <div class="col-md-6">
-                <input type="checkbox" name="inputDesactivar" value="1" {% if not usuario.user.is_active %} checked {% endif %}>
+                <input type="checkbox" name="inputDesactivar" value="1" {% if usuario.user.is_active %} checked {% endif %}>
               </div>
             </div>
 

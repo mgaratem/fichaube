@@ -254,7 +254,7 @@ def updateUsuario(request, id_usuario=None):
 
             especialidadesElegidas = request.POST.getlist('inputEspecialidad')
             correo = request.POST.get('inputCorreo')
-            desactivar = request.POST.get('inputDesactivar')
+            activado = request.POST.get('inputDesactivar')
 
             if especialidadesElegidas:
 
@@ -281,10 +281,10 @@ def updateUsuario(request, id_usuario=None):
             if user:
                 user[0].email = correo
 
-                if desactivar == "1":
-                    user[0].is_active = False
-                else:
+                if activado == "1":
                     user[0].is_active = True
+                else:
+                    user[0].is_active = False
 
                 user[0].save()
 

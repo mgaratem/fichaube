@@ -40,6 +40,9 @@
           </a>
         </div>
       </div>
+      {% if user.is_authenticated %}
+      <center><p>¡Hola, {{ user.get_full_name }}!</p></center>
+      {% endif %}
       <ul class="list-unstyled components">
         <li class="divider"></li>
         {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Profesional" or request.user|has_group:"Asistente Social" or request.user.is_superuser %}
@@ -177,6 +180,7 @@
     <script type="text/javascript" src="{% static 'fichaube/js/activadorRutPasaporte.js' %}"></script>
     <script type="text/javascript" src="{% static 'fichaube/js/activadorAreaEspecialidad.js' %}"></script>
 
+    <!-- SCRIPT COMPORTAMIENTO SIDEBAR -->
     <script type="text/javascript">
       $(document).ready(function() {
         $('#sidebarCollapse').on('click', function() {
@@ -198,6 +202,7 @@
       });
     </script>
 
+    <!-- SCRIPT FILTRO TABLAS -->
     <script>
       $(document).ready(function() {
         $("#filtroTabla").on("keyup", function() {
