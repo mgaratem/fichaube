@@ -1,0 +1,112 @@
+{% extends 'home.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="header text-center">
+        <h2>Ceder Permisos</h2>
+        </br>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if  message.tags == "error" %}
+    <div class="alert alert-danger" role="alert">
+    {% else %}
+    <div class="alert alert-success" role="alert">
+    {% endif %}
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+
+            {% if not usuarios %}
+            <br>
+                <center><div class="alert alert-warning col-sm-6" role="alert">
+                    <h4 class="alert-heading">¡No hay usuarios!</h4>
+                    <p>Puede ser que todos los profesionales tienen permisos sobre este alumno.</p>
+                    <hr>
+                    <p class="mb-0">Asegurese que el profesional a ceder permisos exista.</p>
+                </div></center>
+            {% else %}
+
+            <div class="row cuadro-filtro">
+                <div class="col-xs-6 col-md-4">
+                    <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
+                </div>
+            </div>
+
+
+            <div class="cuadro-tabla">
+                <div class="row">
+
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-head">
+                            <th>Rut</th>
+                            <th>Nombre Profesional</th>
+                            <th>Tipo Usuario</th>
+                            <th>Opciones</th>
+                        </thead>
+                        <tbody id="tablaBusqueda">
+                            {% for usuario in usuarios %}
+                            <tr>
+                                <td>{{usuario.rut}}</td>
+                                <td>{{usuario.nombre}} {{usuario.apellidos}}</td>
+                                {% if usuario.profesional %}
+                                <td>Personal Médico</td>
+                                {% else %}
+                                <td>Asistente Social</td>
+                                {% endif %}
+                                <td>
+                                    <a href="#modalCeder{{usuario.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Ceder Permisos" rel="popover" data-placement="bottom" data-trigger="hover">
+                                        <i class="zmdi zmdi-key" style="font-size:20px; color:#339fc3;"></i>
+                                    </a>
+                                </td>
+
+                                <div id="modalCeder{{usuario.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">¡Atención!</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Está seguro que quiere ceder permisos de visualización de la ficha clínica a este usuario?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <form action="{% url 'permisos:cederPermiso' id_alumno=ficha.alumno.id %}" method="POST">
+                                                  {% csrf_token %}
+                                                  <input type="hidden" id="inputRutProfesional" name="inputRutProfesional" value="{{ usuario.rut }}">
+                                                  <button type="submit" class="btn btn-primary">¡Seguro!</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
