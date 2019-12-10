@@ -34,9 +34,7 @@
               <div class="col-sm-6">
                 <input id="nuevoNombreArea" type="text" class="form-control"  name="nuevoNombreArea" placeholder="Nombre del Área" required>
                 <input type="hidden" id="idArea" type="number" name="idArea" value={{ idArea }}>
-
               </div>
-
             </div>
             <div class="row">
               <div class="col-md-3 ml-md-auto">
@@ -60,15 +58,14 @@
               var area = $('#nuevoNombreArea').val();
               area = area.trim();
               // formulario no esta vacio
-              /*
+
               if (area == null || area == ""){
                 alert('Debe ingresar un nombre para el Area');
                 return false;
               }
-              */
-
               // codigo AJAX  para comprobar si el area existe previamente
-              $.ajax({
+              else{
+                $.ajax({
                 url: 'ajax/validarArea',
                 data: {
                   'area': area
@@ -83,7 +80,8 @@
                     form.submit();
                   }
                 }
-              }); // fin AJAX
+              });
+              } // fin AJAX
             });
 
             </script>
