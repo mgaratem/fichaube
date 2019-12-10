@@ -1,0 +1,97 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Editar Área</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+
+
+        <div class="cuadro-form">
+          <form id="formularioNuevoNombreArea" action={% url 'editarArea' %} method="post"> {% csrf_token %}
+
+            <div class="form-group row">
+              <label for="nuevoNombreArea" class="col-sm-2 col-form-label">Nuevo Nombre del Área:</label>
+              <div class="col-sm-6">
+                <input id="nuevoNombreArea" type="text" class="form-control"  name="nuevoNombreArea" placeholder="Nombre del Área" required>
+                <input type="hidden" id="idArea" type="number" name="idArea" value={{ idArea }}>
+
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <input class="btn btn-primary"type="submit" value="Registrar">
+              </div>
+              <div class="col-md-3 ml-md-auto"></div>
+            </div>
+          </form>
+
+
+
+
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+          {% block javascript %}
+            <script>
+
+            //  validar formulario
+            $('#formularioNuevoNombreArea').submit(function(e){
+              e.preventDefault();
+              var form = this;
+              var area = $('#nuevoNombreArea').val();
+              area = area.trim();
+              // formulario no esta vacio
+              /*
+              if (area == null || area == ""){
+                alert('Debe ingresar un nombre para el Area');
+                return false;
+              }
+              */
+
+              // codigo AJAX  para comprobar si el area existe previamente
+              $.ajax({
+                url: 'ajax/validarArea',
+                data: {
+                  'area': area
+                },
+                dataType: 'json',
+                success: function (data) {
+                  if (data.is_taken){
+                    alert('El Area ingresada ya se encuentra registrada');
+                    return false;
+                  }
+                  else{
+                    form.submit();
+                  }
+                }
+              }); // fin AJAX
+            });
+
+            </script>
+          {% endblock %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
