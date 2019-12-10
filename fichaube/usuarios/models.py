@@ -17,7 +17,7 @@ class Usuario(models.Model):
   mantenedor = models.BooleanField(default=False, null=False)
   asistente_social = models.BooleanField(default=False, null=False)
 
-  user = models.OneToOneField(User, null=True, on_delete = models.SET_NULL) #USUARIO
+  user = models.OneToOneField(User, null=True, on_delete = models.SET_NULL) #USUARIO DJANGO
 
 
   def __str__(self):

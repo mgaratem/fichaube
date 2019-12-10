@@ -21,6 +21,8 @@ import re
 from alumnos.models import Alumno
 from fichas.models import Ficha, Registro
 from permisos.models import Permiso
+from usuarios.models import Usuario
+from areas.models import UsuarioEspecialidad, Especialidad, Area
 
 # Create your views here.
 
@@ -176,8 +178,12 @@ def verAlumno(request, id_alumno=None):
                     ficha = Ficha.objects.get(alumno_id = id_alumno)
                     registros = Registro.objects.filter(ficha_id = ficha.id).order_by('-fecha_creacion')
                     permisos = Permiso.objects.filter(ficha_id = ficha.id)
-
-                    return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos})
+                    if current_user.groups.filter(name__in=['Profesional', 'Coordinador', 'Asistente Social']).exists():
+                        profesional = Usuario.objects.get(user = current_user)
+                        especialidadesUsuario = UsuarioEspecialidad.objects.filter(usuario_id = profesional.id)
+                        return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos, 'especialidades':especialidadesUsuario})
+                    else:
+                        return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos})
                 return render(request, template, {'alumno': alumno})
 
             except Exception as e:

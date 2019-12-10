@@ -94,6 +94,7 @@
                   <p>{{ alumno.prevision }}</p>
                 </div>
               </div>
+              <br>
             </div>
           </div>
         </div>
@@ -101,7 +102,7 @@
     </div>
   </div>
 
-  {% if request.user|has_group:"Coordinador" or request.user|has_group:"Profesional" or request.user|has_group:"Asistente Social" or request.user.is_superuser%}
+  {% if request.user|has_group:"Coordinador" or request.user|has_group:"Profesional" or request.user|has_group:"Asistente Social" or request.user.is_superuser %}
   <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
       <div class="card-content">
@@ -111,12 +112,9 @@
           </br>
 
           {% if not ficha %}
-
           <p>Este alumno aún no tiene ficha clínica creada.</p>
-
-          <p>¡Ups! Usted no tiene permisos para visualizar la ficha clínica.</p>
-
           {% else %}
+
           <div class="row">
             <form method="POST" style="width:100%">
               {% csrf_token %}
@@ -132,11 +130,19 @@
                   <h6>Motivo Atención:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
                     <option value="" selected>Elegir...</option>
-                    <option value="1">Profesional</option>
-                    <option value="2">Administrativo</option>
-                    <option value="3">Mantenedor</option>
-                    <option value="4">Asistente Social</option>
+                    {% for e in especialidades %}
+                    <option value="{{ e.id }}">{{ e.especialidad.nombreEspecialidad }}</option>
+                    {% endfor %}
                   </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                  <br>
+                  <center>
+                    <button type="submit" class="btn btn-primary" {% if request.user.is_superuser %}disabled{% endif %}>Registrar</button>
+                  </center>
                 </div>
               </div>
             </form>
@@ -144,8 +150,8 @@
 
           <hr>
 
-          <div class="row">
-            <table class="table table-hover table-bordered" style="width:100%">
+          <div style="overflow-x:auto;">
+            <table class="table table-hover table-bordered" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
                 <th>Motivo de Atención</th>
@@ -183,6 +189,10 @@
         <div class="cuadrotrans">
           <h3>Permisos</h3>
 
+          {% if not ficha %}
+          <p>Este alumno aún no tiene ficha clínica creada.</p>
+          {% else %}
+
           <div class="row cuadro-filtro">
             <div class="col-xs-12 col-md-8">
               <a href="{% url 'permisos:cederPermiso' id_alumno=alumno.id %}" class="btn btn-primary btn-sm">
@@ -196,7 +206,7 @@
 
 
           <div class="cuadro-tabla">
-            <div class="row">
+            <div style="overflow-x:auto;">
               <table class="table table-hover table-bordered">
                 <thead class="table-head">
                   <th>Profesional</th>
@@ -208,43 +218,43 @@
                     <td>{{permiso.get_nombre}}</td>
                     <td>
                       <a href="#modalRevocar{{permiso.id}}" data-toggle="modal" style="color:#339fc3;" data-content="Revocar Permisos" rel="popover" data-placement="bottom" data-trigger="hover">
-                          <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
+                        <i class="zmdi zmdi-minus-circle-outline" style="font-size:20px; color:#339fc3;"></i>
                       </a>
                     </td>
 
                     <div id="modalRevocar{{permiso.id}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">¡Atención!</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Está seguro que quiere revocar los permisos de visualización de la ficha clínica a este usuario?</p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                  <a href="{% url 'permisos:revocarPermiso' id_permiso=permiso.id id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
-                                </div>
-                            </div>
+                      <div class="modal-dialog" role="document">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">¡Atención!</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>¿Está seguro que quiere revocar los permisos de visualización de la ficha clínica a este usuario?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a href="{% url 'permisos:revocarPermiso' id_permiso=permiso.id id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                          </div>
                         </div>
+                      </div>
                     </div>
 
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
-
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
 
-{% endif %}
+  {% endif %}
 
-      {% endblock content %}
+  {% endblock content %}
