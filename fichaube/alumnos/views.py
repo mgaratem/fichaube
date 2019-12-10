@@ -99,11 +99,16 @@ def borrarAlumno(request, id_alumno=None):
 
     if request.method == 'GET':
         try:
-            alumno = Alumno.objects.get(id=id_alumno)
-            alumno.delete()
+            fichaAlumno = Ficha.objects.filter(alumno_id = id_alumno)
 
-            messages.success(request, '¡Alumno eliminado con éxito!')
-            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+            if not fichaAlumno:
+                alumno = Alumno.objects.get(id=id_alumno)
+                alumno.delete()
+                messages.success(request, '¡Alumno eliminado con éxito!')
+                return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+            else:
+                messages.error(request, "¡No se puede eliminar a un alumno con ficha clínica vigente!")
+                return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
 
         except ObjectDoesNotExist:
             messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
@@ -170,7 +175,8 @@ def verAlumno(request, id_alumno=None):
                 if Ficha.objects.filter(alumno_id = id_alumno):
                     ficha = Ficha.objects.get(alumno_id = id_alumno)
                     registros = Registro.objects.filter(ficha_id = ficha.id).order_by('-fecha_creacion')
-                    permisos = Permiso.objects.filter(ficha_id = ficha.id )
+                    permisos = Permiso.objects.filter(ficha_id = ficha.id)
+
                     return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos})
                 return render(request, template, {'alumno': alumno})
 

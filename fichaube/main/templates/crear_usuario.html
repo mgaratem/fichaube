@@ -1,5 +1,5 @@
 {% extends 'home.html' %}
-
+{% load auth_extras %}
 
 {% block content %}
 
@@ -80,10 +80,14 @@
                 <select class="custom-select mr-sm-2" id="inputTipoUsuario" name="inputTipoUsuario" onchange='CheckUsuario(this.value);' required>
                   <option value="" selected>Elegir...</option>
                   <option value="1">Profesional</option>
+                  {% if request.user|has_group:"Coordinador" or request.user.is_superuser%}
                   <option value="2">Administrativo</option>
                   <option value="3">Mantenedor</option>
+                  {% endif %}
                   <option value="4">Asistente Social</option>
+                  {% if request.user.is_superuser%}
                   <option value="5">Coordinador</option>
+                  {% endif %}
                 </select>
               </div>
             </div>
