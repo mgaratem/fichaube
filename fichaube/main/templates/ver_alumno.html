@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
-
+{% load auth_extras %}
 
 {% block content %}
 
@@ -101,6 +101,7 @@
     </div>
 </div>
 
+{% if request.user|has_group:"Coordinador" or request.user|has_group:"Profesional" or request.user|has_group:"Asistente Social" or request.user.is_superuser%}
 <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
         <div class="card-content">
@@ -108,64 +109,100 @@
                 <h3>Ficha Clínica</h3>
                 </br>
                 </br>
+
                 {% if not ficha %}
+
                 <p>Este alumno aún no tiene ficha clínica creada.</p>
 
                 <p>¡Ups! Usted no tiene permisos para visualizar la ficha clínica.</p>
+
                 {% else %}
                 <div class="row">
+                  <form method="POST" style="width:100%">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h6>Observaciones:</h6>
+                        <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
+                        <br>
+                        <h6>Decisión Alumno:</h6>
+                        <textarea name="inputDecision" rows="3" cols="70"></textarea>
+                      </div>
+                      <div class="col-sm-4">
+                        <h6>Motivo Atención:</h6>
+                        <select class="custom-select mr-sm-2" name="inputMotivo" required>
+                          <option value="" selected>Elegir...</option>
+                          <option value="1">Profesional</option>
+                          <option value="2">Administrativo</option>
+                          <option value="3">Mantenedor</option>
+                          <option value="4">Asistente Social</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
 
-                    <table class="table table-hover table-bordered">
+                <hr>
+
+                <div class="row">
+                    <table class="table table-hover table-bordered" style="width:100%">
                         <thead class="table-head">
                             <th>Fecha</th>
                             <th>Motivo de Atención</th>
                             <th>Observaciones</th>
-                            <th>Profesional (Rut)</th>
+                            <th>Decisión Alumno</th>
+                            <th>Profesional</th>
                         </thead>
                         <tbody>
                             {% for registro in registros %}
                             <tr>
-                                <td>{{alumno.rut}}</td>
-                                <td>{{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}</td>
-                                <td>
-                                    <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
-                                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
-                                    </a>
-                                    <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
-                                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
-                                    </a>
-                                </td>
-
-                                <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">¡Atención!</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>¿Está seguro que quiere eliminar al alumno?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a href="{% url 'alumnos:borrarAlumno' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <td style="width:20%">{{registro.get_fecha}}</td>
+                                <td style="width:20%">{{registro.motivo_atencion}}</td>
+                                <td style="width:20%">{{registro.descripcion_atencion}}</td>
+                                <td style="width:20%">{{registro.decision_alumno}}</td>
+                                <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                             </tr>
                             {% endfor %}
-
                         </tbody>
                     </table>
+                  </div>
+
                 {% endif %}
+
             </div>
         </div>
     </div>
 </div>
+{% endif %}
+
+{% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+        <div class="card-content">
+            <div class="cuadrotrans">
+                <h3>Permisos</h3>
+                </br>
+                </br>
+                {% if %}
+                <table class="table table-hover table-bordered">
+                    <thead class="table-head">
+                        <th>Profesional</th>
+                    </thead>
+                    <tbody>
+                      {% for permiso in permisos %}
+                      <tr>
+                          <td>{{permiso.get_nombre}}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+{% endif %}
 
 {% endblock content %}

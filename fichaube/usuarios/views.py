@@ -9,7 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from areas.models import Especialidad, Area, UsuarioEspecialidad
 from usuarios.models import Usuario
 from datetime import date, datetime
@@ -24,7 +24,7 @@ from django.core.mail import send_mail
 #############---------FUNCION CREATE USER DJANGO------#################
 
 @login_required()
-def crear_user(request, nombre=None, apellido=None, email=None):
+def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None):
     if request.method == 'POST':
         try:
             a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
@@ -52,6 +52,33 @@ def crear_user(request, nombre=None, apellido=None, email=None):
                                                 first_name=primerNombre,
                                                 last_name=primerApellido)
                 user.save()
+
+                if tipoUsuario == "1":
+                    #PROFESIONAL
+                    group = Group.objects.get(name='Profesional')
+                    group.user_set.add(user)
+
+                elif tipoUsuario == "2":
+                    #ADMINISTRATIVO
+                    group = Group.objects.get(name='Administrativo')
+                    group.user_set.add(user)
+
+                elif tipoUsuario == "3":
+                    #MANTENEDOR
+                    group = Group.objects.get(name='Mantenedor')
+                    group.user_set.add(user)
+
+                elif tipoUsuario == "4":
+                    #ASISTENTE SOCIAL
+                    group = Group.objects.get(name='Asistente Social')
+                    group.user_set.add(user)
+
+                elif tipoUsuario == "5":
+                    #COORDINADOR
+                    group = Group.objects.get(name='Coordinador')
+                    group.user_set.add(user)
+
+
                 send_mail(
                     'Password FichaUbe',
                     'Acá tiene su contraseña de su cuenta en FichaUbe: ' + password,
@@ -150,8 +177,10 @@ def crear_usuario(request):
                     usuario.mantenedor = True
                 elif tipoUsuario == "4":
                     usuario.asistente_social = True
+                elif tipoUsuario == "5":
+                    usuario.coordinador = True
 
-                usuario.user = crear_user(request, nombre, apellidos, correo)
+                usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
                 usuario.save()
 
                 if especialidadesElegidas:
@@ -169,6 +198,8 @@ def crear_usuario(request):
                 return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id] ))
 
             else:
+                usuario = usuarioExiste[0]
+                usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
                 messages.error(request,'¡Este usuario ya existe!')
                 return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 

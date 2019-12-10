@@ -9,3 +9,6 @@ from fichas.models import Ficha
 class Permiso(models.Model):
   usuario =  models.ForeignKey(Usuario, on_delete = models.CASCADE)
   ficha = models.ForeignKey(Ficha, on_delete = models.CASCADE)
+
+  def get_nombre(self):
+      return self.usuario.nombre + " " + self.usuario.apellidos

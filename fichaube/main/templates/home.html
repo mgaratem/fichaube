@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load static %}
+{% load auth_extras %}
 
 <!DOCTYPE html>
 <html>
@@ -39,27 +40,27 @@
           </a>
         </div>
       </div>
-
       <ul class="list-unstyled components">
         <li class="divider"></li>
-        {% if request.user.is_superuser %}
+        {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Profesional" or request.user|has_group:"Asistente Social" or request.user.is_superuser %}
         <li>
           <a href="#fichasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
           <ul class="collapse list-unstyled show" id="fichasSubmenu">
             <li>
               <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
             </li>
+            {% if not request.user|has_group:"Profesional" or not request.user|has_group:"Asistente Social" or request.user.is_superuser %}
             <li>
               <a href="{% url 'fichas:crearFicha' %}">Crear nueva ficha</a>
             </li>
             <li>
-              <a href="{% url 'alumnos:crear_alumno' %}">Agregar nuevo alumno</a>
+              <a href="{% url 'alumnos:crear_alumno' %}">Agregar alumno</a>
             </li>
+            {% endif %}
           </ul>
         </li>
         {% endif %}
-
-        {% if request.user.is_superuser %}
+        {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
         <li>
           <a href="#reporteSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
           <ul class="collapse list-unstyled show" id="reporteSubmenu">
@@ -69,16 +70,16 @@
           </ul>
         </li>
         {% endif %}
-        {% if request.user.is_superuser %}
+        {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Mantenedor" or request.user.is_superuser %}
         <li>
           <a href="#mantenedorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
           <ul class="collapse list-unstyled show" id="mantenedorSubmenu">
-
+            {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser%}
             <li>
-              <a href="{% url 'usuarios:buscarUsuario' %}">Buscar Usuarios</a>
+              <a href="{% url 'usuarios:buscarUsuario' %}">Buscar usuarios</a>
             </li>
             <li>
-              <a href="{% url 'usuarios:crear_usuario' %}">Agregar Usuarios</a>
+              <a href="{% url 'usuarios:crear_usuario' %}">Agregar usuarios</a>
             </li>
             <li>
               <a href="#">Áreas</a>
@@ -86,19 +87,18 @@
             <li>
               <a href="#">Especialidades</a>
             </li>
-            <li>
-              <a href="{% url 'alumnos:importAlumnos' %}">Cargar Alumnos</a>
-            </li>
             {% endif %}
-
+            <li>
+              <a href="{% url 'alumnos:importAlumnos' %}">Cargar alumnos</a>
+            </li>
           </ul>
         </li>
-
+        {% endif %}
         <li>
           <a href="#cuentaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cuenta</a>
           <ul class="collapse list-unstyled show" id="cuentaSubmenu">
             <li>
-              <a href="{% url 'cambiar_pass' %}">Cambiar Contraseña</a>
+              <a href="{% url 'cambiar_pass' %}">Cambiar contraseña</a>
             </li>
           </ul>
         </li>

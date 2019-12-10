@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, render
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from datetime import date, datetime
 import logging
 from django.urls import reverse
@@ -20,6 +20,7 @@ import re
 
 from alumnos.models import Alumno
 from fichas.models import Ficha, Registro
+from permisos.models import Permiso
 
 # Create your views here.
 
@@ -160,20 +161,24 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 def verAlumno(request, id_alumno=None):
 
     template = "ver_alumno.html"
+    current_user = request.user
 
-    if request.method == 'GET':
-        try:
-            alumno = Alumno.objects.get(id = id_alumno)
-            if Ficha.objects.filter(alumno_id = id_alumno):
-                ficha = Ficha.objects.get(alumno_id = id_alumno)
-                registros = Registro.objects.filter(ficha_id = ficha.id)
-                return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros})
-            return render(request, template, {'alumno': alumno})
+    if not current_user.groups.filter(name__in=['Mantenedor']).exists():
+        if request.method == 'GET':
+            try:
+                alumno = Alumno.objects.get(id = id_alumno)
+                if Ficha.objects.filter(alumno_id = id_alumno):
+                    ficha = Ficha.objects.get(alumno_id = id_alumno)
+                    registros = Registro.objects.filter(ficha_id = ficha.id).order_by('-fecha_creacion')
+                    permisos = Permiso.objects.filter(ficha_id = ficha.id )
+                    return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos})
+                return render(request, template, {'alumno': alumno})
 
-        except Exception as e:
-            messages.error(request,"No fue posible mostrar alumno. "+repr(e))
-            return render(request, "home.html")
-
+            except Exception as e:
+                messages.error(request,"No fue posible mostrar alumno. "+repr(e))
+                return render(request, "home.html")
+    else:
+        return render(request, "home.html")
 
 
 
