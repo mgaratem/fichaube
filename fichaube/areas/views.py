@@ -12,13 +12,13 @@ from django.http import JsonResponse
 
 # html para agregar area
 def testpancho01(request):
-    return render(request, 'agregar-Area.html',{})
+    return render(request, 'agregar_Area.html',{})
 
 # html para editar area
 def testpancho02(request, idArea):
     area = Area.objects.get(pk = idArea)
     nombreArea = area.nombreArea
-    return render(request, 'editar-Area.html', {'idArea': idArea, 'nombreArea': nombreArea})
+    return render(request, 'editar_Area.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
 # html para agregar especialidad
 def testpancho03(request):
@@ -48,7 +48,7 @@ def agregarArea(request):
         nuevaArea = Area(nombreArea=area)
         nuevaArea.save()
         del nuevaArea
-        return HttpResponseRedirect(reverse('lista-Areas'))
+        return HttpResponseRedirect(reverse('lista_Areas'))
 
 # funcion para corroborar si el area ya existe, se utiliza via AJAX
 def validarArea(request):
@@ -61,13 +61,13 @@ def validarArea(request):
 # funcion y html para listar Areas
 def listarAreas(request):
     listaAreas = Area.objects.all()
-    return render(request, 'lista-Areas.html', {"areas": listaAreas})
+    return render(request, 'lista_Areas.html', {"areas": listaAreas})
 
 # funcion para eliminar una Area dado un ID
 def eliminarArea(request, idArea):
     # idArea = request.GET.get("idArea")
     Area.objects.filter(id=idArea).delete()
-    return HttpResponseRedirect(reverse('lista-Areas'))
+    return HttpResponseRedirect(reverse('lista_Areas'))
 #******************FALTA eliminar en cascada
 
 # funcion para editar el nombre de un area
@@ -78,7 +78,7 @@ def editarArea(request):
         area = Area.objects.get(pk=idArea)
         area.nombreArea = nuevoNombreArea
         area.save()
-        return HttpResponseRedirect(reverse('lista-Areas'))
+        return HttpResponseRedirect(reverse('lista_Areas'))
 
 
 

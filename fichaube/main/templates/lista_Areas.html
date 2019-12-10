@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Lista de Áreas</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+
+        <div class="cuadro-form">
+          <table  class="table">
+            <tr>
+              <th class="table-head">Nombre Área</th>
+              <th class="table-head">Borrar</th>
+              <th class="table-head">Editar</th>
+              <th class="table-head">Especialidades</th>
+            </tr>
+            {% for area in areas %}
+            <tr>
+              <td>{{area.nombreArea}}</td>
+              <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
+              <td><a href="{% url 'editar_Area' idArea=area.id %}">Editar</a></td>
+              <td><a href="{% url 'lista-Especialidades' idArea=area.id %}">Especialidades</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          <div class="row">
+            <div class="col-md-3 ml-md-auto">
+              <button id="botonAgregarArea" type="submit" class="btn btn-primary" onclick="window.location.href = 'agregar_Area';"> Agregar Área</button
+            </div>
+            <div class="col-md-3 ml-md-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
