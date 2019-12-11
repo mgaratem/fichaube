@@ -27,8 +27,8 @@ urlpatterns = [
     # html's, estos despues se eliminaran*************
     path('agregar_Area', areas.views.testpancho01, name="agregar_Area"),
     path('editar_Area/<int:idArea>', areas.views.testpancho02, name='editar_Area'),
-    path('agregar-Especialidad', areas.views.testpancho03, name="agregar-Especialidad"),
-    path('editar-Especialidad/<int:idEspecialidad>/<int:idArea>', areas.views.testpancho04, name="editar-Especialidad"),
+    path('agregar_Especialidad', areas.views.testpancho03, name="agregar_Especialidad"),
+    path('editar_Especialidad/<int:idEspecialidad>/<int:idArea>', areas.views.testpancho04, name="editar_Especialidad"),
 
     # controladores de Areas
     path('agregarArea', areas.views.agregarArea, name="agregarArea"),
@@ -39,12 +39,12 @@ urlpatterns = [
     path('editar_Area/ajax/validarArea', areas.views.validarArea, name="validarArea"), # esta URL deberia eliminarla, y aprovechar la de mas arriba usando regex !!!
 
     # controladores de Especialidades
-    path('lista-Especialidades/<int:idArea>', areas.views.listarEspecialidades, name="lista-Especialidades"),
+    path('lista_Especialidades/<int:idArea>', areas.views.listarEspecialidades, name="lista_Especialidades"),
     path('agregarEspecialidad', areas.views.agregarEspecialidad, name="agregarEspecialidad"),
     path('ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad"),
     path('eliminarEspecialidad/<int:idEspecialidad>/<int:idArea>', areas.views.eliminarEspecialidad, name="eliminarEspecialidad"),
     path('editarEspecialidad', areas.views.editarEspecialidad, name="editarEspecialidad"),
-    re_path(r'^editar-Especialidad/[0-9]+/ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad")
+    re_path(r'^editar_Especialidad/[0-9]+/ajax/validarEspecialidad', areas.views.validarEspecialidad, name="validarEspecialidad")
 
 
 ]

@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Lista de Especialidades</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+
+        <div class="cuadro-form">
+          <table  class="table">
+            <tr>
+              <th class="table-head">Nombre Especialidad</th>
+              <th class="table-head">Borrar</th>
+              <th class="table-head">Editar</th>
+            </tr>
+            {% for especialidad in especialidades %}
+            <tr>
+              <td>{{ especialidad.nombreEspecialidad }}</td>
+              <td><a href="{% url 'eliminarEspecialidad' idEspecialidad=especialidad.id idArea=idArea %}">Borrar</a> </td>
+              <td><a href="{% url 'editar_Especialidad' idEspecialidad=especialidad.id idArea=idArea %}">Editar</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          <form action="{% url 'agregar_Especialidad' %}" method="post">{% csrf_token %}
+            <input type="hidden" value={{ idArea }} name="idArea">
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <button id="botonAgregarArea" type="submit" class="btn btn-primary">Agregar Especialidad</button
+              </div>
+              <div class="col-md-3 ml-md-auto"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
