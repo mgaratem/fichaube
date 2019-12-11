@@ -167,28 +167,60 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 @login_required()
 def verAlumno(request, id_alumno=None):
 
-    template = "ver_alumno.html"
     current_user = request.user
-
     if not current_user.groups.filter(name__in=['Mantenedor']).exists():
+
+        template = "ver_alumno.html"
+        if Ficha.objects.filter(alumno_id = id_alumno):
+            ficha = Ficha.objects.get(alumno_id = id_alumno)
+
         if request.method == 'GET':
             try:
                 alumno = Alumno.objects.get(id = id_alumno)
-                if Ficha.objects.filter(alumno_id = id_alumno):
-                    ficha = Ficha.objects.get(alumno_id = id_alumno)
+                if ficha:
                     registros = Registro.objects.filter(ficha_id = ficha.id).order_by('-fecha_creacion')
                     permisos = Permiso.objects.filter(ficha_id = ficha.id)
                     if current_user.groups.filter(name__in=['Profesional', 'Coordinador', 'Asistente Social']).exists():
                         profesional = Usuario.objects.get(user = current_user)
                         especialidadesUsuario = UsuarioEspecialidad.objects.filter(usuario_id = profesional.id)
-                        return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos, 'especialidades':especialidadesUsuario})
+                        return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos, 'especialidades':especialidadesUsuario, 'profesional':profesional })
                     else:
                         return render(request, template, {'alumno': alumno, 'ficha': ficha, 'registros': registros, 'permisos': permisos})
-                return render(request, template, {'alumno': alumno})
+                else:
+                    return render(request, template, {'alumno': alumno})
 
             except Exception as e:
                 messages.error(request,"No fue posible mostrar alumno. "+repr(e))
                 return render(request, "home.html")
+
+        if request.method == 'POST':
+
+            try:
+                registro = Registro()
+                registro.descripcion_atencion = request.POST.get('inputObservaciones')
+                registro.decision_alumno = request.POST.get('inputDecision')
+                if request.POST.get("inputMotivo") == "Asistente Social":
+                    registro.motivo_atencion = "Asistente Social"
+                    registro.es_asistencia_social = True
+                else:
+                    registro.motivo_atencion = Especialidad.objects.get(id=request.POST.get('inputMotivo')).nombreEspecialidad
+                    if registro.motivo_atencion == "Asistente Social":
+                        registro.es_asistencia_social = True
+                registro.ficha = ficha
+                profesional = Usuario.objects.get(rut = request.POST.get('inputRutProfesional'))
+                registro.profesional = profesional
+
+                registro.save()
+
+                del registro
+                messages.success(request, '¡Registro ingresado exitosamente!')
+                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+            except Exception as e:
+                messages.error(request,"No fue posible ingresar registro. "+repr(e))
+                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+
     else:
         return render(request, "home.html")
 
