@@ -177,7 +177,8 @@ def verAlumno(request, id_alumno=None):
         if request.method == 'GET':
             try:
                 alumno = Alumno.objects.get(id = id_alumno)
-                if ficha:
+                if Ficha.objects.filter(alumno_id = id_alumno):
+                    ficha = Ficha.objects.get(alumno_id = id_alumno)
                     registros = Registro.objects.filter(ficha_id = ficha.id).order_by('-fecha_creacion')
                     permisos = Permiso.objects.filter(ficha_id = ficha.id)
                     if current_user.groups.filter(name__in=['Profesional', 'Coordinador', 'Asistente Social']).exists():
