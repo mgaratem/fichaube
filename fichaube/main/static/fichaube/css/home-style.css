@@ -240,7 +240,8 @@ ul ul a {
 #sidebarCollapse {
   width: 40px;
   height: 40px;
-  background-color: #339fc3;
+  /*background-color: #339fc3;*/
+  background-color: rgba(84,129,201,.42);
   cursor: pointer;
 }
 
@@ -274,6 +275,11 @@ ul ul a {
 
 #navegador-superior {
   color: #fff;
+  background-image: url('../imagen/portadacc.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 /* Fixes dropdown menus placed on the right side */
@@ -289,6 +295,10 @@ textarea {
   outline: none;
   resize: none;
   border: 1px solid #4e4a47;
+}
+
+#cerrarSesion {
+  background-color: rgba(84,129,201,.42);
 }
 
 /* ---------------------------------------------------

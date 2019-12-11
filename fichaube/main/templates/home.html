@@ -106,12 +106,17 @@
           </ul>
         </li>
       </ul>
+      <div class="navbar-header">
+        <center>
+          <img src="{% static 'fichaube/imagen/dae-PUCV.png' %}" class="img-responsive" alt="Responsive image" width="150">
+        </center>
+      </div>
     </nav>
 
     <!-- Page Content Holder -->
     <div id="content">
 
-      <nav id="navegador-superior" class="navbar navbar-expand-lg bg">
+      <nav id="navegador-superior" class="navbar navbar-expand-lg bg" id="cabecera">
         <div class="container-fluid">
 
           <button type="button" id="sidebarCollapse" class="navbar-btn">
@@ -119,12 +124,10 @@
             <span></span>
             <span></span>
           </button>
-          <div class="navbar-header">
-            <img src="{% static 'fichaube/imagen/dae-PUCV.png' %}" class="img-responsive" alt="Responsive image" width="200">
-          </div>
+
 
           <div class="row">
-            <div class="col-md-4 ml-sm-auto">
+            <div class="col-md-4 ml-sm-auto" id="cerrarSesion">
               <a href="{% url 'logout' %}" style="font-weight:50; color:#ffff;">
                 <i class="zmdi zmdi-sign-in" style="font-size:25px; color:#ffff;"></i>Cerrar Sesion
               </a>

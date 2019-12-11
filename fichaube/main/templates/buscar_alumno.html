@@ -4,133 +4,138 @@
 {% block content %}
 
 <div class="col-sm-12 col-sm-offset-1">
-    <div class="header text-center">
-        <h2>Buscar Alumnos</h2>
-        </br>
-    </div>
+  <div class="header text-center">
+    <h2>Buscar Alumnos</h2>
+    </br>
+  </div>
 </div>
 
 {% if messages %}
-    {% for message in messages %}
-    {% if  message.tags == "error" %}
-      <div class="alert alert-danger" role="alert">
-    {% elif message.tags == "info" %}
-      <div class="alert alert-info" role="alert">
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% elif message.tags == "info" %}
+  <div class="alert alert-info" role="alert">
     {% else %}
-      <div class="alert alert-success" role="alert">
-    {% endif %}
-        {{message}}
-      </div>
-    {% endfor %}
-{% endif %}
-
-{% if not alumnos %}
-
-<form method="POST">
-  {% csrf_token %}
-  <div class="cuadro-wrap">
-     <div class="cuadro-search">
-        <input name="inputSearch" type="text" class="searchTerm" placeholder="Ingrese rut o apellidos...">
-        <button type="submit" class="searchButton" id="botonBuscar">
-          <i class="fa fa-search"></i>
-       </button>
-     </div>
-  </div>
-</form>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div class="container">
-    <div class="row align-items-end">
-      <div class="col-6 col-md-5"></div>
-      <div class="col-6 col-md-5">
-        <div id="loading" class="spinner-border text-primary" style="display: none; width: 2rem; height: 2rem;"></div>
-      </div>
-      <div class="col-6 col-md-3"></div>
+    <div class="alert alert-success" role="alert">
+      {% endif %}
+      {{message}}
     </div>
-</div>
+    {% endfor %}
+    {% endif %}
 
-{% else %}
+    {% if not alumnos %}
 
-<div class="col-sm-12 col-sm-offset-1">
-    <div class="card">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-6 col-md-4"></div>
+        <div class="col-6 col-md-4">
+          <div class="cuadro-search">
+            <input name="inputSearch" type="text" class="searchTerm" placeholder="Ingrese rut o apellidos...">
+            <button type="submit" class="searchButton" id="botonBuscar">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-6 col-md-4"></div>
+
+      </div>
+    </form>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+      <div class="row align-items-end">
+        <div class="col-6 col-md-5"></div>
+        <div class="col-6 col-md-5">
+          <div id="loading" class="spinner-border text-primary" style="display: none; width: 2rem; height: 2rem;"></div>
+        </div>
+        <div class="col-6 col-md-3"></div>
+      </div>
+    </div>
+
+    {% else %}
+
+    <div class="col-sm-12 col-sm-offset-1">
+      <div class="card">
         <div class="card-content">
 
-            <div class="row cuadro-filtro">
-                <div class="col-xs-6 col-md-4">
-                    <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
-                </div>
+          <div class="row cuadro-filtro">
+            <div class="col-xs-6 col-md-4">
+              <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
             </div>
+          </div>
 
 
-            <div class="cuadro-tabla">
-                <div class="row">
+          <div class="cuadro-tabla">
+            <div class="row">
 
-                    <table class="table table-hover table-bordered">
-                        <thead class="table-head">
-                            <th>Rut</th>
-                            <th>Nombre Alumno</th>
-                            <th>Acciones</th>
-                        </thead>
-                        <tbody id="tablaBusqueda">
-                            {% for alumno in alumnos %}
-                            <tr>
-                                <td>{{alumno.rut}}</td>
-                                <td>{{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}</td>
-                                <td>
-                                    <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
-                                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
-                                    </a>
-                                    <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
-                                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
-                                    </a>
-                                </td>
+              <table class="table table-hover table-bordered">
+                <thead class="table-head">
+                  <th>Rut</th>
+                  <th>Nombre Alumno</th>
+                  <th>Acciones</th>
+                </thead>
+                <tbody id="tablaBusqueda">
+                  {% for alumno in alumnos %}
+                  <tr>
+                    <td>{{alumno.rut}}</td>
+                    <td>{{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}</td>
+                    <td>
+                      <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
+                        <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
+                      </a>
+                      <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
+                        <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
+                      </a>
+                    </td>
 
-                                <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">¡Atención!</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>¿Está seguro que quiere eliminar al alumno?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a href="{% url 'alumnos:borrarAlumno' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">¡Atención!</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>¿Está seguro que quiere eliminar al alumno?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a href="{% url 'alumnos:borrarAlumno' id_alumno=alumno.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                            </tr>
-                            {% endfor %}
+                  </tr>
+                  {% endfor %}
 
-                        </tbody>
-                    </table>
+                </tbody>
+              </table>
 
-                </div>
             </div>
+          </div>
 
 
         </div>
+      </div>
     </div>
-</div>
-{% endif %}
+    {% endif %}
 
-<script>
-  document.getElementById("botonBuscar").addEventListener("click", function() {
-    var div_loading = document.getElementById('loading');
-    div_loading.style.display='block';
-  });
-</script>
+    <script>
+      document.getElementById("botonBuscar").addEventListener("click", function() {
+        var div_loading = document.getElementById('loading');
+        div_loading.style.display = 'block';
+      });
+    </script>
 
-{% endblock content %}
+    {% endblock content %}

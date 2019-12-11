@@ -28,13 +28,17 @@
 
 <form method="POST">
   {% csrf_token %}
-  <div class="cuadro-wrap">
-     <div class="cuadro-search">
+  <div class="row">
+    <div class="col-6 col-md-4"></div>
+    <div class="col-6 col-md-4">
+      <div class="cuadro-search">
         <input name="inputSearch" type="text" class="searchTerm" placeholder="Ingrese rut o apellidos...">
         <button type="submit" class="searchButton" id="botonBuscar">
           <i class="fa fa-search"></i>
-       </button>
-     </div>
+        </button>
+      </div>
+    </div>
+    <div class="col-6 col-md-4"></div>
   </div>
 </form>
 
