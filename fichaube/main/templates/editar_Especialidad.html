@@ -1,0 +1,101 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Editar Especialidad</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+
+
+        <div class="cuadro-form">
+
+
+
+          <form id="formularioNuevoNombreEspecialidad" action={% url 'editarEspecialidad' %} method="post"> {% csrf_token %}
+            <div class="form-group row">
+              <label for="nuevoNombreEspecialidad" class="col-sm-2 col-form-label">Nuevo nombre de la Especialidad:</label>
+              <div class="col-sm-6">
+                <input id="nuevoNombreEspecialidad" type="text" class="form-control"  name="nuevoNombreEspecialidad" placeholder="Nombre de la Especialidad" required>
+                <input type="hidden" id="idEspecialidad" type="number" name="idEspecialidad" value={{ idEspecialidad }}>
+                <input type="hidden" id="idArea" type="number" name="idArea" value={{ idArea }}>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-3 ml-md-auto">
+                <input class="btn btn-primary"type="submit" value="Registrar">
+              </div>
+              <div class="col-md-3 ml-md-auto"></div>
+            </div>
+
+
+          </form>
+
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+           {% block javascript %}
+             <script>
+
+             //  validar formulario
+             $('#formularioNuevoNombreEspecialidad').submit(function(e){
+               e.preventDefault();
+               var form = this;
+               // var direccion = "fichaube/editar-Especialidad/" + {{ idEspecialidad }} +"/ajax/validarEspecialidad"
+               var especialidad = $('#nuevoNombreEspecialidad').val();
+               especialidad = especialidad.trim();
+               // formulario no esta vacio
+               if (especialidad == null || especialidad == ""){
+                 alert('Debe ingresar un nombre para la Especialidad');
+                 return false;
+               }
+               else{
+                 // codigo AJAX  para comprobar si la Especialidad existe previamente
+                 $.ajax({
+                   url: "ajax/validarEspecialidad",
+                   data: {
+                     'especialidad': especialidad
+                   },
+                   dataType: 'json',
+                   success: function (data) {
+                     if (data.is_taken){
+                       alert('La Especialidad ingresada ya se encuentra registrada');
+                       return false;
+                     }
+                     else{
+                       form.submit();
+                     }
+                 }
+               }); // fin AJAX
+             }
+           });
+
+             </script>
+           {% endblock %}
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}

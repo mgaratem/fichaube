@@ -26,13 +26,13 @@ def testpancho03(request):
         idArea = request.POST.get("idArea")
         area = Area.objects.get(pk = idArea)
         nombreArea = area.nombreArea
-        return render(request, 'agregar-Especialidad.html', {'idArea': idArea, 'nombreArea': nombreArea})
+        return render(request, 'agregar_Especialidad.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
 # html para editar una especialidad
 def testpancho04(request, idEspecialidad, idArea):
     especialidad = Especialidad.objects.get(pk = idEspecialidad)
     nombreEspecialidad = especialidad.nombreEspecialidad
-    return render(request, 'editar-Especialidad.html',{'idArea': idArea, 'nombreEspecialidad': nombreEspecialidad, 'idEspecialidad': idEspecialidad})
+    return render(request, 'editar_Especialidad.html',{'idArea': idArea, 'nombreEspecialidad': nombreEspecialidad, 'idEspecialidad': idEspecialidad})
 
 
 
@@ -96,7 +96,7 @@ def editarArea(request):
 # funcion para listar todas las especialidades
 def listarEspecialidades(request, idArea):
     listaEspecialides = Especialidad.objects.filter(area_id = idArea)
-    return render(request, 'lista-Especialidades.html', {"especialidades": listaEspecialides, "idArea": idArea})
+    return render(request, 'lista_Especialidades.html', {"especialidades": listaEspecialides, "idArea": idArea})
 
 # funcion para agregar una nueva especialidad
 def agregarEspecialidad(request):
@@ -108,7 +108,7 @@ def agregarEspecialidad(request):
         nuevaEspecialidad.area = area
         nuevaEspecialidad.save()
         del nuevaEspecialidad
-        direccion = "lista-Especialidades/" + idArea
+        direccion = "lista_Especialidades/" + idArea
         return redirect(direccion)
     return True
 
@@ -124,7 +124,7 @@ def validarEspecialidad(request):
 # funcion para eliminar una Especialidad dado un ID
 def eliminarEspecialidad(request, idEspecialidad, idArea):
     Especialidad.objects.filter(id=idEspecialidad).delete()
-    direccion = "/fichaube/lista-Especialidades/" + str(idArea)
+    direccion = "/fichaube/lista_Especialidades/" + str(idArea)
     return redirect(direccion)
 
 # funcion para editar el nombre de una especialidad
@@ -136,5 +136,5 @@ def editarEspecialidad(request):
         especialidad = Especialidad.objects.get(pk=idEspecialidad)
         especialidad.nombreEspecialidad = nuevoNombreEspecialidad
         especialidad.save()
-        direccion = "/fichaube/lista-Especialidades/" + str(idArea)
+        direccion = "/fichaube/lista_Especialidades/" + str(idArea)
         return redirect(direccion)
