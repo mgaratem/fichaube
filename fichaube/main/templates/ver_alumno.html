@@ -28,6 +28,7 @@
       <div class="card-content">
         <div class="cuadrotrans">
           <h3>Datos personales</h3>
+          {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
           <div class="row">
             <div class="col-auto mr-auto"></div>
             <div class="col-auto">
@@ -36,6 +37,7 @@
               </a>
             </div>
           </div>
+          {% endif %}
           </br>
           </br>
           <div class="row">
@@ -162,7 +164,7 @@
 
           <div style="overflow-x:auto;">
             <h4>Registros</h4>
-            <table class="table table-hover table-bordered" style="width:100%;">
+            <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
                 <th>Motivo de Atención</th>
@@ -217,7 +219,7 @@
           </br>
 
           <div class="row">
-            <form method="POST" style="width:100%">
+            <form action="{% url 'fichas:crearRegistro' id_alumno=alumno.id %}" method="POST" style="width:100%">
               {% csrf_token %}
               <div class="row">
                 <div class="col-sm-6">
@@ -256,7 +258,7 @@
 
           <div style="overflow-x:auto;">
             <h4>Registros</h4>
-            <table class="table table-hover table-bordered" style="width:100%;">
+            <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
                 <th>Motivo de Atención</th>

@@ -8,7 +8,6 @@ from django.conf.urls.static import static
 # revisar esto, ya que tengo dudas con los import de views************************************************************************
 import areas.views
 
-
 urlpatterns = [
     path('home/', views.index, name='home'),
     path('login/', auth_views.LoginView.as_view(), name="login"),

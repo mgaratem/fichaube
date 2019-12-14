@@ -1,5 +1,6 @@
 {% extends 'home.html' %}
 {% load staticfiles %}
+{% load auth_extras %}
 
 {% block content %}
 
@@ -75,7 +76,7 @@
           <div class="cuadro-tabla">
             <div class="row">
 
-              <table class="table table-hover table-bordered">
+              <table class="table table-hover table-bordered sortable">
                 <thead class="table-head">
                   <th>Rut</th>
                   <th>Nombre Alumno</th>
@@ -90,11 +91,14 @@
                       <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
                         <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
                       </a>
+                      {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
                       <a href="#modalDelete{{alumno.rut}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover">
                         <i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i>
                       </a>
+                      {% endif %}
                     </td>
 
+                    {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
                     <div id="modalDelete{{alumno.rut}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <!-- Modal content-->
@@ -115,6 +119,7 @@
                         </div>
                       </div>
                     </div>
+                    {% endif %}
 
                   </tr>
                   {% endfor %}

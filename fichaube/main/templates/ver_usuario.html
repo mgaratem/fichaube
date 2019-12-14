@@ -1,6 +1,6 @@
 {% extends 'home.html' %}
 {% load static %}
-
+{% load auth_extras %}
 
 {% block content %}
 
@@ -30,14 +30,38 @@
         <div class="card-content">
             <div class="cuadrotrans">
                 <h3>Datos personales</h3>
-                <div class="row">
-                  <div class="col-auto mr-auto"></div>
-                  <div class="col-auto">
-                    <a href="{% url 'usuarios:updateUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
-                      <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
-                    </a>
+                {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
+                  {% if request.user|has_group:"Coordinador" and not usuario.coordinador %}
+                  <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                      <a href="{% url 'usuarios:updateUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
+                        <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
+                      </a>
+                    </div>
                   </div>
-                </div>
+                  {% endif %}
+                  {% if request.user|has_group:"Administrativo" and not usuario.coordinador and not usuario.administrativo and not usuario.mantenedor %}
+                  <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                      <a href="{% url 'usuarios:updateUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
+                        <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
+                      </a>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if request.user.is_superuser %}
+                  <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                      <a href="{% url 'usuarios:updateUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Editar" rel="popover" data-placement="bottom" data-trigger="hover">
+                        <i class="zmdi zmdi-edit" style="font-size:20px; color:#339fc3;"></i>
+                      </a>
+                    </div>
+                  </div>
+                  {% endif %}
+                {% endif %}
                 </br>
                 </br>
                 <div class="row">

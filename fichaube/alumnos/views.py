@@ -30,66 +30,75 @@ from areas.models import UsuarioEspecialidad, Especialidad, Area
 
 @login_required()
 def crear_alumno(request):
-    template = "crear_alumno.html"
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == 'GET':
-        return render(request, template)
+        template = "crear_alumno.html"
 
-    if request.method == 'POST':
-        try:
+        if request.method == 'GET':
+            return render(request, template)
 
-            nombre_alumno = request.POST.get('inputNombre')
-            apellidos_paterno = request.POST.get('inputApellidoPaterno')
-            apellidos_materno = request.POST.get('inputApellidoMaterno')
-            txt_rut =  request.POST.get('inputRut')
-            rut = txt_rut.replace(".", "")
-            tipoDocumento = request.POST.get('inputTipoDocumento')
-            fecha_nacimiento = request.POST.get('inputFechaNacimiento')
-            sexo = request.POST.get('inputSexo')
-            correo = request.POST.get('inputCorreo')
-            carrera = request.POST.get('inputCarrera')
-            domicilio = request.POST.get('inputDomicilio')
-            #ocupacion = request.POST.get('inputOcupacion')
-            representante = request.POST.get('inputRepresentante')
-            prevision = request.POST.get('inputPrevision')
+        if request.method == 'POST':
+            try:
+
+                nombre_alumno = request.POST.get('inputNombre')
+                apellidos_paterno = request.POST.get('inputApellidoPaterno')
+                apellidos_materno = request.POST.get('inputApellidoMaterno')
+                txt_rut =  request.POST.get('inputRut')
+                rut = txt_rut.replace(".", "")
+                tipoDocumento = request.POST.get('inputTipoDocumento')
+                fecha_nacimiento = request.POST.get('inputFechaNacimiento')
+                sexo = request.POST.get('inputSexo')
+                correo = request.POST.get('inputCorreo')
+                carrera = request.POST.get('inputCarrera')
+                domicilio = request.POST.get('inputDomicilio')
+                #ocupacion = request.POST.get('inputOcupacion')
+                representante = request.POST.get('inputRepresentante')
+                prevision = request.POST.get('inputPrevision')
 
 
-            alumnoExiste = Alumno.objects.filter(rut=rut)
+                alumnoExiste = Alumno.objects.filter(rut=rut)
 
-            if not alumnoExiste:
+                if not alumnoExiste:
 
-                alumno = Alumno()
-                alumno.nombre = nombre_alumno.upper()
-                alumno.apellido_paterno = apellidos_paterno.upper()
-                alumno.apellido_materno = apellidos_materno.upper()
-                alumno.rut = rut
-                alumno.tipoDocumento = tipoDocumento
-                alumno.fecha_nacimiento = fecha_nacimiento
-                alumno.sexo = sexo
-                alumno.correo = correo
-                alumno.carrera = carrera.upper()
-                alumno.domicilio = domicilio.upper()
-                #alumno.ocupacion = ocupacion
-                alumno.representante_legal = representante.upper()
-                alumno.prevision = prevision.upper()
+                    alumno = Alumno()
+                    alumno.nombre = nombre_alumno.upper()
+                    alumno.apellido_paterno = apellidos_paterno.upper()
+                    alumno.apellido_materno = apellidos_materno.upper()
+                    alumno.rut = rut
+                    alumno.tipoDocumento = tipoDocumento
+                    alumno.fecha_nacimiento = fecha_nacimiento
+                    alumno.sexo = sexo
+                    alumno.correo = correo
+                    alumno.carrera = carrera.upper()
+                    alumno.domicilio = domicilio.upper()
+                    #alumno.ocupacion = ocupacion
+                    alumno.representante_legal = representante.upper()
+                    alumno.prevision = prevision.upper()
 
-                alumno.save()
-                id = alumno.id
-                del alumno
-                messages.success(request, '¡Alumno agregado con éxito!')
-                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id]))
+                    alumno.save()
+                    id = alumno.id
+                    del alumno
+                    messages.success(request, '¡Alumno agregado con éxito!')
+                    return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id]))
 
-            else:
-                messages.error(request,'¡Este usuario ya existe!')
+                else:
+                    messages.error(request,'¡Este usuario ya existe!')
+                    del alumno
+                    return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
+
+            except Exception as e:
+                messages.error(request,"No fue posible crear alumno. "+repr(e))
                 del alumno
                 return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
-        except Exception as e:
-            messages.error(request,"No fue posible crear alumno. "+repr(e))
-            del alumno
             return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
-
-        return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
 
 
@@ -98,23 +107,31 @@ def crear_alumno(request):
 
 @login_required()
 def borrarAlumno(request, id_alumno=None):
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == 'GET':
-        try:
-            fichaAlumno = Ficha.objects.filter(alumno_id = id_alumno)
+        if request.method == 'GET':
+            try:
+                fichaAlumno = Ficha.objects.filter(alumno_id = id_alumno)
 
-            if not fichaAlumno:
-                alumno = Alumno.objects.get(id=id_alumno)
-                alumno.delete()
-                messages.success(request, '¡Alumno eliminado con éxito!')
+                if not fichaAlumno:
+                    alumno = Alumno.objects.get(id=id_alumno)
+                    alumno.delete()
+                    messages.success(request, '¡Alumno eliminado con éxito!')
+                    return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+                else:
+                    messages.error(request, "¡No se puede eliminar a un alumno con ficha clínica vigente!")
+                    return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+
+            except ObjectDoesNotExist:
+                messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
                 return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
-            else:
-                messages.error(request, "¡No se puede eliminar a un alumno con ficha clínica vigente!")
-                return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
-
-        except ObjectDoesNotExist:
-            messages.error(request,'ERROR - ¡No se pudo eliminar al alumno correctamente!')
-            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
 
 
 
@@ -122,41 +139,51 @@ def borrarAlumno(request, id_alumno=None):
 #############---------FUNCION MODIFICAR------#################
 
 @login_required()
-def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
-    template = "actualizar_alumno.html"
+def updateAlumno(request, id_alumno=None):
 
-    if request.method == 'GET':
-        try:
-            alumno = Alumno.objects.get(id = id_alumno)
-            return render(request, template, {'alumno': alumno})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-        except Exception as e:
-            messages.error(request,"No fue posible modificar alumno. "+repr(e))
-            return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+        template = "actualizar_alumno.html"
 
-    if request.method == 'POST':
-        try:
-            alumno = Alumno.objects.get(id = id_alumno)
+        if request.method == 'GET':
+            try:
+                alumno = Alumno.objects.get(id = id_alumno)
+                return render(request, template, {'alumno': alumno})
 
-            alumno.nombre = request.POST.get('inputNombre').upper()
-            alumno.apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
-            alumno.apellido_materno = request.POST.get('inputApellidoMaterno').upper()
-            #alumno.sexo = request.POST.get('inputSexo')
-            alumno.correo = request.POST.get('inputCorreo')
-            alumno.carrera = request.POST.get('inputCarrera')
-            alumno.domicilio = request.POST.get('inputDomicilio')
-            #alumno.ocupacion = request.POST.get('inputOcupacion')
-            alumno.representante_legal = request.POST.get('inputRepresentante')
-            alumno.prevision = request.POST.get('inputPrevision')
+            except Exception as e:
+                messages.error(request,"No fue posible modificar alumno. "+repr(e))
+                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
 
-            alumno.save()
-            messages.success(request, '¡Alumno modificado exitosamente!')
-            return HttpResponseRedirect(reverse("alumnos:updateAlumno", args=[id_alumno]))
-            #return verAlumno('get', id_alumno)
+        if request.method == 'POST':
+            try:
+                alumno = Alumno.objects.get(id = id_alumno)
 
-        except Exception as e:
-            messages.error(request,"No fue posible modificar alumno. "+repr(e))
-            return verAlumno('get', id_alumno)
+                alumno.nombre = request.POST.get('inputNombre').upper()
+                alumno.apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
+                alumno.apellido_materno = request.POST.get('inputApellidoMaterno').upper()
+                #alumno.sexo = request.POST.get('inputSexo')
+                alumno.correo = request.POST.get('inputCorreo')
+                alumno.carrera = request.POST.get('inputCarrera')
+                alumno.domicilio = request.POST.get('inputDomicilio')
+                #alumno.ocupacion = request.POST.get('inputOcupacion')
+                alumno.representante_legal = request.POST.get('inputRepresentante')
+                alumno.prevision = request.POST.get('inputPrevision')
+
+                alumno.save()
+                messages.success(request, '¡Alumno modificado exitosamente!')
+                return HttpResponseRedirect(reverse("alumnos:updateAlumno", args=[id_alumno]))
+                #return verAlumno('get', id_alumno)
+
+            except Exception as e:
+                messages.error(request,"No fue posible modificar alumno. "+repr(e))
+                return verAlumno('get', id_alumno)
 
 
 
@@ -167,6 +194,7 @@ def updateAlumno(request, id_alumno=None): #Actualizar datos alumnos
 @login_required()
 def verAlumno(request, id_alumno=None):
 
+    #PERMISOS
     current_user = request.user
     if not current_user.groups.filter(name__in=['Mantenedor']).exists():
 
@@ -196,34 +224,41 @@ def verAlumno(request, id_alumno=None):
 
         if request.method == 'POST':
 
-            try:
-                registro = Registro()
-                registro.descripcion_atencion = request.POST.get('inputObservaciones')
-                registro.decision_alumno = request.POST.get('inputDecision')
-                if request.POST.get("inputMotivo") == "Asistente Social":
-                    registro.motivo_atencion = "Asistente Social"
-                    registro.es_asistencia_social = True
-                else:
-                    registro.motivo_atencion = Especialidad.objects.get(id=request.POST.get('inputMotivo')).nombreEspecialidad
-                    if registro.motivo_atencion == "Asistente Social":
+            #PERMISOS
+            if request.user.groups.filter(name__in=['Mantenedor']).exists():
+                return HttpResponseRedirect(reverse("home"))
+            elif request.user.groups.filter(name__in=['Administrativo']).exists():
+                return HttpResponseRedirect(reverse("home"))
+            else:
+
+                try:
+                    registro = Registro()
+                    registro.descripcion_atencion = request.POST.get('inputObservaciones')
+                    registro.decision_alumno = request.POST.get('inputDecision')
+                    if request.POST.get("inputMotivo") == "Asistente Social":
+                        registro.motivo_atencion = "Asistente Social"
                         registro.es_asistencia_social = True
-                registro.ficha = ficha
-                profesional = Usuario.objects.get(rut = request.POST.get('inputRutProfesional'))
-                registro.profesional = profesional
+                    else:
+                        registro.motivo_atencion = Especialidad.objects.get(id=request.POST.get('inputMotivo')).nombreEspecialidad
+                        if registro.motivo_atencion == "Asistente Social":
+                            registro.es_asistencia_social = True
+                    registro.ficha = ficha
+                    profesional = Usuario.objects.get(rut = request.POST.get('inputRutProfesional'))
+                    registro.profesional = profesional
 
-                registro.save()
+                    registro.save()
 
-                del registro
-                messages.success(request, '¡Registro ingresado exitosamente!')
-                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+                    del registro
+                    messages.success(request, '¡Registro ingresado exitosamente!')
+                    return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
 
-            except Exception as e:
-                messages.error(request,"No fue posible ingresar registro. "+repr(e))
-                return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+                except Exception as e:
+                    messages.error(request,"No fue posible ingresar registro. "+repr(e))
+                    return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
 
 
     else:
-        return render(request, "home.html")
+        return HttpResponseRedirect(reverse("home"))
 
 
 
@@ -232,15 +267,20 @@ def verAlumno(request, id_alumno=None):
 @login_required()
 def listarAlumnos(request):
 
-    template = "listar_alumnos.html"
-    if request.method == 'GET':
-        try:
-            alumnos = Alumno.objects.all()
-            return render(request, template, {'alumnos': alumnos})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-        except Exception as e:
-            messages.error(request,"No fue posible listar alumnos. "+repr(e))
-            return render(request, "home.html")
+        template = "listar_alumnos.html"
+        if request.method == 'GET':
+            try:
+                alumnos = Alumno.objects.all()
+                return render(request, template, {'alumnos': alumnos})
+
+            except Exception as e:
+                messages.error(request,"No fue posible listar alumnos. "+repr(e))
+                return render(request, "home.html")
 
 
 #############---------FUNCION BUSCAR------#################
@@ -248,151 +288,164 @@ def listarAlumnos(request):
 @login_required()
 def buscarAlumno(request):
 
-    template = "buscar_alumno.html"
-    if request.method == 'GET':
-        return render(request, template)
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == "POST":
-        try:
-            filtro = request.POST.get('inputSearch')
-            querys = (Q(nombre__icontains=filtro) | Q(apellido_materno__icontains=filtro))
-            querys |= Q(apellido_paterno__icontains=filtro)
-            querys |= Q(rut__icontains=filtro)
+        template = "buscar_alumno.html"
+        if request.method == 'GET':
+            return render(request, template)
 
-            alumnos = Alumno.objects.filter(querys)
+        if request.method == "POST":
+            try:
+                filtro = request.POST.get('inputSearch')
+                querys = (Q(nombre__icontains=filtro) | Q(apellido_materno__icontains=filtro))
+                querys |= Q(apellido_paterno__icontains=filtro)
+                querys |= Q(rut__icontains=filtro)
 
-            if not alumnos:
-                messages.info(request,"No se encontró ningún alumno.")
+                alumnos = Alumno.objects.filter(querys)
+
+                if not alumnos:
+                    messages.info(request,"No se encontró ningún alumno.")
+                    return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
+                else:
+                    return render(request, template, {'alumnos': alumnos})
+
+            except Exception as e:
+                messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
                 return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
-            else:
-                return render(request, template, {'alumnos': alumnos})
-
-        except Exception as e:
-            messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
-            return HttpResponseRedirect(reverse("alumnos:buscarAlumno"))
 
 
 #############---------FUNCION CARGAR DATOS CSV------#################
 
 @login_required()
-def importAlumnos(request): #Importar alumnos nuevos desde archivo .csv
+def importAlumnos(request):
+    #Importar alumnos nuevos desde archivo .csv
 
-    template = "alumnos_upload.html"
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == 'GET':
-        return render(request, template)
+        template = "alumnos_upload.html"
 
-    if request.method == 'POST':
-        try:
-            csv_file = request.FILES["file"]
-            if not csv_file.name.endswith('csv'):
-                messages.error(request,'ERROR - ¡No es un archivo .csv!')
-                return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
-            #if csv_file.multiple_chunks():
-            #    messages.error(request,"Archivo es demasiado grande (%.2f MB)." % (csv_file.size/(1000*1000),))
-            #    return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
-            file_data = csv.reader(codecs.iterdecode(csv_file, 'utf-8'),  delimiter='\t', quoting=csv.QUOTE_NONE)
-            row_count = 0
-            headers_final = []
-            header_split = []
-            for row in file_data:
-                #print(row)
-                row_count += 1
-                if 7 > row_count > 3 :
-                    header_split = header_split + row[0].split(';')
-                if row_count == 6:
-                    for h in header_split:
-                        string = h.replace('"', '')
-                        if string == '(Fijo / Movil)' or string == '':
-                            continue
-                        headers_final.append(string)
+        if request.method == 'GET':
+            return render(request, template)
 
-                    #print(headers_final)
-                    #print(len(headers_final))
+        if request.method == 'POST':
+            try:
+                csv_file = request.FILES["file"]
+                if not csv_file.name.endswith('csv'):
+                    messages.error(request,'ERROR - ¡No es un archivo .csv!')
+                    return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+                #if csv_file.multiple_chunks():
+                #    messages.error(request,"Archivo es demasiado grande (%.2f MB)." % (csv_file.size/(1000*1000),))
+                #    return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+                file_data = csv.reader(codecs.iterdecode(csv_file, 'utf-8'),  delimiter='\t', quoting=csv.QUOTE_NONE)
+                row_count = 0
+                headers_final = []
+                header_split = []
+                for row in file_data:
+                    #print(row)
+                    row_count += 1
+                    if 7 > row_count > 3 :
+                        header_split = header_split + row[0].split(';')
+                    if row_count == 6:
+                        for h in header_split:
+                            string = h.replace('"', '')
+                            if string == '(Fijo / Movil)' or string == '':
+                                continue
+                            headers_final.append(string)
 
-                if row_count > 7:
+                        #print(headers_final)
+                        #print(len(headers_final))
 
-                    if row[0] == ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;":
-                        break
+                    if row_count > 7:
 
-                    dato = row[0].split(";")
-                    #print (dato)
-                    #print (len(dato)) #deben ser 30
-                    cedula = ""
-                    primer_nombre = ""
-                    segundo_nombre = ""
-                    ap_paterno = ""
-                    ap_materno = ""
-                    correo = ""
-                    sexo = ""
-                    carrera = ""
-                    for header in headers_final:
-                        if header == "Carrera":
-                            carrera = dato[headers_final.index(header)]
-                            #print(carrera)
-                        if header == "Rut":
-                            rut = dato[headers_final.index(header)]
-                            cedula = rut
-                            #print(rut)
-                        if header == "Dv":
-                            dv = dato[headers_final.index(header)]
-                            cedula = cedula + "-" + dv
-                            #print(dv)
-                        if header == "1er Nombre":
-                            primer_nombre = dato[headers_final.index(header)]
-                            #print(primer_nombre)
-                        if header == "2do Nombre":
-                            segundo_nombre = dato[headers_final.index(header)]
-                            #print(segundo_nombre)
-                        if header == "Ap. Paterno":
-                            ap_paterno = dato[headers_final.index(header)]
-                            #print(ap_paterno)
-                        if header == "Ap. Materno":
-                            ap_materno = dato[headers_final.index(header)]
-                            #print(ap_materno)
-                        if header == "Email Personal":
-                            correo = dato[headers_final.index(header)]
-                            #print(correo)
-                        if header == "Sexo":
-                            sexo = dato[headers_final.index(header)]
-                            #print(sexo)
+                        if row[0] == ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;":
+                            break
 
-                    alumnoExiste = Alumno.objects.filter(rut=cedula)
-                    if not alumnoExiste:
-                        alumno = Alumno()
-                        alumno.nombre = primer_nombre
-                        if segundo_nombre != "":
-                            alumno.nombre = alumno.nombre + " " + segundo_nombre
-                        alumno.apellido_paterno = ap_paterno
-                        alumno.apellido_materno = ap_materno
-                        alumno.rut = cedula
-                        alumno.tipoDocumento = "CEDULA"
-                        if sexo == "F":
-                            alumno.sexo = "Mujer"
+                        dato = row[0].split(";")
+                        #print (dato)
+                        #print (len(dato)) #deben ser 30
+                        cedula = ""
+                        primer_nombre = ""
+                        segundo_nombre = ""
+                        ap_paterno = ""
+                        ap_materno = ""
+                        correo = ""
+                        sexo = ""
+                        carrera = ""
+                        for header in headers_final:
+                            if header == "Carrera":
+                                carrera = dato[headers_final.index(header)]
+                                #print(carrera)
+                            if header == "Rut":
+                                rut = dato[headers_final.index(header)]
+                                cedula = rut
+                                #print(rut)
+                            if header == "Dv":
+                                dv = dato[headers_final.index(header)]
+                                cedula = cedula + "-" + dv
+                                #print(dv)
+                            if header == "1er Nombre":
+                                primer_nombre = dato[headers_final.index(header)]
+                                #print(primer_nombre)
+                            if header == "2do Nombre":
+                                segundo_nombre = dato[headers_final.index(header)]
+                                #print(segundo_nombre)
+                            if header == "Ap. Paterno":
+                                ap_paterno = dato[headers_final.index(header)]
+                                #print(ap_paterno)
+                            if header == "Ap. Materno":
+                                ap_materno = dato[headers_final.index(header)]
+                                #print(ap_materno)
+                            if header == "Email Personal":
+                                correo = dato[headers_final.index(header)]
+                                #print(correo)
+                            if header == "Sexo":
+                                sexo = dato[headers_final.index(header)]
+                                #print(sexo)
+
+                        alumnoExiste = Alumno.objects.filter(rut=cedula)
+                        if not alumnoExiste:
+                            alumno = Alumno()
+                            alumno.nombre = primer_nombre
+                            if segundo_nombre != "":
+                                alumno.nombre = alumno.nombre + " " + segundo_nombre
+                            alumno.apellido_paterno = ap_paterno
+                            alumno.apellido_materno = ap_materno
+                            alumno.rut = cedula
+                            alumno.tipoDocumento = "CEDULA"
+                            if sexo == "F":
+                                alumno.sexo = "Mujer"
+                            else:
+                                alumno.sexo = "Hombre"
+                            alumno.correo = correo
+                            alumno.carrera = carrera
+                            print(alumno)
+                            alumno.save()
+                            del alumno
+                            print("Guardó al alumno número" + " " + str((row_count-7)))
                         else:
-                            alumno.sexo = "Hombre"
-                        alumno.correo = correo
-                        alumno.carrera = carrera
-                        print(alumno)
-                        alumno.save()
-                        del alumno
-                        print("Guardó al alumno número" + " " + str((row_count-7)))
-                    else:
-                        alumnoExiste[0].carrera = carrera
-                        alumnoExiste[0].save()
-                        print("Guardó al alumno número" + " " + str((row_count-7)))
-                        del alumnoExiste
+                            alumnoExiste[0].carrera = carrera
+                            alumnoExiste[0].save()
+                            print("Guardó al alumno número" + " " + str((row_count-7)))
+                            del alumnoExiste
 
 
-                #if row_count == 1:
-                #    break
+                    #if row_count == 1:
+                    #    break
 
-            messages.success(request, '¡Importación exitosa!')
+                messages.success(request, '¡Importación exitosa!')
 
-        except Exception as e:
-            logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-            messages.error(request,"ERROR - No se pudo subir archivo. "+repr(e))
+            except Exception as e:
+                logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+                messages.error(request,"ERROR - No se pudo subir archivo. "+repr(e))
+                return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
+
+
             return HttpResponseRedirect(reverse("alumnos:importAlumnos"))
-
-
-        return HttpResponseRedirect(reverse("alumnos:importAlumnos"))

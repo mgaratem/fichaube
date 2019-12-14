@@ -139,73 +139,83 @@ def cambiar_pass(request):
 
 @login_required()
 def crear_usuario(request):
-    template = "crear_usuario.html"
 
-    if request.method == 'GET':
-        areas = Area.objects.all()
-        especialidades = Especialidad.objects.all()
-        return render(request, template, {"areas": areas, "especialidades": especialidades})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == 'POST':
-        try:
+        template = "crear_usuario.html"
 
-            nombre = request.POST.get('inputNombre').upper()
-            apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
-            apellido_materno = request.POST.get('inputApellidoMaterno').upper()
-            txt_rut =  request.POST.get('inputRut')
-            rut = txt_rut.replace(".", "")
-            tipoUsuario = request.POST.get('inputTipoUsuario')
-            correo = request.POST.get('inputCorreo')
-            especialidadesElegidas = request.POST.getlist('inputEspecialidad')
-            apellidos =  apellido_paterno.upper() + " " + apellido_materno.upper()
-            #print (especialidadesElegidas)
+        if request.method == 'GET':
+            areas = Area.objects.all()
+            especialidades = Especialidad.objects.all()
+            return render(request, template, {"areas": areas, "especialidades": especialidades})
 
-            usuarioExiste = Usuario.objects.filter(rut=rut)
+        if request.method == 'POST':
+            try:
 
-            if not usuarioExiste:
+                nombre = request.POST.get('inputNombre').upper()
+                apellido_paterno = request.POST.get('inputApellidoPaterno').upper()
+                apellido_materno = request.POST.get('inputApellidoMaterno').upper()
+                txt_rut =  request.POST.get('inputRut')
+                rut = txt_rut.replace(".", "")
+                tipoUsuario = request.POST.get('inputTipoUsuario')
+                correo = request.POST.get('inputCorreo')
+                especialidadesElegidas = request.POST.getlist('inputEspecialidad')
+                apellidos =  apellido_paterno.upper() + " " + apellido_materno.upper()
+                #print (especialidadesElegidas)
 
-                usuario = Usuario()
-                usuario.nombre = nombre.upper()
-                usuario.apellidos = apellidos
-                usuario.rut = rut
+                usuarioExiste = Usuario.objects.filter(rut=rut)
 
-                if tipoUsuario == "1":
-                    usuario.profesional = True
-                elif tipoUsuario == "2":
-                    usuario.administrativo = True
-                elif tipoUsuario == "3":
-                    usuario.mantenedor = True
-                elif tipoUsuario == "4":
-                    usuario.asistente_social = True
-                elif tipoUsuario == "5":
-                    usuario.coordinador = True
+                if not usuarioExiste:
 
-                usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
-                usuario.save()
+                    usuario = Usuario()
+                    usuario.nombre = nombre.upper()
+                    usuario.apellidos = apellidos
+                    usuario.rut = rut
 
-                if especialidadesElegidas:
-                    for e in especialidadesElegidas:
-                        obj = UsuarioEspecialidad()
-                        especialidad = Especialidad.objects.get(id=e)
-                        obj.especialidad = especialidad
-                        obj.usuario = usuario
-                        obj.save()
+                    if tipoUsuario == "1":
+                        usuario.profesional = True
+                    elif tipoUsuario == "2":
+                        usuario.administrativo = True
+                    elif tipoUsuario == "3":
+                        usuario.mantenedor = True
+                    elif tipoUsuario == "4":
+                        usuario.asistente_social = True
+                    elif tipoUsuario == "5":
+                        usuario.coordinador = True
+
+                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
+                    usuario.save()
+
+                    if especialidadesElegidas:
+                        for e in especialidadesElegidas:
+                            obj = UsuarioEspecialidad()
+                            especialidad = Especialidad.objects.get(id=e)
+                            obj.especialidad = especialidad
+                            obj.usuario = usuario
+                            obj.save()
 
 
-                messages.success(request, '¡Usuario agregado con éxito!')
-                id = usuario.id
-                del usuario
-                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id] ))
+                    messages.success(request, '¡Usuario agregado con éxito!')
+                    id = usuario.id
+                    del usuario
+                    return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id] ))
 
-            else:
-                usuario = usuarioExiste[0]
-                usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
-                messages.error(request,'¡Este usuario ya existe!')
+                else:
+                    usuario = usuarioExiste[0]
+                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
+                    messages.error(request,'¡Este usuario ya existe!')
+                    return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
+
+            except Exception as e:
+                messages.error(request,"No fue posible crear usuario. "+repr(e))
                 return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
-
-        except Exception as e:
-            messages.error(request,"No fue posible crear usuario. "+repr(e))
-            return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
 
 
@@ -215,18 +225,27 @@ def crear_usuario(request):
 @login_required()
 def borrarUsuario(request, id_usuario=None):
 
-    if request.method == 'GET':
-        try:
-            usuario = Usuario.objects.get(id=id_usuario)
-            user = User.objects.get(id=usuario.user_id)
-            user.delete()
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-            messages.success(request, '¡Usuario eliminado con éxito!')
-            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+        if request.method == 'GET':
+            try:
+                usuario = Usuario.objects.get(id=id_usuario)
+                user = User.objects.get(id=usuario.user_id)
+                user.delete()
 
-        except ObjectDoesNotExist:
-            messages.error(request,'ERROR - ¡No se pudo eliminar al usuario correctamente!')
-            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+                messages.success(request, '¡Usuario eliminado con éxito!')
+                return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+
+            except ObjectDoesNotExist:
+                messages.error(request,'ERROR - ¡No se pudo eliminar al usuario correctamente!')
+                return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
 
 
@@ -235,67 +254,77 @@ def borrarUsuario(request, id_usuario=None):
 
 @login_required()
 def updateUsuario(request, id_usuario=None):
-    template = "actualizar_usuario.html"
-    areas = Area.objects.all()
-    especialidades = Especialidad.objects.all()
-    usuario = Usuario.objects.get(id = id_usuario)
-    userEsp = UsuarioEspecialidad.objects.filter(usuario = usuario)
 
-    if request.method == 'GET':
-        try:
-            return render(request, template, {'usuario': usuario, 'areas': areas, 'especialidades': especialidades, 'usuarioEspecialidades': userEsp})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-        except Exception as e:
-            messages.error(request,"No fue posible modificar usuario. "+repr(e))
-            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
+        template = "actualizar_usuario.html"
+        areas = Area.objects.all()
+        especialidades = Especialidad.objects.all()
+        usuario = Usuario.objects.get(id = id_usuario)
+        userEsp = UsuarioEspecialidad.objects.filter(usuario = usuario)
 
-    if request.method == 'POST':
-        try:
+        if request.method == 'GET':
+            try:
+                return render(request, template, {'usuario': usuario, 'areas': areas, 'especialidades': especialidades, 'usuarioEspecialidades': userEsp})
 
-            especialidadesElegidas = request.POST.getlist('inputEspecialidad')
-            correo = request.POST.get('inputCorreo')
-            activado = request.POST.get('inputDesactivar')
+            except Exception as e:
+                messages.error(request,"No fue posible modificar usuario. "+repr(e))
+                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
 
-            if especialidadesElegidas:
+        if request.method == 'POST':
+            try:
 
-                #SI SE AGREGA NUEVA ESPECIALIDAD
-                for e in especialidadesElegidas:
-                    query1 =  userEsp.filter(especialidad=e)
-                    if not query1:
-                        obj = UsuarioEspecialidad()
-                        especialidad = Especialidad.objects.get(id=e)
-                        obj.especialidad = especialidad
-                        obj.usuario = usuario
-                        obj.save()
+                especialidadesElegidas = request.POST.getlist('inputEspecialidad')
+                correo = request.POST.get('inputCorreo')
+                activado = request.POST.get('inputDesactivar')
 
-                #SI SE QUITA UNA ESPECIALIDAD
-                query2 = UsuarioEspecialidad.objects.filter(usuario = usuario)
-                for e in especialidadesElegidas:
-                    query2 = query2.exclude(especialidad=e)
+                if especialidadesElegidas:
 
-                for esp in query2:
-                    esp.delete()
+                    #SI SE AGREGA NUEVA ESPECIALIDAD
+                    for e in especialidadesElegidas:
+                        query1 =  userEsp.filter(especialidad=e)
+                        if not query1:
+                            obj = UsuarioEspecialidad()
+                            especialidad = Especialidad.objects.get(id=e)
+                            obj.especialidad = especialidad
+                            obj.usuario = usuario
+                            obj.save()
 
-            user = User.objects.filter(id=usuario.user_id)
+                    #SI SE QUITA UNA ESPECIALIDAD
+                    query2 = UsuarioEspecialidad.objects.filter(usuario = usuario)
+                    for e in especialidadesElegidas:
+                        query2 = query2.exclude(especialidad=e)
 
-            if user:
-                user[0].email = correo
+                    for esp in query2:
+                        esp.delete()
 
-                if activado == "1":
-                    user[0].is_active = True
-                else:
-                    user[0].is_active = False
+                user = User.objects.filter(id=usuario.user_id)
 
-                user[0].save()
+                if user:
+                    user[0].email = correo
 
-            #usuario.save()
-            messages.success(request, '¡Usuario modificado exitosamente!')
-            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
-            #return verUsuario('get', id_usuario)
+                    if activado == "1":
+                        user[0].is_active = True
+                    else:
+                        user[0].is_active = False
 
-        except Exception as e:
-            messages.error(request,"No fue posible modificar usuario. "+repr(e))
-            return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
+                    user[0].save()
+
+                #usuario.save()
+                messages.success(request, '¡Usuario modificado exitosamente!')
+                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
+                #return verUsuario('get', id_usuario)
+
+            except Exception as e:
+                messages.error(request,"No fue posible modificar usuario. "+repr(e))
+                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
 
 
 
@@ -305,17 +334,25 @@ def updateUsuario(request, id_usuario=None):
 
 @login_required()
 def verUsuario(request, id_usuario=None):
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    template = "ver_usuario.html"
-    if request.method == 'GET':
-        try:
-            especialidadesUsuario = UsuarioEspecialidad.objects.filter(usuario_id = id_usuario)
-            usuario = Usuario.objects.get(id = id_usuario)
-            return render(request, template, {'usuario': usuario, 'especialidades': especialidadesUsuario})
+        template = "ver_usuario.html"
+        if request.method == 'GET':
+            try:
+                especialidadesUsuario = UsuarioEspecialidad.objects.filter(usuario_id = id_usuario)
+                usuario = Usuario.objects.get(id = id_usuario)
+                return render(request, template, {'usuario': usuario, 'especialidades': especialidadesUsuario})
 
-        except Exception as e:
-            messages.error(request,"No fue posible mostrar usuario. "+repr(e))
-            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+            except Exception as e:
+                messages.error(request,"No fue posible mostrar usuario. "+repr(e))
+                return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
 
 
@@ -325,15 +362,24 @@ def verUsuario(request, id_usuario=None):
 @login_required()
 def listarUsuarios(request):
 
-    template = "listar_profesionales.html"
-    if request.method == 'GET':
-        try:
-            usuarios = Usuario.objects.filter(tipoUsuario )
-            return render(request, template, {'usuarios': usuarios})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-        except Exception as e:
-            messages.error(request,"No fue posible listar usuarios. "+repr(e))
-            return render(request, "home.html")
+        template = "listar_profesionales.html"
+        if request.method == 'GET':
+            try:
+                usuarios = Usuario.objects.filter(tipoUsuario )
+                return render(request, template, {'usuarios': usuarios})
+
+            except Exception as e:
+                messages.error(request,"No fue posible listar usuarios. "+repr(e))
+                return render(request, "home.html")
 
 
 
@@ -342,24 +388,33 @@ def listarUsuarios(request):
 @login_required()
 def buscarUsuario(request):
 
-    template = "buscar_usuario.html"
-    if request.method == 'GET':
-        return render(request, template)
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
 
-    if request.method == "POST":
-        try:
-            filtro = request.POST.get('inputSearch')
-            querys = (Q(nombre__icontains=filtro) | Q(apellidos__icontains=filtro))
-            querys |= Q(rut__icontains=filtro)
+        template = "buscar_usuario.html"
+        if request.method == 'GET':
+            return render(request, template)
 
-            usuarios = Usuario.objects.filter(querys)
+        if request.method == "POST":
+            try:
+                filtro = request.POST.get('inputSearch')
+                querys = (Q(nombre__icontains=filtro) | Q(apellidos__icontains=filtro))
+                querys |= Q(rut__icontains=filtro)
 
-            if not usuarios:
-                messages.info(request,"No se encontró ningún usuario.")
+                usuarios = Usuario.objects.filter(querys)
+
+                if not usuarios:
+                    messages.info(request,"No se encontró ningún usuario.")
+                    return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+                else:
+                    return render(request, template, {'usuarios': usuarios})
+
+            except Exception as e:
+                messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
                 return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
-            else:
-                return render(request, template, {'usuarios': usuarios})
-
-        except Exception as e:
-            messages.error(request,"No se pudo realizar la búsqueda. "+repr(e))
-            return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
