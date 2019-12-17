@@ -35,12 +35,12 @@
             {% for especialidad in especialidades %}
             <tr>
               <td>{{ especialidad.nombreEspecialidad }}</td>
-              <td><a href="{% url 'eliminarEspecialidad' idEspecialidad=especialidad.id idArea=idArea %}">Borrar</a> </td>
-              <td><a href="{% url 'editar_Especialidad' idEspecialidad=especialidad.id idArea=idArea %}">Editar</a></td>
+              <td><a href="{% url 'areas:eliminarEspecialidad' idEspecialidad=especialidad.id idArea=idArea %}">Borrar</a> </td>
+              <td><a href="{% url 'areas:editar_Especialidad' idEspecialidad=especialidad.id idArea=idArea %}">Editar</a></td>
             </tr>
             {% endfor %}
           </table>
-          <form action="{% url 'agregar_Especialidad' %}" method="post">{% csrf_token %}
+          <form action="{% url 'areas:agregar_Especialidad' %}" method="post">{% csrf_token %}
             <input type="hidden" value={{ idArea }} name="idArea">
             <div class="row">
               <div class="col-md-3 ml-md-auto">

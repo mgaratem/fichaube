@@ -36,9 +36,9 @@
             {% for area in areas %}
             <tr>
               <td>{{area.nombreArea}}</td>
-              <td><a href="{% url 'eliminarArea' idArea=area.id %}">Borrar</a> </td>
-              <td><a href="{% url 'editar_Area' idArea=area.id %}">Editar</a></td>
-              <td><a href="{% url 'lista_Especialidades' idArea=area.id %}">Especialidades</a></td>
+              <td><a href="{% url 'areas:eliminarArea' idArea=area.id %}">Borrar</a> </td>
+              <td><a href="{% url 'areas:editar_Area' idArea=area.id %}">Editar</a></td>
+              <td><a href="{% url 'areas:lista_Especialidades' idArea=area.id %}">Especialidades</a></td>
             </tr>
             {% endfor %}
           </table>

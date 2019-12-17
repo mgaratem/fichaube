@@ -27,8 +27,7 @@
 
 
         <div class="cuadro-form">
-          <form id="formularioNuevoNombreArea" action={% url 'editarArea' %} method="post"> {% csrf_token %}
-
+          <form id="formularioNuevoNombreArea" action={% url 'areas:editarArea' %} method="post"> {% csrf_token %}
             <div class="form-group row">
               <label for="nuevoNombreArea" class="col-sm-2 col-form-label">Nuevo Nombre del Área:</label>
               <div class="col-sm-6">
