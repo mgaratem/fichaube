@@ -36,7 +36,27 @@
             {% for area in areas %}
             <tr>
               <td>{{area.nombreArea}}</td>
-              <td><a href="{% url 'areas:eliminarArea' idArea=area.id %}">Borrar</a> </td>
+              <td><a href="#modalDeleteArea{{area.id}}" data-toggle="modal" style="color:#339fc3;" data-content="Borrar" rel="popover" data-placement="bottom" data-trigger="hover" ><i class="zmdi zmdi-delete" style="font-size:20px; color:#339fc3;"></i></a> </td>
+                <div id="modalDeleteArea{{area.id}}" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">¡Atención!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>¿Está seguro que quiere eliminar el Área?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a href="{% url 'areas:eliminarArea' idArea=area.id %}" role="button" class="btn btn-primary">¡Seguro!</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               <td><a href="{% url 'areas:editar_Area' idArea=area.id %}">Editar</a></td>
               <td><a href="{% url 'areas:lista_Especialidades' idArea=area.id %}">Especialidades</a></td>
             </tr>

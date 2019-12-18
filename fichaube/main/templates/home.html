@@ -73,6 +73,17 @@
             </li>
           </ul>
         </li>
+        <li>
+          <a href="#areasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Áreas y Especialidades</a>
+          <ul class="collapse list-unstyled show" id="reporteSubmenu">
+            <li>
+              <a href="{% url 'areas:lista_Areas' %}">Listado de Áreas</a>
+            </li>
+            <li>
+              <a href="{% url 'areas:agregar_Area' %}">Crear una Área</a>
+            </li>
+          </ul>
+        </li>
         {% endif %}
         {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Mantenedor" or request.user.is_superuser %}
         <li>
