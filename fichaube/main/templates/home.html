@@ -82,10 +82,10 @@
             <li>
               <a href="{% url 'usuarios:buscarUsuario' %}">Buscar usuarios</a>
             </li>
-            {% if request.user|has_group:"Coordinador" or request.user.is_superuser%}
             <li>
               <a href="{% url 'usuarios:crear_usuario' %}">Agregar usuarios</a>
             </li>
+            {% if request.user|has_group:"Coordinador" or request.user.is_superuser%}
             <li>
               <a href="#">Áreas</a>
             </li>
