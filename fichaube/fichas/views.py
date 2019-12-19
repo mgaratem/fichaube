@@ -208,6 +208,11 @@ def crearFichaPDF(request, id_alumno=None):
     return response
 
 
+#############---------FUNCION CREAR REPORTES------#################
+
+@login_required()
+def reportes(request):
+    return render(request, 'reportes.html', {})
 """
 #############---------FUNCION BORRAR------#################
 
