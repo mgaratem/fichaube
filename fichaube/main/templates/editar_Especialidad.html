@@ -24,13 +24,8 @@
   <div class="col-sm-12 col-sm-offset-1">
     <div class="card">
       <div class="card-content">
-
-
         <div class="cuadro-form">
-
-
-
-          <form id="formularioNuevoNombreEspecialidad" action={% url 'editarEspecialidad' %} method="post"> {% csrf_token %}
+          <form id="formularioNuevoNombreEspecialidad" action={% url 'areas:editarEspecialidad' %} method="post"> {% csrf_token %}
             <div class="form-group row">
               <label for="nuevoNombreEspecialidad" class="col-sm-2 col-form-label">Nuevo nombre de la Especialidad:</label>
               <div class="col-sm-6">

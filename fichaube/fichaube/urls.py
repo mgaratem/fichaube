@@ -19,6 +19,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('areas/', include('areas.urls')),
     path('fichaube/', include('main.urls')),
     path('coordinador/', include('coordinador.urls')),
     path('profesional/', include('profesional.urls')),
@@ -28,6 +29,5 @@ urlpatterns = [
     path('usuarios/', include('usuarios.urls')),
     path('fichas/', include('fichas.urls')),
     path('permisos/', include('permisos.urls')),
-
     path('accounts/', include('django.contrib.auth.urls')),
 ]

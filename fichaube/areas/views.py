@@ -5,6 +5,8 @@ from django.urls import reverse
 from areas.models import Area
 from areas.models import Especialidad
 from django.http import JsonResponse
+from django.template import *
+
 
 # Create your views here.
 
@@ -37,10 +39,6 @@ def testpancho04(request, idEspecialidad, idArea):
 
 
 
-
-
-
-
 # funcion para agregar areas
 def agregarArea(request):
     if request.method == 'POST':
@@ -48,7 +46,7 @@ def agregarArea(request):
         nuevaArea = Area(nombreArea=area)
         nuevaArea.save()
         del nuevaArea
-        return HttpResponseRedirect(reverse('lista_Areas'))
+        return redirect('areas:lista_Areas')
 
 # funcion para corroborar si el area ya existe, se utiliza via AJAX
 def validarArea(request):
@@ -61,13 +59,13 @@ def validarArea(request):
 # funcion y html para listar Areas
 def listarAreas(request):
     listaAreas = Area.objects.all()
-    return render(request, 'lista_Areas.html', {"areas": listaAreas})
+    return render(request, "lista_Areas.html", {"areas": listaAreas})
 
 # funcion para eliminar una Area dado un ID
 def eliminarArea(request, idArea):
     # idArea = request.GET.get("idArea")
     Area.objects.filter(id=idArea).delete()
-    return HttpResponseRedirect(reverse('lista_Areas'))
+    return HttpResponseRedirect(reverse("areas:lista_Areas"))
 #******************FALTA eliminar en cascada
 
 # funcion para editar el nombre de un area
@@ -78,25 +76,14 @@ def editarArea(request):
         area = Area.objects.get(pk=idArea)
         area.nombreArea = nuevoNombreArea
         area.save()
-        return HttpResponseRedirect(reverse('lista_Areas'))
-
-
-
-
-
-
-
-
-
-
-
+        return HttpResponseRedirect(reverse("areas:lista_Areas"))
 
 
 
 # funcion para listar todas las especialidades
 def listarEspecialidades(request, idArea):
     listaEspecialides = Especialidad.objects.filter(area_id = idArea)
-    return render(request, 'lista_Especialidades.html', {"especialidades": listaEspecialides, "idArea": idArea})
+    return render(request, "lista_Especialidades.html", {"especialidades": listaEspecialides, "idArea": idArea})
 
 # funcion para agregar una nueva especialidad
 def agregarEspecialidad(request):
@@ -124,7 +111,7 @@ def validarEspecialidad(request):
 # funcion para eliminar una Especialidad dado un ID
 def eliminarEspecialidad(request, idEspecialidad, idArea):
     Especialidad.objects.filter(id=idEspecialidad).delete()
-    direccion = "/fichaube/lista_Especialidades/" + str(idArea)
+    direccion = "/areas/lista_Especialidades/" + str(idArea)
     return redirect(direccion)
 
 # funcion para editar el nombre de una especialidad
@@ -136,5 +123,5 @@ def editarEspecialidad(request):
         especialidad = Especialidad.objects.get(pk=idEspecialidad)
         especialidad.nombreEspecialidad = nuevoNombreEspecialidad
         especialidad.save()
-        direccion = "/fichaube/lista_Especialidades/" + str(idArea)
+        direccion = "/areas/lista_Especialidades/" + str(idArea)
         return redirect(direccion)
