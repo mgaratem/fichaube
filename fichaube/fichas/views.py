@@ -22,6 +22,10 @@ from permisos.models import Permiso
 from usuarios.models import Usuario
 from areas.models import UsuarioEspecialidad, Especialidad, Area
 
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
 # Create your views here.
 
 
@@ -177,6 +181,31 @@ def crearRegistro(request, id_alumno=None):
             except Exception as e:
                 messages.error(request,"No fue posible ingresar registro. "+repr(e))
                 return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
+
+
+
+#############---------FUNCION CREAR PDF FICHA CLINICA------#################
+
+@login_required
+def crearFichaPDF(request, id_alumno=None):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+
+    # Start writing the PDF here
+    p.drawString(100, 100, 'Hello world.')
+    # End writing
+
+    p.showPage()
+    p.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
 
 
 """
