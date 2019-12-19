@@ -179,6 +179,12 @@ def crearRegistro(request, id_alumno=None):
                 return HttpResponseRedirect(reverse("alumnos:verAlumno", args=[id_alumno]))
 
 
+
+
+@login_required()
+def reportes(request):
+    return render(request, 'reportes.html', {})
+
 """
 #############---------FUNCION BORRAR------#################
 
