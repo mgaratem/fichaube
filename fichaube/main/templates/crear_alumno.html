@@ -27,14 +27,14 @@
 
         <div class="cuadro-form">
 
-          <form method="POST" name="menuForm">
+          <form id="formularioAlumno" method="POST" name="menuForm">
             {% csrf_token %}
 
             <div class="form-group row">
               <label for="inputTipoDocumento" class="col-sm-2 col-form-label">Elija tipo de documento:</label>
               <div class="col-sm-3">
                 <select class="custom-select mr-sm-2" id="inputTipoDocumento" name="inputTipoDocumento" onchange='CheckDocumento(this.value);' required>
-                  <option value="" selected>Elegir...</option>
+                  <option value="" selected hidden>Elegir...</option>
                   <option value="CEDULA">Cédula de Identidad</option>
                   <option value="PASAPORTE">Pasaporte</option>
                 </select>
@@ -108,7 +108,7 @@
               <label for="inputSexo" class="col-sm-2 col-form-label">Sexo:</label>
               <div class="col-sm-2">
                 <select class="custom-select mr-sm-2" id="inputSexo" name="inputSexo" required>
-                  <option value="" selected>Elegir...</option>
+                  <option value="" selected hidden>Elegir...</option>
                   <option value="Mujer">Mujer</option>
                   <option value="Hombre">Hombre</option>
                 </select>
@@ -171,4 +171,14 @@
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+  // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+  $(function(){
+    $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+    });
+  });
+
+  </script>
   {% endblock content %}

@@ -222,6 +222,11 @@ class GeneratePdf(View):
 def reportes(request):
     return render(request, 'reportes.html', {})
 
+@login_required()
+def generarReporte(request):
+    listaFichas = Fichas.objects.all()
+    return True
+
 """
 #############---------FUNCION BORRAR------#################
 

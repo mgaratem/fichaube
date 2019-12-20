@@ -23,32 +23,25 @@
     <div class="card">
       <div class="card-content">
         <div class="cuadro-tabla">
-          <form method="post" enctype="multipart/form-data">{% csrf_token %}
-            <div class="form-group">
-              <label for="exampleInputFile">Archivo CSV:</label>
-              <input type='file' name="file" id="exampleInputFile" aria-describedby="exampleInputFile" placeholder="Seleccione un archivo" required>
-              <small id="emailHelp" class="form-text text-muted">
-                Seleccione el archivo .csv con los datos de los alumnos matriculados</small>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-md-5">
-                <button class="btn btn-primary" type="submit" onclick="cargando()" id="cargar" style="display: block;">Cargar</button>
-              </div>
-              <div class="col-md-5" id="loading" style="display: none;">
-                <br>
-                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;"></div>
-                <br>
-                <br>
-                <center>
-                  <small class="form-text text-muted">La carga puede tardar unos minutos</small>
-                </center>
-              </div>
-            </div>
-          </form>
+          <div class="form-group">
+            <label for="exampleInputFile">Descargar reporte de fichas clínicas:</label>
+            <button id="generarReporte" type="button" name="generarReporte" class="btn btn-primary"type="submit" value="Registrar">Descargar</button>
+            <small id="emailHelp" class="form-text text-muted">
+              Se descargará un archivo .xlsx que contiene los alumnos que poseen una ficha clínica, y el total de estos.</small>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <script>
+     $('#generarReporte').click(function(){
+       $.ajax({
+         url: 'ajax/generarReporte',
+         
+       })
+     });
+   </script>
+
 
   {% endblock content %}
