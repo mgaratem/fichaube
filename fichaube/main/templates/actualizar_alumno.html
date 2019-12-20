@@ -134,4 +134,16 @@
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+  // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+  $(function(){
+    $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+    });
+  });
+
+  </script>
+
+
   {% endblock content %}
