@@ -119,7 +119,6 @@
           <h3>Ficha Clínica</h3>
           </br>
           </br>
-
           <div class="row">
             <form method="POST" style="width:100%">
               {% csrf_token %}
@@ -215,6 +214,14 @@
       <div class="card-content">
         <div class="cuadrotrans">
           <h3>Ficha Clínica</h3>
+          <div class="row">
+            <div class="col-auto mr-auto"></div>
+            <div class="col-auto">
+              <a href="{% url 'fichas:crearFichaPDF' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Descargar PDF" rel="popover" data-placement="bottom" data-trigger="hover">
+                <i class="zmdi zmdi-collection-pdf" style="font-size:20px; color:#339fc3;"></i>
+              </a>
+            </div>
+          </div>
           </br>
           </br>
 

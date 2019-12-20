@@ -22,9 +22,14 @@ from permisos.models import Permiso
 from usuarios.models import Usuario
 from areas.models import UsuarioEspecialidad, Especialidad, Area
 
+from django.conf import settings
 from io import BytesIO
-from reportlab.pdfgen import canvas
+
 from django.http import HttpResponse
+from django.views.generic import View
+from django.template.loader import get_template
+
+from .utils import render_to_pdf
 
 # Create your views here.
 
@@ -186,26 +191,29 @@ def crearRegistro(request, id_alumno=None):
 
 #############---------FUNCION CREAR PDF FICHA CLINICA------#################
 
-@login_required
-def crearFichaPDF(request, id_alumno=None):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
-
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer)
-
-    # Start writing the PDF here
-    p.drawString(100, 100, 'Hello world.')
-    # End writing
-
-    p.showPage()
-    p.save()
-
-    pdf = buffer.getvalue()
-    buffer.close()
-    response.write(pdf)
-
-    return response
+class GeneratePdf(View):
+    def get(self, request, id_alumno=None):
+        template = get_template('pdf/ficha_pdf.html')
+        ficha = Ficha.objects.get(alumno = id_alumno)
+        registros = Registro.objects.filter(ficha = ficha)
+        #pdf = render_to_pdf('pdf/ficha_pdf.html', {"registros": registros, "ficha": ficha})
+        #return HttpResponse(pdf, content_type='application/pdf')
+        context = {
+            "registros": registros,
+            "ficha": ficha,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('pdf/ficha_pdf.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Ficha_%s.pdf" %(ficha.alumno.rut)
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
 
 
 #############---------FUNCION CREAR REPORTES------#################
@@ -213,6 +221,7 @@ def crearFichaPDF(request, id_alumno=None):
 @login_required()
 def reportes(request):
     return render(request, 'reportes.html', {})
+
 """
 #############---------FUNCION BORRAR------#################
 

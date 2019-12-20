@@ -1,0 +1,164 @@
+<html>
+
+<head>
+  <title>Ficha Clínica {{ ficha.alumno.rut }}</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 1cm;
+
+      @frame footer_frame {
+        -pdf-frame-content: footer_content;
+        right: 200pt;
+        width: 512pt;
+        top: 772pt;
+        height: 20pt;
+      }
+
+    }
+
+    table {
+      -pdf-keep-with-next: true;
+    }
+
+    .title {
+      font-size: 19px;
+      text-align: center !important;
+      padding: -10px;
+    }
+
+    .table {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 5px;
+      background-color: #fff;
+    }
+
+    .table td,
+    .table th {
+      padding: 5px;
+      vertical-align: top;
+      border-top: 1px solid #000;
+      border-left: 1px solid #000;
+      border-right: 1px solid #000;
+      text-align: left;
+      border-bottom: 1px solid #000;
+    }
+
+    .table thead th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #000;
+    }
+
+    .table tbody+tbody {
+      border-top: 2px solid #000;
+    }
+
+    p {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: 200px;
+    }
+
+    .hrItem {
+      border: none;
+      height: 1px;
+      /* Set the hr color */
+      color: #333;
+      /* old IE */
+      background-color: #fff;
+      /* Modern Browsers */
+    }
+
+    #tabla{
+      padding: 5px;
+      vertical-align: top;
+      text-align: left;
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 5px;
+      background-color: #fff;
+      font-size: 12px;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="footer_content">
+    Página <pdf:pagenumber> de <pdf:pagecount>
+  </div>
+
+  <div class="grid-container">
+    <div>
+      <img src="http://vra.ucv.cl/dae/wp-content/uploads/2017/01/Dae-PUCV-color.png" width="150">
+      <p style="text-align:right; vertical-align: top;">Fecha Creación: {{ ficha.get_fecha }}</p>
+    </div>
+    <div>
+      <p class='title'>FICHA CONFIDENCIAL</p>
+      <p class='title'><b>UNIDAD DE BIENESTAR</b></p>
+    </div>
+  </div>
+
+  <hr class='hrItem' />
+  <div>
+    <table id="tabla" style="width:100%;">
+      <tbody>
+        <tr>
+          <td style="width:70%; text-transform: uppercase;"><b>Nombre Paciente:</b> {{ ficha.alumno.get_name }}</td>
+          <td style="width:30%"><b>RUT:</b> {{ ficha.alumno.rut }}</td>
+        </tr>
+        <br>
+        <tr>
+          <td style="width:70%"><b>Fecha Nacimiento:</b> {{ ficha.alumno.get_fecha }}</td>
+          <td style="width:30%"><b>Sexo:</b> {{ ficha.alumno.sexo }}</td>
+        </tr>
+        <tr>
+          <td style="width:100%; text-transform: uppercase;"><b>Domicilio:</b> {{ ficha.alumno.domicilio }}</td>
+        </tr>
+        <tr>
+          <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>
+          <td style="width:30%"><b>Prevision:</b> {{ ficha.alumno.prevision }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class='hrItem' />
+
+  <div>
+    <table class="table" style="width:100%;">
+      <thead class="table-head">
+        <th>Fecha</th>
+        <th>Motivo de Atención</th>
+        <th>Observaciones</th>
+        <th>Decisión Alumno</th>
+        <th>Profesional</th>
+      </thead>
+      <tbody>
+        {% for registro in registros %}
+        <tr>
+          <td style="width:10%">{{registro.get_fecha}}</td>
+          <td style="width:15%">{{registro.motivo_atencion}}</td>
+          <td style="width:40%">{{registro.descripcion_atencion}}</td>
+          <td style="width:20%">{{registro.decision_alumno}}</td>
+          <td style="width:15%">{{registro.profesional.get_nombre}} {{ registro.profesional.rut}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>
