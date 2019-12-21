@@ -31,7 +31,7 @@ from django.template.loader import get_template
 
 from .utils import render_to_pdf
 from openpyxl import Workbook
-from openpyxl.styles import Alignment
+from openpyxl.styles import Alignment, PatternFill
 
 
 
@@ -234,7 +234,9 @@ class ReporteExcel(View):
         wb = Workbook()
         ws = wb.active
         ws['B1'] = 'Reporte de Fichas Clínicas'
-        ws.merge_cells('B1:E1')
+        ws.merge_cells('B1:C1')
+        ws['B1'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+
 
         #   tamaño de columnas
         ws.column_dimensions['B'].width = 20
@@ -263,6 +265,15 @@ class ReporteExcel(View):
         ws['F4'].alignment = Alignment(horizontal='center')
         ws['G4'].alignment = Alignment(horizontal='center')
         ws['H4'].alignment = Alignment(horizontal='center')
+
+        #   background de headers color gris
+        ws['B4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['C4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['D4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['E4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['F4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['G4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['H4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
 
         #   obtener datos
         listaFichas = Ficha.objects.select_related('alumno')
@@ -296,7 +307,9 @@ class ReporteExcel(View):
 
 
         ws['B2'] = 'Total de Fichas Clínicas existentes: ' + str(len(listaFichas)) #terminar esto
-        ws.merge_cells('B2:E2')
+        ws.merge_cells('B2:C2')
+        ws['B2'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+
 
         nombre_archivo = "Reporte.xlsx"
         response = HttpResponse(content_type = "application/ms-excel")
