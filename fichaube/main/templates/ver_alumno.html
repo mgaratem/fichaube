@@ -188,8 +188,8 @@
                 <tr>
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
-                  <td style="width:20%">{{registro.descripcion_atencion}}</td>
-                  <td style="width:20%">{{registro.decision_alumno}}</td>
+                  <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}">Ver</a></td>
+                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}">Ver</a>{% else %}-{% endif %}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endif %}
@@ -278,8 +278,8 @@
                 <tr>
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
-                  <td style="width:20%">{{registro.descripcion_atencion}}</td>
-                  <td style="width:20%">{{registro.decision_alumno}}</td>
+                  <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}">Ver</a></td>
+                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}">Ver</a>{% else %}-{% endif %}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endfor %}
@@ -372,4 +372,38 @@
 
   {% endif %}
 
+  <script>
+    function readMore1(id) {
+      var dots = document.getElementById("dots1".concat(id));
+      var moreText = document.getElementById("more1".concat(id));
+      var btnText = document.getElementById("readMore1".concat(id));
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Ver";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Ocultar";
+        moreText.style.display = "inline";
+      }
+    }
+
+    function readMore2(id) {
+      var dots = document.getElementById("dots2".concat(id));
+      var moreText = document.getElementById("more2".concat(id));
+      var btnText = document.getElementById("readMore2".concat(id));
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Ver";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Ocultar";
+        moreText.style.display = "inline";
+      }
+    }
+  </script>
+  
   {% endblock content %}

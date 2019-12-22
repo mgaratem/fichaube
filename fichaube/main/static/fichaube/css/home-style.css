@@ -241,7 +241,7 @@ ul ul a {
   width: 40px;
   height: 40px;
   /*background-color: #339fc3;*/
-  background-color: rgba(84,129,201,.42);
+  background-color: rgba(84, 129, 201, .42);
   cursor: pointer;
 }
 
@@ -289,7 +289,7 @@ ul ul a {
 }
 
 textarea {
-  float:left;
+  float: left;
   width: 100%;
   min-height: 35px;
   outline: none;
@@ -298,13 +298,13 @@ textarea {
 }
 
 #cerrarSesion {
-  background-color: rgba(84,129,201,.42);
+  background-color: rgba(84, 129, 201, .42);
 }
+
 
 /* ---------------------------------------------------
       BOTONES
 ----------------------------------------------------- */
-
 /*a.btn.btn-primary:active:hover, a.btn.btn-secondary:active:hover, a.btn.btn-primary:hover {
   -moz-transition: none !important;
   -webkit-transition: none !important;
@@ -314,7 +314,6 @@ textarea {
   transition: color 0s !important;
 
 }*/
-
 .btn.btn-primary, .btn.btn-primary:active, .btn.btn-primary.active, .btn.btn-primary:active:focus, .btn.btn-primary.active:hover, .open>.btn.btn-primary.dropdown-toggle, .open>.btn.btn-primary.dropdown-toggle:focus, .open>.btn.btn-primary.dropdown-toggle:hover, .navbar .navbar-nav>li>a.btn.btn-primary, .navbar .navbar-nav>li>a.btn.btn-primary:hover, .navbar .navbar-nav>li>a.btn.btn-primary:focus, .navbar .navbar-nav>li>a.btn.btn-primary:active, .navbar .navbar-nav>li>a.btn.btn-primary.active, .navbar .navbar-nav>li>a.btn.btn-primary:active:focus, .navbar .navbar-nav>li>a.btn.btn-primary:active:hover, .navbar .navbar-nav>li>a.btn.btn-primary.active:focus, .navbar .navbar-nav>li>a.btn.btn-primary.active:hover, .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle, .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle:focus, .open>.navbar .navbar-nav>li>a.btn.btn-primary.dropdown-toggle:hover {
   background-color: #e87e04;
   color: #FFFFFF;
@@ -373,7 +372,6 @@ textarea {
 /*.btn {
   margin: 2px 2px !important;
 }*/
-
 .btn-celeste {
   background-color: #FFFFFF;
   color: #339fc3;
@@ -613,29 +611,25 @@ button#botonRegistrarse {
 }
 
 /*------------------------------------- Modal */
-
-
 /*.modal-dialog {
   margin: 2px auto;
   display: inline-block;
   text-align: left;
   vertical-align: middle;
 }*/
-
 .modal {
-    position: relative;
-    z-index: 99999;
-    float: left;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: relative;
+  z-index: 99999;
+  float: left;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .modal-backdrop {
-    /* bug fix - no overlay */
-    display: none;
-    z-index: -1;
-
+  /* bug fix - no overlay */
+  display: none;
+  z-index: -1;
 }
 
 /*
@@ -643,7 +637,6 @@ div#modalDetalles .modal-dialog {
   top: 30%;
 }
 */
-
 /*------------------------------------- Img-responsive */
 .img-responsive {
   display: initial;
@@ -705,5 +698,5 @@ table.dataTable thead .sorting_desc:after,
 table.dataTable thead .sorting_desc:before,
 table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
-bottom: .5em;
+  bottom: .5em;
 }
