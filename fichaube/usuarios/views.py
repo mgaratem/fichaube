@@ -24,7 +24,7 @@ from django.core.mail import send_mail
 #############---------FUNCION CREATE USER DJANGO------#################
 
 @login_required()
-def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None):
+def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None, cedula=None):
     if request.method == 'POST':
         try:
             a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
@@ -43,7 +43,11 @@ def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None
             userName = first_letra + first_apellido + second_apellido
             userExiste = User.objects.filter(username=userName)
             if not userExiste:
-                password = User.objects.make_random_password()
+
+                #password = User.objects.make_random_password()
+                rut = cedula.split("-")
+                password = rut[0][-4:]
+
                 userEmail = email
 
                 user = User.objects.create_user(username=userName,
@@ -190,7 +194,7 @@ def crear_usuario(request):
                     elif tipoUsuario == "5":
                         usuario.coordinador = True
 
-                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
+                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario, rut)
                     usuario.save()
 
                     if especialidadesElegidas:
