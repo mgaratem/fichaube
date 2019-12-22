@@ -33,7 +33,7 @@
               <div class="form-group row">
                 <label for="area" class="col-sm-2 col-form-label">Ingrese Área: </label>
                 <div class="col-sm-6">
-                  <input id="area" type="text" class="form-control" name="area" placeholder="Nombre del Área">
+                  <input id="area" type="text" class="form-control" name="area" placeholder="Nombre del Área" required>
                 </div>
               </div>
               <div class="row">
@@ -49,36 +49,37 @@
              {% block javascript %}
                <script>
 
+                 // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+                 $(function(){
+                   $('input[type="text"]').change(function(){
+                       this.value = $.trim(this.value);
+                   });
+                 });
+
                  //  validar formulario
                  $('#formularioNuevaArea').submit(function(e){
                    e.preventDefault();
                    var form = this;
                    var area = $('#area').val();
-                   area = area.trim(area);
-                   // formulario no esta vacio
-                   if (area == null || area == ""){
-                     alert('Debe ingresar un Area');
-                     return false;
-                   }
-                   else{
-                     // codigo AJAX  para comprobar si el area existe previamente
-                     $.ajax({
-                       url: 'ajax/validarArea',
-                       data: {
-                         'area': area
-                       },
-                       dataType: 'json',
-                       success: function (data) {
-                         if (data.is_taken){
-                           alert('La Area ingresada ya se encuentra registrada');
-                           return false;
-                         }
-                         else{
-                           form.submit();
-                         }
+
+                   // codigo AJAX  para comprobar si el area existe previamente
+                   $.ajax({
+                     url: 'ajax/validarArea',
+                     data: {
+                       'area': area
+                     },
+                     dataType: 'json',
+                     success: function (data) {
+                       if (data.is_taken){
+                         alert('La Area ingresada ya se encuentra registrada');
+                         return false;
+                       }
+                       else{
+                         form.submit();
+                       }
                      }
                    });
-                 }
+
                }); // fin de la funcion
 
                </script>
