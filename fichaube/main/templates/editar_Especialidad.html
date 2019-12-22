@@ -49,20 +49,19 @@
           <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
            {% block javascript %}
              <script>
+               // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+               $(function(){
+                 $('input[type="text"]').change(function(){
+                     this.value = $.trim(this.value);
+                 });
+               });
 
-             //  validar formulario
-             $('#formularioNuevoNombreEspecialidad').submit(function(e){
-               e.preventDefault();
-               var form = this;
-               // var direccion = "fichaube/editar-Especialidad/" + {{ idEspecialidad }} +"/ajax/validarEspecialidad"
-               var especialidad = $('#nuevoNombreEspecialidad').val();
-               especialidad = especialidad.trim();
-               // formulario no esta vacio
-               if (especialidad == null || especialidad == ""){
-                 alert('Debe ingresar un nombre para la Especialidad');
-                 return false;
-               }
-               else{
+               //  validar formulario
+               $('#formularioNuevoNombreEspecialidad').submit(function(e){
+                 e.preventDefault();
+                 var form = this;
+                 // var direccion = "fichaube/editar-Especialidad/" + {{ idEspecialidad }} +"/ajax/validarEspecialidad"
+                 var especialidad = $('#nuevoNombreEspecialidad').val();
                  // codigo AJAX  para comprobar si la Especialidad existe previamente
                  $.ajax({
                    url: "ajax/validarEspecialidad",
@@ -78,10 +77,9 @@
                      else{
                        form.submit();
                      }
-                 }
-               }); // fin AJAX
-             }
-           });
+                   }
+                 }); // fin AJAX
+               });
 
              </script>
            {% endblock %}

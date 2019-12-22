@@ -133,7 +133,7 @@
                 <div class="col-sm-4">
                   <h6>Motivo Atención:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
-                    <option value="" selected>Elegir...</option>
+                    <option value="" selected hidden>Elegir...</option>
                     {% if request.user|has_group:"Asistente Social" %}
                     <option value="Asistente Social">Asistente Social</option>
                     {% else %}

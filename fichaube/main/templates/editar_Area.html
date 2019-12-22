@@ -50,21 +50,20 @@
           {% block javascript %}
             <script>
 
+            // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+            $(function(){
+              $('input[type="text"]').change(function(){
+                  this.value = $.trim(this.value);
+              });
+            });
+
             //  validar formulario
             $('#formularioNuevoNombreArea').submit(function(e){
               e.preventDefault();
               var form = this;
               var area = $('#nuevoNombreArea').val();
-              area = area.trim();
-              // formulario no esta vacio
 
-              if (area == null || area == ""){
-                alert('Debe ingresar un nombre para el Area');
-                return false;
-              }
-              // codigo AJAX  para comprobar si el area existe previamente
-              else{
-                $.ajax({
+              $.ajax({
                 url: 'ajax/validarArea',
                 data: {
                   'area': area
@@ -80,7 +79,6 @@
                   }
                 }
               });
-              } // fin AJAX
             });
 
             </script>

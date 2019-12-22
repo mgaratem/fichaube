@@ -30,6 +30,10 @@ from django.views.generic import View
 from django.template.loader import get_template
 
 from .utils import render_to_pdf
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, PatternFill
+
+
 
 # Create your views here.
 
@@ -224,18 +228,95 @@ def reportes(request):
 
 
 
-@login_required()
-def generarReporte(request):
-    listaFichas = Fichas.objects.all()
-    return True
+
+class ReporteExcel(View):
+    def get(self,request,*args,**kwargs):
+        wb = Workbook()
+        ws = wb.active
+        ws['B1'] = 'Reporte de Fichas Clínicas'
+        ws.merge_cells('B1:C1')
+        ws['B1'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
 
 
+        #   tamaño de columnas
+        ws.column_dimensions['B'].width = 20
+        ws.column_dimensions['C'].width = 20
+        ws.column_dimensions['D'].width = 20
+        ws.column_dimensions['E'].width = 45
+        ws.column_dimensions['F'].width = 15
+        ws.column_dimensions['G'].width = 20
+        ws.column_dimensions['H'].width = 25
+
+        #   headers
+        ws['B4'] = 'Nombres'
+        ws['C4'] = 'Apellido Paterno'
+        ws['D4'] = 'Apellido Materno'
+        ws['E4'] = 'Carrera'
+        ws['F4'] = 'Rut'
+        ws['G4'] = 'N° de Ficha Clínica'
+        ws['H4'] = 'Fecha del último registro'
+        # ws.merge_cells('H:J')
+
+        #   centrar texto de headers
+        ws['B4'].alignment = Alignment(horizontal='center')
+        ws['C4'].alignment = Alignment(horizontal='center')
+        ws['D4'].alignment = Alignment(horizontal='center')
+        ws['E4'].alignment = Alignment(horizontal='center')
+        ws['F4'].alignment = Alignment(horizontal='center')
+        ws['G4'].alignment = Alignment(horizontal='center')
+        ws['H4'].alignment = Alignment(horizontal='center')
+
+        #   background de headers color gris
+        ws['B4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['C4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['D4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['E4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['F4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['G4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+        ws['H4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
+
+        #   obtener datos
+        listaFichas = Ficha.objects.select_related('alumno')
+        contador = 5    #   fila en la cual empieza a llenar datos
+        for ficha in listaFichas:
+            listaRegistros = Registro.objects.filter(ficha_id = ficha.pk).order_by("-fecha_creacion")
+            if (len(listaRegistros) > 0):
+                registro = listaRegistros[0]    #   obtener solo el último registro realizado
+                ws.cell(row = contador, column = 8).value = registro.fecha_creacion.strftime('%d-%m-%Y')
+            else:   #   en caso de que no cuente con ningun registro
+                ws.cell(row = contador, column = 8).value = " - "
+
+            #   imprimir datos en excel
+            ws.cell(row = contador, column = 2).value = ficha.alumno.nombre
+            ws.cell(row = contador, column = 3).value = ficha.alumno.apellido_paterno
+            ws.cell(row = contador, column = 4).value = ficha.alumno.apellido_materno
+            ws.cell(row = contador, column = 5).value = ficha.alumno.carrera
+            ws.cell(row = contador, column = 6).value = ficha.alumno.rut
+            ws.cell(row = contador, column = 7).value = ficha.pk
+
+            #   centrar datos de las columnas
+            ws.cell(row = contador, column = 2).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 3).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 4).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 5).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 6).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 7).alignment = Alignment(horizontal='center')
+            ws.cell(row = contador, column = 8).alignment = Alignment(horizontal='center')
+
+            contador = contador + 1
 
 
+        ws['B2'] = 'Total de Fichas Clínicas existentes: ' + str(len(listaFichas)) #terminar esto
+        ws.merge_cells('B2:C2')
+        ws['B2'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
 
 
-
-
+        nombre_archivo = "Reporte.xlsx"
+        response = HttpResponse(content_type = "application/ms-excel")
+        content = "atachment; filename = {0}".format(nombre_archivo)
+        response['Content-Disposition'] = content
+        wb.save(response)
+        return response
 
 
 """
