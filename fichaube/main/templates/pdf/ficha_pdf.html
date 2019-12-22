@@ -102,6 +102,7 @@
   <div class="grid-container">
     <div>
       <img src="http://vra.ucv.cl/dae/wp-content/uploads/2017/01/Dae-PUCV-color.png" width="150">
+      <p style="text-align:right; vertical-align: top;">N° Folio: {{ ficha.numero_folio }}</p>
       <p style="text-align:right; vertical-align: top;">Fecha Creación: {{ ficha.get_fecha }}</p>
     </div>
     <div>
@@ -125,6 +126,7 @@
         </tr>
         <tr>
           <td style="width:100%; text-transform: uppercase;"><b>Domicilio:</b> {{ ficha.alumno.domicilio }}</td>
+          <td style="width:100%; text-transform: uppercase;"><b>Ocupación:</b> {{ ficha.alumno.ocupacion }}</td>
         </tr>
         <tr>
           <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>

@@ -1,6 +1,10 @@
 from django.db import models
 from alumnos.models import Alumno
 from usuarios.models import Usuario
+import datetime
+from datetime import date, datetime
+import random
+from random import seed, randint
 
 # Create your models here.
 
@@ -8,15 +12,20 @@ from usuarios.models import Usuario
 
 class Ficha(models.Model):
 
-  fecha_creacion = models.DateTimeField(auto_now_add=True)
-  alumno = models.OneToOneField(Alumno, null=True, on_delete=models.PROTECT)
+    def number():
+        numero =  int(date.today().year) * 100000 +  Ficha.objects.count()
+        return numero + 1
+
+    numero_folio = models.BigIntegerField(default=number, unique=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    alumno = models.OneToOneField(Alumno, null=True, on_delete=models.PROTECT)
 
 
-  def get_fecha(self):
-      return self.fecha_creacion.strftime('%d/%m/%Y')
+    def get_fecha(self):
+        return self.fecha_creacion.strftime('%d/%m/%Y')
 
-  def __str__(self):
-      return 'Alumno={0}, Fecha={1}'.format(self.alumno, self.fecha_creacion)
+    def __str__(self):
+        return 'Alumno={0}, Fecha={1}'.format(self.alumno, self.fecha_creacion)
 
 
 
