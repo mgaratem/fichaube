@@ -5,77 +5,83 @@
 {% block content %}
 
 </head>
+
 <body>
 
-    <nav class="navbar navbar-default navbar-absolute">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img src="{% static 'fichaube/imagen/Dae-PUCV.png' %}" class="img-responsive"
-                  alt="Responsive image" width="250"></a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="wrapper wrapper-full-page">
-        <div class="full-page login-page" data-color="blue">
-            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-
-
-                            <form class="form-signin" name="form_ingreso" id="form_ingreso" method="post" action="{% url 'login' %}" role="ingreso" >
-                                {% csrf_token %}
-                                <div class="card card-login">
-                                    <div class="card-header text-center">
-                                      <h2>Ingreso</h2>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                            </span>
-                                            <div class="form-group">
-                                                <label class="control-label">Usuario</label>
-                                                <input type="text" name="username" id="id_username"  title="Ingresa tu usuario" class="form-control" value="" autofocus />
-                                                <span class="material-icons form-control-feedback">clear</span>
-                                            </div>
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                            </span>
-                                            <div class="form-group">
-                                                <label class="control-label">Contrase&ntilde;a</label>
-                                                <input type="password" class="form-control" name="password" id="id_password">
-                                                <span class="material-icons form-control-feedback">clear</span>
-                                            </div>
-                                        </div>
-
-                                        {% if form.errors %}
-
-                                            <div class="alert alert-warning" >
-                                                <span id="spn_texto">Tu usuario y contraseña no coinciden. Por favor trata nuevamente.</span>
-                                            </div>
-
-                                        {% endif %}
-
-
-                                    </div>
-                                    <div class="text-center">
-                                        <button class="btn btn-primary" type="submit">Ingresar</button>
-                                        <br><br>
-                                        <a href="{% url 'password_reset' %}">
-                                          <small class="text-info" id="recuperacionPass">¿Olvidaste tu contraseña?</small>
-                                        </a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <nav class="navbar navbar-default navbar-absolute">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><img src="{% static 'fichaube/imagen/Dae-PUCV.png' %}" class="img-responsive" alt="Responsive image" width="250"></a>
+      </div>
     </div>
+  </nav>
+
+  <div class="wrapper wrapper-full-page">
+    <div class="full-page login-page" data-color="blue">
+      <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
 
 
-{% endblock content %}
+              <form class="form-signin" name="form_ingreso" id="form_ingreso" method="post" action="{% url 'login' %}" role="ingreso">
+                {% csrf_token %}
+                <div class="card card-login">
+                  <div class="card-header text-center">
+                    <h2>Ingreso</h2>
+                  </div>
+                  <div class="card-content">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                      </span>
+                      <div class="form-group">
+                        <label class="control-label">Usuario</label>
+                        <input type="text" name="username" id="id_username" title="Ingresa tu usuario" class="form-control" value="" autofocus />
+                        <span class="material-icons form-control-feedback">clear</span>
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                      </span>
+                      <div class="form-group">
+                        <label class="control-label">Contrase&ntilde;a</label>
+                        <input type="password" class="form-control" name="password" id="id_password">
+                        <span class="material-icons form-control-feedback">clear</span>
+                      </div>
+                    </div>
+
+                    {% if form.errors %}
+
+                    <div class="alert alert-warning">
+                      <span id="spn_texto">Tu usuario y contraseña no coinciden. Por favor trata nuevamente.</span>
+                    </div>
+
+                    {% endif %}
+
+
+                  </div>
+                  <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Ingresar</button>
+                    <br>
+                    <br>
+                    <small class="form-text text-muted">
+                      ¿Primera vez? Utiliza los 4 últimos dígitos de tu rut (sin dígito verificador) como contraseña.
+                    </small>
+                    <br>
+                    <br>
+                    <a href="{% url 'password_reset' %}">
+                      <small class="text-info" id="recuperacionPass">¿Olvidaste tu contraseña?</small>
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock content %}
