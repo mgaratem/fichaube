@@ -18,6 +18,7 @@ class Usuario(models.Model):
   asistente_social = models.BooleanField(default=False, null=False)
 
   user = models.OneToOneField(User, null=True, on_delete = models.SET_NULL) #USUARIO DJANGO
+  has_previously_logged_in = models.BooleanField(default=False, null=False) #PARA SABER SI CAMBIO PASS
 
   def get_nombre(self):
       return self.nombre + " " + self.apellidos

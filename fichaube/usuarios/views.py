@@ -23,64 +23,63 @@ from django.core.mail import send_mail
 
 #############---------FUNCION CREATE USER DJANGO------#################
 
-@login_required()
-def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None, cedula=None):
-    if request.method == 'POST':
-        try:
-            a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
-            trans = str.maketrans(a,b)
-            nombre_nuevo = nombre.translate(trans)
-            apellido_nuevo = apellido.translate(trans)
+def crear_user(nombre=None, apellido=None, email=None, tipoUsuario=None, cedula=None):
 
-            first_letra = nombre_nuevo[:1].lower()
-            apellidoSplit = apellido_nuevo.split(" ")
-            first_apellido = apellidoSplit[0].lower()
-            second_apellido = apellidoSplit[1][:1].lower()
+    try:
+        a,b = 'áéíóúüñÁÉÍÓÚÜÑ','aeiouunAEIOUUN' #Evitar problemas letras especiales y tildes
+        trans = str.maketrans(a,b)
+        nombre_nuevo = nombre.translate(trans)
+        apellido_nuevo = apellido.translate(trans)
 
-            primerNombre = nombre_nuevo.split(" ")[0]
-            primerApellido =apellidoSplit[0]
+        first_letra = nombre_nuevo[:1].lower()
+        apellidoSplit = apellido_nuevo.split(" ")
+        first_apellido = apellidoSplit[0].lower()
+        second_apellido = apellidoSplit[1][:1].lower()
 
-            userName = first_letra + first_apellido + second_apellido
-            userExiste = User.objects.filter(username=userName)
-            if not userExiste:
+        primerNombre = nombre_nuevo.split(" ")[0]
+        primerApellido =apellidoSplit[0]
 
-                #password = User.objects.make_random_password()
-                rut = cedula.split("-")
-                password = rut[0][-4:]
+        userName = first_letra + first_apellido + second_apellido
+        userExiste = User.objects.filter(username=userName)
+        if not userExiste:
 
-                userEmail = email
+            #password = User.objects.make_random_password()
+            rut = cedula.split("-")
+            password = rut[0][-4:]
 
-                user = User.objects.create_user(username=userName,
-                                                email=userEmail,
-                                                password=password,
-                                                first_name=primerNombre,
-                                                last_name=primerApellido)
-                user.save()
+            userEmail = email
 
-                if tipoUsuario == "1":
-                    #PROFESIONAL
-                    group = Group.objects.get(name='Profesional')
-                    group.user_set.add(user)
+            user = User.objects.create_user(username=userName,
+                                            email=userEmail,
+                                            password=password,
+                                            first_name=primerNombre,
+                                            last_name=primerApellido)
+            user.save()
 
-                elif tipoUsuario == "2":
-                    #ADMINISTRATIVO
-                    group = Group.objects.get(name='Administrativo')
-                    group.user_set.add(user)
+            if tipoUsuario == "1":
+                #PROFESIONAL
+                group = Group.objects.get(name='Profesional')
+                group.user_set.add(user)
 
-                elif tipoUsuario == "3":
-                    #MANTENEDOR
-                    group = Group.objects.get(name='Mantenedor')
-                    group.user_set.add(user)
+            elif tipoUsuario == "2":
+                #ADMINISTRATIVO
+                group = Group.objects.get(name='Administrativo')
+                group.user_set.add(user)
 
-                elif tipoUsuario == "4":
-                    #ASISTENTE SOCIAL
-                    group = Group.objects.get(name='Asistente Social')
-                    group.user_set.add(user)
+            elif tipoUsuario == "3":
+                #MANTENEDOR
+                group = Group.objects.get(name='Mantenedor')
+                group.user_set.add(user)
 
-                elif tipoUsuario == "5":
-                    #COORDINADOR
-                    group = Group.objects.get(name='Coordinador')
-                    group.user_set.add(user)
+            elif tipoUsuario == "4":
+                #ASISTENTE SOCIAL
+                group = Group.objects.get(name='Asistente Social')
+                group.user_set.add(user)
+
+            elif tipoUsuario == "5":
+                #COORDINADOR
+                group = Group.objects.get(name='Coordinador')
+                group.user_set.add(user)
 
 
                 send_mail(
@@ -91,20 +90,66 @@ def crear_user(request, nombre=None, apellido=None, email=None, tipoUsuario=None
                     fail_silently=False,
                 )
 
-                return user
+            return user
 
-            return userExiste[0]
+        return userExiste[0]
 
-        except Exception as e:
-                messages.error(request,"No fue posible crear usuario. "+repr(e))
-                return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
+    except Exception as e:
+        messages.error(request,"No fue posible crear usuario. "+repr(e))
+        return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
+
+
+
+#############---------FUNCION CREAR UN USUARIO PARA PROFESIONAL------#################
+
+@login_required()
+def crearCuenta(request, id_usuario=None):
+
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+
+        if request.method == 'GET':
+            try:
+                usuario = Usuario.objects.get(id = id_usuario)
+                if usuario.user:
+                    messages.error(request,"Este usuario ya tiene cuenta.")
+                    return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
+
+                correo = "example@example.com"
+
+                tipoUsuario = ""
+                if usuario.profesional == True:
+                    tipoUsuario = "1"
+                elif usuario.administrativo == True:
+                    tipoUsuario = "2"
+                elif usuario.mantenedor == True:
+                    tipoUsuario = "3"
+                elif usuario.asistente_social == True:
+                    tipoUsuario = "4"
+                elif usuario.coordinador == True:
+                    tipoUsuario = "5"
+
+                usuario.user = crear_user(usuario.nombre, usuario.apellidos, correo, tipoUsuario, usuario.rut)
+                usuario.save()
+                messages.success(request, '¡Cuenta creada con éxito!')
+                return HttpResponseRedirect(reverse("usuarios:verUsuario", args=[id_usuario]))
+
+            except Exception as e:
+                messages.error(request,"No fue posible crear user para usuario. "+repr(e))
+                return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 
 
 
 #############---------FUNCION CHANGE PASSWORD------#################
 
 @login_required()
-def cambiar_pass(request):
+def cambiarPass(request):
     template = "cambiar_pass.html"
 
     if request.method == 'GET':
@@ -126,16 +171,16 @@ def cambiar_pass(request):
                     messages.success(request, '¡Contraseña cambiada con éxito!')
                 else:
                     messages.error(request,'Las contraseñas no coinciden')
-                    return HttpResponseRedirect(reverse("cambiar_pass"))
+                    return HttpResponseRedirect(reverse("usuarios:cambiarPass"))
             else:
                 messages.error(request,'La contraseña no es la correcta')
-                return HttpResponseRedirect(reverse("cambiar_pass"))
+                return HttpResponseRedirect(reverse("usuarios:cambiarPass"))
 
         except Exception as e:
             messages.error(request,"No es posible cambiar contraseña. "+repr(e))
-            return HttpResponseRedirect(reverse("cambiar_pass"))
+            return HttpResponseRedirect(reverse("usuarios:cambiarPass"))
 
-        return HttpResponseRedirect(reverse("cambiar_pass"))
+        return HttpResponseRedirect(reverse("usuarios:cambiarPass"))
 
     #return render(request, 'cambiar_pass.html')
 
@@ -241,9 +286,10 @@ def borrarUsuario(request, id_usuario=None):
         if request.method == 'GET':
             try:
                 usuario = Usuario.objects.get(id=id_usuario)
+                usuario.has_previously_logged_in = False
+                usuario.save()
                 user = User.objects.get(id=usuario.user_id)
                 user.delete()
-
                 messages.success(request, '¡Usuario eliminado con éxito!')
                 return HttpResponseRedirect(reverse("usuarios:buscarUsuario"))
 

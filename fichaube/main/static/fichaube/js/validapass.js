@@ -1,13 +1,12 @@
 var Pw = {
-    // Valida el rut con su cadena completa "XXXXXXXX-X" con puntos o sin puntos
     validaPass : function (pass) {
         var res = pass.split("");
         var largo = res.length
-        
+
         if ( largo <= 5 ){
              return false;
         }
-        
+
         else {
             return true;
         }

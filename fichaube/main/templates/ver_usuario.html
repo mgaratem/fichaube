@@ -110,6 +110,29 @@
                                 <!-- END: Separacion interlineado -->
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Personal Vigente</h6>
+                                <p>
+                                  {% if usuario.user %}
+                                    {% if usuario.user.is_active %}
+                                    Si
+                                    {% else %}
+                                    No
+                                    {% endif %}
+                                  {% else %}
+                                  No tiene cuenta asociada
+                                  {% if request.user|has_group:"Coordinador" or request.user.is_superuser %}
+                                  [
+                                  <a href="{% url 'usuarios:crearCuenta' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Crear Cuenta" rel="popover" data-placement="bottom" data-trigger="hover">
+                                    <i class="zmdi zmdi-account-add" style="font-size:20px; color:#339fc3;"></i>
+                                  </a>
+                                  ]
+                                  {% endif %}
+                                  {% endif %}
+                                </p>
+                            </div>
+                        </div>
 
 
                     </div>

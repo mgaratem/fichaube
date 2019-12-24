@@ -125,13 +125,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#Para que tenga concordancia con la fecha y hora local
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#Cuando se usa un TIME_ZONE especifico, se deja en False
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

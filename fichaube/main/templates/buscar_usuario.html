@@ -81,6 +81,7 @@
                   <th>Rut</th>
                   <th>Nombre Usuario</th>
                   <th>Tipo de Usuario</th>
+                  <th>Personal Vigente</th>
                   <th>Acciones</th>
                 </thead>
                 <tbody id="tablaBusqueda">
@@ -88,17 +89,30 @@
                   <tr>
                     <td>{{usuario.rut}}</td>
                     <td>{{usuario.nombre}} {{usuario.apellidos}}</td>
-                    {% if usuario.coordinador %}
-                    <td>Coordinador</td>
-                    {% elif usuario.profesional %}
-                    <td>Profesional</td>
-                    {% elif usuario.administrativo %}
-                    <td>Administrativo</td>
-                    {% elif usuario.mantenedor %}
-                    <td>Mantenedor</td>
-                    {% else %}
-                    <td>Asistente Social</td>
+                    <td>
+                      {% if usuario.coordinador %}
+                      Coordinador
+                      {% elif usuario.profesional %}
+                      Profesional
+                      {% elif usuario.administrativo %}
+                      Administrativo
+                      {% elif usuario.mantenedor %}
+                      Mantenedor
+                      {% else %}
+                      Asistente Social
                     {% endif %}
+                    </td>
+                    <td>
+                      {% if usuario.user %}
+                        {% if usuario.user.is_active %}
+                        Si
+                        {% else %}
+                        No
+                        {% endif %}
+                      {% else %}
+                        Sin cuenta asociada
+                      {% endif %}
+                    </td>
                     <td>
                       <a href="{% url 'usuarios:verUsuario' id_usuario=usuario.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
                         <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>

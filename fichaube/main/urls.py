@@ -16,7 +16,7 @@ urlpatterns = [
     path('404/', views.handler404, name="404"),
     path('500/', views.handler500, name="500"),
 
-    path('cambiar_pass/', views.cambiar_pass, name="cambiar_pass"),
+    path('force_cambiar_pass/', views.force_cambiar_pass, name="force_cambiar_pass"),
 
 
 ]
