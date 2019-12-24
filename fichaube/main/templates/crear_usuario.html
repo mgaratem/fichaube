@@ -78,7 +78,7 @@
               <label for="inputTipoUsuario" class="col-sm-2 col-form-label">Elija tipo de usuario:</label>
               <div class="col-sm-4">
                 <select class="custom-select mr-sm-2" id="inputTipoUsuario" name="inputTipoUsuario" onchange='CheckUsuario(this.value);' required>
-                  <option value="" selected>Elegir...</option>
+                  <option value="" selected hidden>Elegir...</option>
                   <option value="1">Profesional</option>
                   {% if request.user|has_group:"Coordinador" or request.user.is_superuser%}
                   <option value="2">Administrativo</option>
