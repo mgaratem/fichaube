@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ficha',
             name='numero_folio',
-            field=models.BigIntegerField(default=fichas.models.Ficha.number),
+            field=models.BigIntegerField(default=fichas.models.Ficha.number, unique=True),
         ),
     ]

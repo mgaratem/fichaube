@@ -16,38 +16,72 @@ from areas.models import Especialidad
 from django.http import JsonResponse
 from django.template import *
 
-
-# Create your views here.
-
+from alumnos.models import Alumno
+from fichas.models import Ficha, Registro
+from permisos.models import Permiso
+from usuarios.models import Usuario
+from areas.models import UsuarioEspecialidad, Especialidad, Area
 
 
 # html para agregar area
 @login_required()
 def testpancho01(request):
-    return render(request, 'agregar_Area.html',{})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        return render(request, 'agregar_Area.html',{})
 
 # html para editar area
 @login_required()
 def testpancho02(request, idArea):
-    area = Area.objects.get(pk = idArea)
-    nombreArea = area.nombreArea
-    return render(request, 'editar_Area.html', {'idArea': idArea, 'nombreArea': nombreArea})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        area = Area.objects.get(pk = idArea)
+        nombreArea = area.nombreArea
+        return render(request, 'editar_Area.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
 # html para agregar especialidad
 @login_required()
 def testpancho03(request):
-    if request.method == 'POST':
-        idArea = request.POST.get("idArea")
-        area = Area.objects.get(pk = idArea)
-        nombreArea = area.nombreArea
-        return render(request, 'agregar_Especialidad.html', {'idArea': idArea, 'nombreArea': nombreArea})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        if request.method == 'POST':
+            idArea = request.POST.get("idArea")
+            area = Area.objects.get(pk = idArea)
+            nombreArea = area.nombreArea
+            return render(request, 'agregar_Especialidad.html', {'idArea': idArea, 'nombreArea': nombreArea})
 
 # html para editar una especialidad
 @login_required()
 def testpancho04(request, idEspecialidad, idArea):
-    especialidad = Especialidad.objects.get(pk = idEspecialidad)
-    nombreEspecialidad = especialidad.nombreEspecialidad
-    return render(request, 'editar_Especialidad.html',{'idArea': idArea, 'nombreEspecialidad': nombreEspecialidad, 'idEspecialidad': idEspecialidad})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        especialidad = Especialidad.objects.get(pk = idEspecialidad)
+        nombreEspecialidad = especialidad.nombreEspecialidad
+        return render(request, 'editar_Especialidad.html',{'idArea': idArea, 'nombreEspecialidad': nombreEspecialidad, 'idEspecialidad': idEspecialidad})
 
 
 
@@ -74,8 +108,16 @@ def validarArea(request):
 # funcion y html para listar Areas
 @login_required()
 def listarAreas(request):
-    listaAreas = Area.objects.all()
-    return render(request, "lista_Areas.html", {"areas": listaAreas})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        listaAreas = Area.objects.all()
+        return render(request, "lista_Areas.html", {"areas": listaAreas})
 
 # funcion para eliminar una Area dado un ID
 @login_required()
