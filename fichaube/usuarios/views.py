@@ -239,7 +239,7 @@ def crear_usuario(request):
                     elif tipoUsuario == "5":
                         usuario.coordinador = True
 
-                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario, rut)
+                    usuario.user = crear_user(nombre, apellidos, correo, tipoUsuario, rut)
                     usuario.save()
 
                     if especialidadesElegidas:
@@ -258,7 +258,7 @@ def crear_usuario(request):
 
                 else:
                     usuario = usuarioExiste[0]
-                    usuario.user = crear_user(request, nombre, apellidos, correo, tipoUsuario)
+                    usuario.user = crear_user(nombre, apellidos, correo, tipoUsuario, rut)
                     messages.error(request,'¡Este usuario ya existe!')
                     return HttpResponseRedirect(reverse("usuarios:crear_usuario"))
 
