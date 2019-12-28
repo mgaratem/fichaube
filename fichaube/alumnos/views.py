@@ -90,7 +90,7 @@ def crear_alumno(request):
 
                 else:
                     messages.error(request,'¡Este usuario ya existe!')
-                    del alumno
+                    # del alumno
                     return HttpResponseRedirect(reverse("alumnos:crear_alumno"))
 
             except Exception as e:
