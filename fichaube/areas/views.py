@@ -143,8 +143,16 @@ def editarArea(request):
 # funcion para listar todas las especialidades
 @login_required()
 def listarEspecialidades(request, idArea):
-    listaEspecialides = Especialidad.objects.filter(area_id = idArea)
-    return render(request, "lista_Especialidades.html", {"especialidades": listaEspecialides, "idArea": idArea})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        listaEspecialides = Especialidad.objects.filter(area_id = idArea)
+        return render(request, "lista_Especialidades.html", {"especialidades": listaEspecialides, "idArea": idArea})
 
 # funcion para agregar una nueva especialidad
 @login_required()
