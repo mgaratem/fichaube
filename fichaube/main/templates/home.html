@@ -64,7 +64,7 @@
           </ul>
         </li>
         {% endif %}
-        {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
+        {% if request.user|has_group:"Coordinador" or request.user.is_superuser %}
         <li>
           <a href="#reporteSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
           <ul class="collapse list-unstyled show" id="reporteSubmenu">
@@ -74,7 +74,7 @@
           </ul>
         </li>
         {% endif %}
-        {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Mantenedor" or request.user.is_superuser %}
+        {% if request.user|has_group:"Coordinador" or request.user.is_superuser %}
         <li>
           <a href="#mantenedorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
           <ul class="collapse list-unstyled show" id="mantenedorSubmenu">

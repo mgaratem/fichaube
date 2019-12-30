@@ -50,3 +50,13 @@ fichaube/areas/__pycache__/admin.cpython-37.pyc
 *.pyc
 *.pyc
 *.pyc
+fichaube/alumnos/migrations/0002_auto_20191125_2344.py
+fichaube/usuarios/migrations/0002_usuario_has_previously_logged_in.py
+fichaube/usuarios/migrations/0001_initial.py
+fichaube/permisos/migrations/0001_initial.py
+fichaube/fichas/migrations/0002_ficha_numero_folio.py
+fichaube/fichas/migrations/0001_initial.py
+fichaube/areas/migrations/0002_auto_20191211_1927.py
+fichaube/areas/migrations/0001_initial.py
+fichaube/alumnos/migrations/0003_auto_20191126_0009.py
+fichaube/alumnos/migrations/0001_initial.py
