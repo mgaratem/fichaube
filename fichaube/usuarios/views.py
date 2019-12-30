@@ -196,6 +196,8 @@ def crear_usuario(request):
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
         return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
     else:
 
         template = "crear_usuario.html"
@@ -281,6 +283,8 @@ def borrarUsuario(request, id_usuario=None):
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
         return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
     else:
 
         if request.method == 'GET':
@@ -311,6 +315,8 @@ def updateUsuario(request, id_usuario=None):
     elif request.user.groups.filter(name__in=['Profesional']).exists():
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
         return HttpResponseRedirect(reverse("home"))
     else:
 
@@ -391,6 +397,8 @@ def verUsuario(request, id_usuario=None):
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
         return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
     else:
 
         template = "ver_usuario.html"
@@ -419,6 +427,8 @@ def listarUsuarios(request):
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
         return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
     else:
 
         template = "listar_profesionales.html"
@@ -444,6 +454,8 @@ def buscarUsuario(request):
     elif request.user.groups.filter(name__in=['Profesional']).exists():
         return HttpResponseRedirect(reverse("home"))
     elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
         return HttpResponseRedirect(reverse("home"))
     else:
 
