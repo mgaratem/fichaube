@@ -234,7 +234,17 @@ class GeneratePdf(View):
 
 @login_required()
 def reportes(request):
-    return render(request, 'reportes.html', {})
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Profesional']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Asistente Social']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        return render(request, 'reportes.html', {})
 
 
 
