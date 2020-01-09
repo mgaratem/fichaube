@@ -31,7 +31,7 @@ from django.template.loader import get_template
 
 from .utils import render_to_pdf
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, PatternFill
+from openpyxl.styles import Alignment, PatternFill, Border, Side
 
 
 
@@ -264,11 +264,22 @@ class ReporteExcel(View):
 
             wb = Workbook()
             ws = wb.active
+
+            # formato de bordes para celdas
+            borde = Border(left=Side(border_style="thin", color='141414'),
+                            right=Side(border_style="thin", color='141414'),
+                            top=Side(border_style="thin", color='141414'),
+                            bottom=Side(border_style="thin", color='141414'))
+
             ws['B1'] = 'Reporte de Fichas Clínicas'
             ws.merge_cells('B1:C1')
             ws['B1'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
-
-
+            #   bordes
+            ws['B1'].border = borde
+            ws['C1'].border = borde
+            ws['B2'].border = borde
+            ws['C2'].border = borde
+            
             #   tamaño de columnas
             ws.column_dimensions['B'].width = 15
             ws.column_dimensions['C'].width = 20
@@ -280,9 +291,9 @@ class ReporteExcel(View):
 
             #   headers
             ws['B4'] = 'Rut'
-            ws['C4'] = 'Nombres'
-            ws['D4'] = 'Apellido Paterno'
-            ws['E4'] = 'Apellido Materno'
+            ws['C4'] = 'Apellido Paterno'
+            ws['D4'] = 'Apellido Materno'
+            ws['E4'] = 'Nombres'
             ws['F4'] = 'Carrera'
             ws['G4'] = 'N° Folio Ficha Clínica'
             ws['H4'] = 'Fecha del último registro'
@@ -296,6 +307,15 @@ class ReporteExcel(View):
             ws['F4'].alignment = Alignment(horizontal='center')
             ws['G4'].alignment = Alignment(horizontal='center')
             ws['H4'].alignment = Alignment(horizontal='center')
+
+            #   bordes de headers
+            ws['B4'].border = borde
+            ws['C4'].border = borde
+            ws['D4'].border = borde
+            ws['E4'].border = borde
+            ws['F4'].border = borde
+            ws['G4'].border = borde
+            ws['H4'].border = borde
 
             #   background de headers color gris
             ws['B4'].fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type = "solid")
@@ -319,20 +339,30 @@ class ReporteExcel(View):
 
                 #   imprimir datos en excel
                 ws.cell(row = contador, column = 2).value = ficha.alumno.rut
-                ws.cell(row = contador, column = 3).value = ficha.alumno.nombre
-                ws.cell(row = contador, column = 4).value = ficha.alumno.apellido_paterno
-                ws.cell(row = contador, column = 5).value = ficha.alumno.apellido_materno
+                ws.cell(row = contador, column = 3).value = ficha.alumno.apellido_paterno
+                ws.cell(row = contador, column = 4).value = ficha.alumno.apellido_materno
+                ws.cell(row = contador, column = 5).value = ficha.alumno.nombre
                 ws.cell(row = contador, column = 6).value = ficha.alumno.carrera
                 ws.cell(row = contador, column = 7).value = ficha.numero_folio
 
                 #   centrar datos de las columnas
-                ws.cell(row = contador, column = 2).alignment = Alignment(horizontal='left')
-                ws.cell(row = contador, column = 3).alignment = Alignment(horizontal='left')
-                ws.cell(row = contador, column = 4).alignment = Alignment(horizontal='left')
-                ws.cell(row = contador, column = 5).alignment = Alignment(horizontal='left')
+                ws.cell(row = contador, column = 2).alignment = Alignment(horizontal='center')
+                ws.cell(row = contador, column = 3).alignment = Alignment(horizontal='center')
+                ws.cell(row = contador, column = 4).alignment = Alignment(horizontal='center')
+                ws.cell(row = contador, column = 5).alignment = Alignment(horizontal='center')
                 ws.cell(row = contador, column = 6).alignment = Alignment(horizontal='center')
                 ws.cell(row = contador, column = 7).alignment = Alignment(horizontal='center')
                 ws.cell(row = contador, column = 8).alignment = Alignment(horizontal='center')
+
+                #   darles bordes a las celdas
+                ws.cell(row = contador, column = 2).border = borde
+                ws.cell(row = contador, column = 3).border = borde
+                ws.cell(row = contador, column = 4).border = borde
+                ws.cell(row = contador, column = 5).border = borde
+                ws.cell(row = contador, column = 6).border = borde
+                ws.cell(row = contador, column = 7).border = borde
+                ws.cell(row = contador, column = 8).border = borde
+
 
                 contador = contador + 1
 
