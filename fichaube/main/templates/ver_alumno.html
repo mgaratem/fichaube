@@ -231,11 +231,15 @@
             <form action="{% url 'fichas:crearRegistro' id_alumno=alumno.id %}" method="POST" style="width:100%">
               {% csrf_token %}
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                   <h6>Observaciones:</h6>
-                  <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
+                  <textarea name="inputObservaciones" rows="12" cols="150" required></textarea>
                   <br>
                 </div>
+              </div>
+              <br>
+              <br>
+              <div class="row">
                 <div class="col-sm-4">
                   <h6>Especialidad:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
