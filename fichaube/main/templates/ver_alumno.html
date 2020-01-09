@@ -267,10 +267,10 @@
               <tbody>
                 {% for registro in registros %}
                 <tr>
-                  <td style="width:20%">{{registro.get_fecha}}</td>
-                  <td style="width:20%">{{registro.motivo_atencion}}</td>
-                  <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
+                  <td style="width:10%">{{registro.get_fecha}}</td>
+                  <td style="width:10%">{{registro.motivo_atencion}}</td>
+                  <td style="width:65%;white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
+                  <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
