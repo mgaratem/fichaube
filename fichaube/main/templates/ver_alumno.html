@@ -7,7 +7,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
   <div class="header text-center">
-    <h2>Ficha Alumno</h2>
+    <h2>Ver Estudiante</h2>
   </div>
 </div>
 
@@ -64,7 +64,7 @@
 
               <div class="row">
                 <div class="col-sm-6">
-                  <h6>Correo alumno</h6>
+                  <h6>Correo estudiante</h6>
                   <p>
                     <a href="mailto:{{ alumno.correo }}">{{ alumno.correo }}</a>
                   </p>
@@ -127,11 +127,11 @@
                   <h6>Observaciones:</h6>
                   <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
                   <br>
-                  <h6>Decisión Alumno:</h6>
+                  <h6>Decisión Estudiante:</h6>
                   <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
-                  <h6>Motivo Atención:</h6>
+                  <h6>Especialidad:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
                     <option value="" selected hidden>Elegir...</option>
                     {% if request.user|has_group:"Asistente Social" %}
@@ -166,9 +166,9 @@
             <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
-                <th>Motivo de Atención</th>
+                <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Alumno</th>
+                <th>Decisión Estudiante</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
@@ -232,7 +232,7 @@
                   <h6>Observaciones:</h6>
                   <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
                   <br>
-                  <h6>Decisión Alumno:</h6>
+                  <h6>Decisión Estudiante:</h6>
                   <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
@@ -267,9 +267,9 @@
             <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
-                <th>Motivo de Atención</th>
+                <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Alumno</th>
+                <th>Decisión Estudiante</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
@@ -315,7 +315,7 @@
           <h3>Permisos</h3>
 
           {% if not ficha %}
-          <p>Este alumno aún no tiene ficha clínica creada.</p>
+          <p>Este estudiante aún no tiene ficha clínica creada.</p>
           {% else %}
 
           <div class="row cuadro-filtro">
@@ -358,7 +358,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>¿Está seguro que quiere revocar los permisos de visualización de la ficha clínica a este usuario?</p>
+                            <p>¿Desea quitar el acceso a la ficha clínica a este profesional </p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

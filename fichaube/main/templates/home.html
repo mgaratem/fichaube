@@ -51,14 +51,14 @@
           <a href="#fichasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fichas</a>
           <ul class="collapse list-unstyled show" id="fichasSubmenu">
             <li>
-              <a href="{% url 'alumnos:buscarAlumno' %}">Buscar alumno</a>
+              <a href="{% url 'alumnos:buscarAlumno' %}">Buscar estudiante</a>
             </li>
             {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser %}
             <li>
               <a href="{% url 'fichas:crearFicha' %}">Crear nueva ficha</a>
             </li>
             <li>
-              <a href="{% url 'alumnos:crear_alumno' %}">Agregar alumno</a>
+              <a href="{% url 'alumnos:crear_alumno' %}">Agregar estudiante</a>
             </li>
             {% endif %}
           </ul>
@@ -95,7 +95,7 @@
             {% endif %}
             {% endif %}
             <li>
-              <a href="{% url 'alumnos:importAlumnos' %}">Cargar alumnos</a>
+              <a href="{% url 'alumnos:importAlumnos' %}">Cargar estudiantes</a>
             </li>
           </ul>
         </li>
