@@ -237,9 +237,9 @@
                   <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
-                  <h6>Motivo Atención:</h6>
+                  <h6>Especialidad:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
-                    <option value="" selected>Elegir...</option>
+                    <option value="" selected hidden>Elegir...</option>
                     {% for e in especialidades %}
                     <option value="{{ e.especialidad.id }}">{{ e.especialidad.nombreEspecialidad }}</option>
                     {% endfor %}

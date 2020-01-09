@@ -63,7 +63,7 @@
             <div class="form-group row">
               <label for="inputNombre" class="col-sm-2 col-form-label">Nombres:</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombres" required>
+                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombres" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -71,10 +71,10 @@
             <div class="form-group row">
               <label for="inputNombre" class="col-sm-2 col-form-label">Apellidos:</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" id="inputApellidoPaterno" name="inputApellidoPaterno" placeholder="Apellido Paterno" required>
+                <input type="text" class="form-control" id="inputApellidoPaterno" name="inputApellidoPaterno" placeholder="Apellido Paterno" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
               <div class="col-sm-5">
-                <input type="text" class="form-control" id="inputApellidoMaterno" name="inputApellidoMaterno" placeholder="Apellido Materno" required>
+                <input type="text" class="form-control" id="inputApellidoMaterno" name="inputApellidoMaterno" placeholder="Apellido Materno" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -85,7 +85,7 @@
             <div class="form-group row">
               <label for="inputCorreo" class="col-sm-2 col-form-label">Correo:</label>
               <div class="col-sm-8">
-                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" placeholder="email@example.com" required>
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" placeholder="email@ejemplo.com" required>
               </div>
             </div>
 
@@ -96,7 +96,7 @@
             <div class="form-group row">
               <label for="inputGeneracion" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
               <div class="col-sm-3">
-                <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento" required>
+                <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento" max="2100-01-01" required>
               </div>
             </div>
 
@@ -122,7 +122,7 @@
             <div class="form-group row">
               <label for="inputDomicilio" class="col-sm-2 col-form-label">Domicilio:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" placeholder="Calle, N°, Depto, Villa, Ciudad" required>
+                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" placeholder="Calle, N°, Depto, Villa, Ciudad" pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -144,7 +144,7 @@
             <div class="form-group row">
               <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado" required>
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado" pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -154,7 +154,7 @@
             <div class="form-group row">
               <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Isapre, Capredena..." required>
+                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Isapre, Capredena..." pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
             </br>
@@ -177,6 +177,13 @@
   $(function(){
     $('input[type="text"]').change(function(){
         this.value = $.trim(this.value);
+    });
+  });
+
+  // validar fecha de nacimiento no es mayor a hoy
+  $(function(){
+    $('[type="date"]').prop('max', function(){
+        return new Date().toJSON().split('T')[0];
     });
   });
 
