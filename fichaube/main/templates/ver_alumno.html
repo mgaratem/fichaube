@@ -127,8 +127,6 @@
                   <h6>Observaciones:</h6>
                   <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
                   <br>
-                  <h6>Decisión Estudiante:</h6>
-                  <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
                   <h6>Especialidad:</h6>
@@ -168,7 +166,6 @@
                 <th>Fecha</th>
                 <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Estudiante</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
@@ -179,7 +176,6 @@
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
                   <td style="width:20%">{{registro.descripcion_atencion}}</td>
-                  <td style="width:20%">{{registro.decision_alumno}}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% else %}
@@ -189,7 +185,6 @@
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
                   <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}" style="color: #339fc3;">[Ver]</a>{% else %}-{% endif %}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endif %}
@@ -232,8 +227,6 @@
                   <h6>Observaciones:</h6>
                   <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
                   <br>
-                  <h6>Decisión Estudiante:</h6>
-                  <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
                   <h6>Especialidad:</h6>
@@ -269,7 +262,6 @@
                 <th>Fecha</th>
                 <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Estudiante</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
@@ -278,7 +270,6 @@
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
                   <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}" style="color: #339fc3;">[Ver]</a>{% else %}-{% endif %}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endfor %}
