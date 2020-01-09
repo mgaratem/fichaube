@@ -34,9 +34,8 @@ class Ficha(models.Model):
 class Registro(models.Model):
 
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    motivo_atencion = models.CharField(max_length = 50, null=False)
+    motivo_atencion = models.CharField(max_length = 50, null=False) # tambien es especialidad del profesional
     descripcion_atencion = models.TextField()
-    decision_alumno = models.TextField()
     es_asistencia_social = models.BooleanField(default=False, null=False)
 
     profesional = models.ForeignKey(Usuario, on_delete = models.PROTECT)
