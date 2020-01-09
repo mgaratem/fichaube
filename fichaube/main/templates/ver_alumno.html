@@ -196,6 +196,9 @@
                 {% endfor %}
               </tbody>
             </table>
+            <center>
+              <button type="submit" class="btn btn-primary" {% if request.user.is_superuser %}disabled{% endif %}>Registrar</button>
+            </center>
           </div>
 
         </div>
@@ -216,11 +219,7 @@
           <h3>Ficha Clínica</h3>
           <div class="row">
             <div class="col-auto mr-auto"></div>
-            <div class="col-auto">
-              <a href="{% url 'fichas:crearFichaPDF' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Descargar PDF" rel="popover" data-placement="bottom" data-trigger="hover">
-                <i class="zmdi zmdi-collection-pdf" style="font-size:20px; color:#339fc3;"></i>
-              </a>
-            </div>
+
           </div>
           </br>
           </br>
@@ -286,7 +285,18 @@
               </tbody>
             </table>
           </div>
-
+          <div class="row">
+            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-4">
+              <br>
+              <center>
+                <form action="{% url 'fichas:crearFichaPDF' id_alumno=alumno.id %}">
+                  <input type="submit" class="btn btn-primary" {% if request.user.is_superuser %}disabled{% endif %} value="Descargar Ficha">
+                </form>
+              </center>
+            </div>
+          </div>
         </div>
       </div>
     </div>
