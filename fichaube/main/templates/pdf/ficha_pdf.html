@@ -129,8 +129,19 @@
           <td style="width:100%; text-transform: uppercase;"><b>Ocupación:</b> {{ ficha.alumno.ocupacion }}</td>
         </tr>
         <tr>
-          <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>
+          {% if ficha.alumno.representante_legal %}
+            <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>
+          {% else %}
+            <td style="width:70%"><b>Representante Legal:</b> - </td>
+          {% endif %}
           <td style="width:30%"><b>Prevision:</b> {{ ficha.alumno.prevision }}</td>
+        </tr>
+        <tr>
+          {% if ficha.alumno.nombre_social %}
+            <td style="width:100%"><b>Nombre Social:</b> {{ ficha.alumno.nombre_social }}</td>
+          {% else %}
+            <td><b>Nombre Social:</b> - </td>
+          {% endif %}
         </tr>
       </tbody>
     </table>

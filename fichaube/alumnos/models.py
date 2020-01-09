@@ -18,7 +18,7 @@ class Alumno(models.Model):
   carrera = models.CharField(max_length=120)
   domicilio = models.CharField(max_length=150, blank=True)
   ocupacion = models.CharField(max_length=100, default='Estudiante')
-  representante_legal = models.CharField(max_length=100, blank=True)
+  representante_legal = models.CharField(max_length=100, blank=True, null=True)
   prevision = models.CharField(max_length=100, blank=True)
   nombre_social = models.CharField(max_length=100, null=True)
 
