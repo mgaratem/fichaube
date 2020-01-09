@@ -20,10 +20,11 @@ class Alumno(models.Model):
   ocupacion = models.CharField(max_length=100, default='Estudiante')
   representante_legal = models.CharField(max_length=100, blank=True)
   prevision = models.CharField(max_length=100, blank=True)
+  nombre_social = models.CharField(max_length=100, null=True)
 
   def get_name(self):
       return self.nombre + " " + self.apellido_paterno + " " + self.apellido_materno
-      
+
   def __str__(self):
     return 'Rut={0}, Nombre={1}, ApellidoPaterno={2}, ApellidoMaterno={3}, Carrera={4}, Domicilio={5}, Ocupacion={6}, Representante={7}, Prevision={8}'.format(self.rut, self.nombre, self.apellido_paterno, self.apellido_materno, self.carrera, self.domicilio, self.ocupacion, self.representante_legal, self.prevision)
 

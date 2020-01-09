@@ -61,7 +61,7 @@ def crear_alumno(request):
                 #ocupacion = request.POST.get('inputOcupacion')
                 representante = request.POST.get('inputRepresentante')
                 prevision = request.POST.get('inputPrevision')
-
+                nombre_social = request.POST.get('inputNombreSocial')
 
                 alumnoExiste = Alumno.objects.filter(rut=rut)
 
@@ -81,6 +81,7 @@ def crear_alumno(request):
                     #alumno.ocupacion = ocupacion
                     alumno.representante_legal = representante.upper()
                     alumno.prevision = prevision.upper()
+                    alumno.nombre_social = nombre_social.upper()
 
                     alumno.save()
                     id = alumno.id

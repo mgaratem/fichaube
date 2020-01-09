@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <h6>Nombre</h6>
                   <p style="text-transform: uppercase;">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }} {{ alumno.nombre }}</p>
                 </div>
@@ -63,7 +63,7 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <h6>Correo estudiante</h6>
                   <p>
                     <a href="mailto:{{ alumno.correo }}">{{ alumno.correo }}</a>
@@ -87,13 +87,21 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <h6>Domicilio</h6>
                   <p>{{ alumno.domicilio }}</p>
                 </div>
                 <div class="col-sm-3">
                   <h6>Prevision</h6>
                   <p>{{ alumno.prevision }}</p>
+                </div>
+                <div class="col-sm-3">
+                  <h6>Nombre Social</h6>
+                  {% if alumno.nombre_social %}
+                    <p>{{ alumno.nombre_social }}</p>
+                  {% else %}
+                    <p> - </p>
+                  {% endif %}
                 </div>
               </div>
               <br>
