@@ -7,7 +7,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
   <div class="header text-center">
-    <h2>Ficha Alumno</h2>
+    <h2>Ver Estudiante</h2>
   </div>
 </div>
 
@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <h6>Nombre</h6>
                   <p style="text-transform: uppercase;">{{ alumno.apellido_paterno }} {{ alumno.apellido_materno }} {{ alumno.nombre }}</p>
                 </div>
@@ -63,8 +63,8 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-6">
-                  <h6>Correo alumno</h6>
+                <div class="col-sm-3">
+                  <h6>Correo estudiante</h6>
                   <p>
                     <a href="mailto:{{ alumno.correo }}">{{ alumno.correo }}</a>
                   </p>
@@ -87,13 +87,21 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <h6>Domicilio</h6>
                   <p>{{ alumno.domicilio }}</p>
                 </div>
                 <div class="col-sm-3">
                   <h6>Prevision</h6>
                   <p>{{ alumno.prevision }}</p>
+                </div>
+                <div class="col-sm-3">
+                  <h6>Nombre Social</h6>
+                  {% if alumno.nombre_social %}
+                    <p>{{ alumno.nombre_social }}</p>
+                  {% else %}
+                    <p> - </p>
+                  {% endif %}
                 </div>
               </div>
               <br>
@@ -127,11 +135,9 @@
                   <h6>Observaciones:</h6>
                   <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
                   <br>
-                  <h6>Decisión Alumno:</h6>
-                  <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
                 <div class="col-sm-4">
-                  <h6>Motivo Atención:</h6>
+                  <h6>Especialidad:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
                     <option value="" selected hidden>Elegir...</option>
                     {% if request.user|has_group:"Asistente Social" %}
@@ -166,9 +172,8 @@
             <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
-                <th>Motivo de Atención</th>
+                <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Alumno</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
@@ -179,7 +184,6 @@
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
                   <td style="width:20%">{{registro.descripcion_atencion}}</td>
-                  <td style="width:20%">{{registro.decision_alumno}}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% else %}
@@ -189,13 +193,15 @@
                   <td style="width:20%">{{registro.get_fecha}}</td>
                   <td style="width:20%">{{registro.motivo_atencion}}</td>
                   <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}" style="color: #339fc3;">[Ver]</a>{% else %}-{% endif %}</td>
                   <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endif %}
                 {% endfor %}
               </tbody>
             </table>
+            <center>
+              <button type="submit" class="btn btn-primary" {% if request.user.is_superuser %}disabled{% endif %}>Registrar</button>
+            </center>
           </div>
 
         </div>
@@ -216,11 +222,7 @@
           <h3>Ficha Clínica</h3>
           <div class="row">
             <div class="col-auto mr-auto"></div>
-            <div class="col-auto">
-              <a href="{% url 'fichas:crearFichaPDF' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Descargar PDF" rel="popover" data-placement="bottom" data-trigger="hover">
-                <i class="zmdi zmdi-collection-pdf" style="font-size:20px; color:#339fc3;"></i>
-              </a>
-            </div>
+
           </div>
           </br>
           </br>
@@ -229,17 +231,19 @@
             <form action="{% url 'fichas:crearRegistro' id_alumno=alumno.id %}" method="POST" style="width:100%">
               {% csrf_token %}
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                   <h6>Observaciones:</h6>
-                  <textarea name="inputObservaciones" rows="4" cols="70" required></textarea>
+                  <textarea name="inputObservaciones" rows="12" cols="150" required></textarea>
                   <br>
-                  <h6>Decisión Alumno:</h6>
-                  <textarea name="inputDecision" rows="3" cols="70"></textarea>
                 </div>
+              </div>
+              <br>
+              <br>
+              <div class="row">
                 <div class="col-sm-4">
-                  <h6>Motivo Atención:</h6>
+                  <h6>Especialidad:</h6>
                   <select class="custom-select mr-sm-2" name="inputMotivo" required>
-                    <option value="" selected>Elegir...</option>
+                    <option value="" selected hidden>Elegir...</option>
                     {% for e in especialidades %}
                     <option value="{{ e.especialidad.id }}">{{ e.especialidad.nombreEspecialidad }}</option>
                     {% endfor %}
@@ -268,25 +272,34 @@
             <table class="table table-hover table-bordered sortable" style="width:100%;">
               <thead class="table-head">
                 <th>Fecha</th>
-                <th>Motivo de Atención</th>
+                <th>Especialidad</th>
                 <th>Observaciones</th>
-                <th>Decisión Alumno</th>
                 <th>Profesional</th>
               </thead>
               <tbody>
                 {% for registro in registros %}
                 <tr>
-                  <td style="width:20%">{{registro.get_fecha}}</td>
-                  <td style="width:20%">{{registro.motivo_atencion}}</td>
-                  <td style="width:20%"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:20%">{% if registro.decision_alumno %}<span id="dots2{{registro.id}}"></span><span id="more2{{registro.id}}" style="display: none;">{{registro.decision_alumno}}</span> <a onclick="readMore2({{registro.id}})" id="readMore2{{registro.id}}" style="color: #339fc3;">[Ver]</a>{% else %}-{% endif %}</td>
-                  <td style="width:20%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
+                  <td style="width:10%">{{registro.get_fecha}}</td>
+                  <td style="width:10%">{{registro.motivo_atencion}}</td>
+                  <td style="width:65%;white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
+                  <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
-
+          <div class="row">
+            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-4">
+              <br>
+              <center>
+                <form action="{% url 'fichas:crearFichaPDF' id_alumno=alumno.id %}">
+                  <input type="submit" class="btn btn-primary" {% if request.user.is_superuser %}disabled{% endif %} value="Descargar Ficha">
+                </form>
+              </center>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -305,7 +318,7 @@
           <h3>Permisos</h3>
 
           {% if not ficha %}
-          <p>Este alumno aún no tiene ficha clínica creada.</p>
+          <p>Este estudiante aún no tiene ficha clínica creada.</p>
           {% else %}
 
           <div class="row cuadro-filtro">
@@ -348,7 +361,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>¿Está seguro que quiere revocar los permisos de visualización de la ficha clínica a este usuario?</p>
+                            <p>¿Desea quitar el acceso a la ficha clínica a este profesional </p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

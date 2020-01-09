@@ -6,7 +6,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
   <div class="header text-center">
-    <h2>Buscar Alumnos</h2>
+    <h2>Buscar Estudiantes</h2>
     </br>
   </div>
 </div>
@@ -68,7 +68,7 @@
 
           <div class="row cuadro-filtro">
             <div class="col-xs-6 col-md-4">
-              <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar..">
+              <input class="form-control" id="filtroTabla" type="text" placeholder="Filtrar...">
             </div>
           </div>
 
@@ -79,14 +79,14 @@
               <table class="table table-hover table-bordered sortable">
                 <thead class="table-head">
                   <th>Rut</th>
-                  <th>Nombre Alumno</th>
+                  <th>Nombre Estudiante</th>
                   <th>Acciones</th>
                 </thead>
                 <tbody id="tablaBusqueda">
                   {% for alumno in alumnos %}
                   <tr>
                     <td>{{alumno.rut}}</td>
-                    <td>{{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}</td>
+                    <td>{{alumno.apellido_paterno}} {{alumno.apellido_materno}} {{alumno.nombre}}</td>
                     <td>
                       <a href="{% url 'alumnos:verAlumno' id_alumno=alumno.id %}" style="color:#339fc3;" data-content="Ver" rel="popover" data-placement="bottom" data-trigger="hover">
                         <i class="zmdi zmdi-eye" style="font-size:20px; color:#339fc3;"></i>
@@ -110,7 +110,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>¿Está seguro que quiere eliminar al alumno?</p>
+                            <p>¿Desea eliminar al estudiante?</p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

@@ -5,7 +5,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
   <div class="header text-center">
-    <h2>Crear Alumno</h2>
+    <h2>Crear Estudiante</h2>
   </div>
 </div>
 
@@ -44,7 +44,7 @@
             <div class="form-group row" name="groupRut" id="groupRut" style='display:none;'>
               <label for="inputRut" class="col-sm-3 col-form-label">Ingrese su Rut:</label>
               <div class="col-sm-7">
-                <input disabled type="text" class="form-control" id="inputRut" name="inputRut" placeholder="p.e. 12345678-9" required autofocus>
+                <input disabled type="text" class="form-control" id="inputRut" name="inputRut" placeholder="Ejemplo: 12345678-9" required autofocus>
               </div>
               <small class="text-info" id="msgRut"></small>
             </div>
@@ -52,7 +52,7 @@
             <div class="form-group row" name="groupPasaporte" id="groupPasaporte" style='display:none;'>
               <label for="inputPasaporte" class="col-sm-2 col-form-label">Ingrese su Pasaporte:</label>
               <div class="col-sm-7">
-                <input disabled type="text" class="form-control" id="inputPasaporte" name="inputPasaporte" placeholder="p.e. P01234567" required autofocus>
+                <input disabled type="text" class="form-control" id="inputPasaporte" name="inputPasaporte" placeholder="Ejemplo: P01234567" required autofocus>
               </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="form-group row">
               <label for="inputNombre" class="col-sm-2 col-form-label">Nombres:</label>
               <div class="col-sm-6">
-                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombres" required>
+                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombres" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -71,10 +71,10 @@
             <div class="form-group row">
               <label for="inputNombre" class="col-sm-2 col-form-label">Apellidos:</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" id="inputApellidoPaterno" name="inputApellidoPaterno" placeholder="Apellido Paterno" required>
+                <input type="text" class="form-control" id="inputApellidoPaterno" name="inputApellidoPaterno" placeholder="Apellido Paterno" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
               <div class="col-sm-5">
-                <input type="text" class="form-control" id="inputApellidoMaterno" name="inputApellidoMaterno" placeholder="Apellido Materno" required>
+                <input type="text" class="form-control" id="inputApellidoMaterno" name="inputApellidoMaterno" placeholder="Apellido Materno" pattern="[A-Za-z]{1,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -85,7 +85,7 @@
             <div class="form-group row">
               <label for="inputCorreo" class="col-sm-2 col-form-label">Correo:</label>
               <div class="col-sm-8">
-                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" placeholder="email@example.com" required>
+                <input type="email" class="form-control" id="inputCorreo" name="inputCorreo" placeholder="email@ejemplo.com" required>
               </div>
             </div>
 
@@ -96,7 +96,7 @@
             <div class="form-group row">
               <label for="inputGeneracion" class="col-sm-2 col-form-label">Fecha de Nacimiento:</label>
               <div class="col-sm-3">
-                <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento" required>
+                <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento" max="2100-01-01" required>
               </div>
             </div>
 
@@ -111,6 +111,7 @@
                   <option value="" selected hidden>Elegir...</option>
                   <option value="Mujer">Mujer</option>
                   <option value="Hombre">Hombre</option>
+                  <option value="Otro">Otro</option>
                 </select>
               </div>
             </div>
@@ -122,7 +123,7 @@
             <div class="form-group row">
               <label for="inputDomicilio" class="col-sm-2 col-form-label">Domicilio:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" placeholder="Calle, N°, Depto, Villa, Ciudad" required>
+                <input type="text" class="form-control" id="inputDomicilio" name="inputDomicilio" placeholder="Calle, N°, Depto, Villa, Ciudad" pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
 
@@ -133,7 +134,7 @@
             <div class="form-group row">
               <label for="inputCarrera" class="col-sm-2 col-form-label">Carrera:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputCarrera" name="inputCarrera" placeholder="Ingrese la carrera del alumno" required>
+                <input type="text" class="form-control" id="inputCarrera" name="inputCarrera" placeholder="Ingrese la carrera del estudiante" required>
               </div>
             </div>
 
@@ -144,7 +145,7 @@
             <div class="form-group row">
               <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado" required>
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado (Opcional)" pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+">
               </div>
             </div>
 
@@ -154,9 +155,18 @@
             <div class="form-group row">
               <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Isapre, Capredena..." required>
+                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Isapre, Capredena..." pattern="[A-Za-z]{3,}[A-Za-z0-9._ ]+" required>
               </div>
             </div>
+
+            <div class="form-group row">
+              <label for="inputNombreSocial" class="col-sm-2 col-form-label">Nombre Social:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputNombreSocial" name="inputNombreSocial" placeholder="(Opcional)">
+              </div>
+            </div>
+
+
             </br>
             </br>
             <div class="row">
@@ -177,6 +187,13 @@
   $(function(){
     $('input[type="text"]').change(function(){
         this.value = $.trim(this.value);
+    });
+  });
+
+  // validar fecha de nacimiento no es mayor a hoy
+  $(function(){
+    $('[type="date"]').prop('max', function(){
+        return new Date().toJSON().split('T')[0];
     });
   });
 

@@ -129,8 +129,19 @@
           <td style="width:100%; text-transform: uppercase;"><b>Ocupación:</b> {{ ficha.alumno.ocupacion }}</td>
         </tr>
         <tr>
-          <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>
+          {% if ficha.alumno.representante_legal %}
+            <td style="width:70%"><b>Representante Legal:</b> {{ ficha.alumno.representante_legal }}</td>
+          {% else %}
+            <td style="width:70%"><b>Representante Legal:</b> - </td>
+          {% endif %}
           <td style="width:30%"><b>Prevision:</b> {{ ficha.alumno.prevision }}</td>
+        </tr>
+        <tr>
+          {% if ficha.alumno.nombre_social %}
+            <td style="width:100%"><b>Nombre Social:</b> {{ ficha.alumno.nombre_social }}</td>
+          {% else %}
+            <td><b>Nombre Social:</b> - </td>
+          {% endif %}
         </tr>
       </tbody>
     </table>
@@ -142,9 +153,8 @@
     <table class="table" style="width:100%;">
       <thead class="table-head">
         <th>Fecha</th>
-        <th>Motivo de Atención</th>
+        <th>Especialidad</th>
         <th>Observaciones</th>
-        <th>Decisión Alumno</th>
         <th>Profesional</th>
       </thead>
       <tbody>
@@ -152,8 +162,7 @@
         <tr>
           <td style="width:10%">{{registro.get_fecha}}</td>
           <td style="width:15%">{{registro.motivo_atencion}}</td>
-          <td style="width:40%">{{registro.descripcion_atencion}}</td>
-          <td style="width:20%">{{registro.decision_alumno}}</td>
+          <td style="width:60%">{{registro.descripcion_atencion}}</td>
           <td style="width:15%">{{registro.profesional.get_nombre}} {{ registro.profesional.rut}}</td>
         </tr>
         {% endfor %}
