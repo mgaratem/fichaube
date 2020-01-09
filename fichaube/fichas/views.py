@@ -91,7 +91,7 @@ def confirmarCreacionFicha(request, id_alumno=None):
             alumno = Alumno.objects.get(id = id_alumno)
 
             try:
-                if not alumno.domicilio or not alumno.prevision or not alumno.representante_legal or not alumno.fecha_nacimiento:
+                if not alumno.domicilio or not alumno.prevision or not alumno.fecha_nacimiento:
                     return render(request, template, {'alumno': alumno})
 
                 fichaExiste = Ficha.objects.filter(alumno = id_alumno)
