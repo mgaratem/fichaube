@@ -76,7 +76,7 @@
         {% endif %}
         {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user|has_group:"Mantenedor" or request.user.is_superuser %}
         <li>
-          <a href="#mantenedorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mantenedor</a>
+          <a href="#mantenedorSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Administración</a>
           <ul class="collapse list-unstyled show" id="mantenedorSubmenu">
             {% if request.user|has_group:"Coordinador" or request.user|has_group:"Administrativo" or request.user.is_superuser%}
             <li>

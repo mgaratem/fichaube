@@ -20,7 +20,7 @@ class Alumno(models.Model):
   ocupacion = models.CharField(max_length=100, default='Estudiante')
   representante_legal = models.CharField(max_length=100, blank=True, null=True)
   prevision = models.CharField(max_length=100, blank=True)
-  nombre_social = models.CharField(max_length=100, null=True)
+  nombre_social = models.CharField(max_length=100, null=True, default='-')
 
   def get_name(self):
       return self.nombre + " " + self.apellido_paterno + " " + self.apellido_materno
@@ -33,3 +33,11 @@ class Alumno(models.Model):
           return self.fecha_nacimiento.strftime('%d/%m/%Y')
       else:
           return False
+
+
+class Carrera(models.Model):
+    nombre_carrera = models.CharField(max_length=120, null=False)
+
+
+class Prevision(models.Model):
+    nombre_prevision = models.CharField(max_length=120, null=False)

@@ -65,7 +65,7 @@
             <div class="form-group row">
               <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado" required>
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" placeholder="Ingrese el nombre del apoderado (opcional)">
               </div>
             </div>
 
@@ -78,7 +78,27 @@
             <div class="form-group row">
               <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" placeholder="Fonasa, Nombre Isapre o Capredena" required>
+                <select class="custom-select" id="inputPrevision" name="inputPrevision" required>
+                  <option value="" selected hidden>Elegir prevision...</option>
+                  {% for prevision in previsiones %}
+                    <option value="{{ prevision.nombre_prevision }}">{{ prevision.nombre_prevision }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+
+            </br>
+
+            {% endif %}
+
+
+            {% if not alumno.nombre_social %}
+
+            <div class="form-group row">
+              <label for="inputNombreSocial" class="col-sm-2 col-form-label">Nombre Social:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputNombreSocial" name="inputNombreSocial" placeholder="(Opcional)">
               </div>
             </div>
 

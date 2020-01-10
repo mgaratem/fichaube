@@ -18,7 +18,7 @@ import csv
 import codecs
 import re
 
-from alumnos.models import Alumno
+from alumnos.models import Alumno, Carrera, Prevision
 from fichas.models import Ficha, Registro
 from permisos.models import Permiso
 from usuarios.models import Usuario
@@ -42,7 +42,9 @@ def crear_alumno(request):
         template = "crear_alumno.html"
 
         if request.method == 'GET':
-            return render(request, template)
+            carreras = Carrera.objects.all().order_by('nombre_carrera')
+            previsiones = Prevision.objects.all().order_by('nombre_prevision')
+            return render(request, template, {'carreras': carreras, 'previsiones': previsiones})
 
         if request.method == 'POST':
             try:
@@ -156,7 +158,9 @@ def updateAlumno(request, id_alumno=None):
         if request.method == 'GET':
             try:
                 alumno = Alumno.objects.get(id = id_alumno)
-                return render(request, template, {'alumno': alumno})
+                carreras = Carrera.objects.all().order_by('nombre_carrera')
+                previsiones = Prevision.objects.all().order_by('nombre_prevision')
+                return render(request, template, {'alumno': alumno, 'carreras': carreras, 'previsiones': previsiones})
 
             except Exception as e:
                 messages.error(request,"No fue posible modificar alumno. "+repr(e))
@@ -176,6 +180,7 @@ def updateAlumno(request, id_alumno=None):
                 #alumno.ocupacion = request.POST.get('inputOcupacion')
                 alumno.representante_legal = request.POST.get('inputRepresentante')
                 alumno.prevision = request.POST.get('inputPrevision')
+                alumno.nombre_social = request.POST.get('inputNombreSocial')
 
                 alumno.save()
                 messages.success(request, '¡Alumno modificado exitosamente!')
@@ -411,6 +416,15 @@ def importAlumnos(request):
                                 sexo = dato[headers_final.index(header)]
                                 #print(sexo)
 
+                        carreraExiste = Carrera.objects.filter(nombre_carrera=carrera)
+                        if not carreraExiste:
+                            print(carrera)
+                            carreraNueva = Carrera()
+                            carreraNueva.nombre_carrera = carrera
+                            carreraNueva.save()
+                            del carreraNueva
+                            del carreraExiste
+
                         alumnoExiste = Alumno.objects.filter(rut=cedula)
                         if not alumnoExiste:
                             alumno = Alumno()
@@ -436,6 +450,7 @@ def importAlumnos(request):
                             alumnoExiste[0].save()
                             print("Guardó al alumno número" + " " + str((row_count-7)))
                             del alumnoExiste
+
 
 
                     #if row_count == 1:

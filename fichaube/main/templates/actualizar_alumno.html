@@ -91,7 +91,11 @@
             <div class="form-group row">
               <label for="inputCarrera" class="col-sm-2 col-form-label">Carrera:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputCarrera" name="inputCarrera" value="{{ alumno.carrera }}" required>
+                <select class="custom-select" id="inputCarrera" name="inputCarrera" required>
+                  {% for carrera in carreras %}
+                  <option value="{{ carrera.nombre_carrera }}" {% if alumno.carrera == carrera.nombre_carrera %}selected{% endif %}>{{ carrera.nombre_carrera }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
 
@@ -102,7 +106,7 @@
             <div class="form-group row">
               <label for="inputRepresentante" class="col-sm-2 col-form-label">Representante Legal o Apoderado:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" value="{{ alumno.representante_legal }}" required>
+                <input type="text" class="form-control" id="inputRepresentante" name="inputRepresentante" value="{{ alumno.representante_legal }}">
               </div>
             </div>
 
@@ -112,7 +116,23 @@
             <div class="form-group row">
               <label for="inputPrevision" class="col-sm-2 col-form-label">Prevision:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputPrevision" name="inputPrevision" value="{{ alumno.prevision }}" required>
+                <select class="custom-select" id="inputPrevision" name="inputPrevision" required>
+                  {% if not alumno.prevision %}
+                  <option value="" selected hidden>Elegir prevision...</option>
+                  {% endif %}
+                  {% for prevision in previsiones %}
+                  <option value="{{ prevision.nombre_prevision }}" {% if alumno.prevision == prevision.nombre_prevision %}selected{% endif %}>{{ prevision.nombre_prevision }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            </br>
+
+            <div class="form-group row">
+              <label for="inputNombreSocial" class="col-sm-2 col-form-label">Nombre Social:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputNombreSocial" name="inputNombreSocial" value="{{ alumno.nombre_social }}" placeholder="(Opcional)">
               </div>
             </div>
 
@@ -136,13 +156,12 @@
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
-  // trimear formulario (borrar espacios y tabulados antes y despes del texto)
-  $(function(){
-    $('input[type="text"]').change(function(){
+    // trimear formulario (borrar espacios y tabulados antes y despes del texto)
+    $(function() {
+      $('input[type="text"]').change(function() {
         this.value = $.trim(this.value);
+      });
     });
-  });
-
   </script>
 
 

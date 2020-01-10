@@ -16,7 +16,7 @@ from django.template import *
 from django.db.models import Q
 
 from django.contrib.auth.models import User
-from alumnos.models import Alumno
+from alumnos.models import Alumno, Carrera, Prevision
 from fichas.models import Ficha, Registro
 from permisos.models import Permiso
 from usuarios.models import Usuario
@@ -92,7 +92,8 @@ def confirmarCreacionFicha(request, id_alumno=None):
 
             try:
                 if not alumno.domicilio or not alumno.prevision or not alumno.fecha_nacimiento:
-                    return render(request, template, {'alumno': alumno})
+                    previsiones = Prevision.objects.all().order_by('nombre_prevision')
+                    return render(request, template, {'alumno': alumno, 'previsiones': previsiones})
 
                 fichaExiste = Ficha.objects.filter(alumno = id_alumno)
                 if not fichaExiste:
@@ -120,6 +121,7 @@ def confirmarCreacionFicha(request, id_alumno=None):
                 domicilio = request.POST.get('inputDomicilio')
                 representante = request.POST.get('inputRepresentante')
                 prevision = request.POST.get('inputPrevision')
+                nombre_social = request.POST.get('inputNombreSocial')
 
                 if fecha_nacimiento:
                     alumno.fecha_nacimiento = fecha_nacimiento
@@ -129,6 +131,8 @@ def confirmarCreacionFicha(request, id_alumno=None):
                     alumno.representante_legal = representante
                 if prevision:
                     alumno.prevision = prevision
+                if nombre_social:
+                    alumno.nombre_social = nombre_social
 
                 alumno.save()
 
