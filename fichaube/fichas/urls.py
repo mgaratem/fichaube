@@ -13,4 +13,5 @@ urlpatterns = [
     path('reportes/', views.reportes, name="reportes"),
     path('generarReporte', ReporteExcel.as_view(), name="generarReporte"),
     path('crear_pdf_ficha/<int:id_alumno>', GeneratePdf.as_view(), name="crearFichaPDF"),
+    path('ver_registro/<int:id_registro>', views.verRegistro, name="verRegistro"),
 ]

@@ -188,18 +188,7 @@
                   <td style="width:10%">{{registro.get_fecha}}</td>
                   <td style="width:10%">{{registro.motivo_atencion}}</td>
                   <td style="width:65%; white-space:pre-wrap">
-                    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Open Modal</button>
 
-                    <div id="id01" class="w3-modal">
-                      <div class="w3-modal-content">
-                        <div class="w3-container">
-                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                          <p>Some text. Some text. Some text.</p>
-                          <p>Some text. Some text. Some text.</p>
-                        </div>
-                      </div>
-                    </div>
-                    
                   </td>
                   <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
@@ -208,7 +197,16 @@
                 <tr>
                   <td style="width:10%">{{registro.get_fecha}}</td>
                   <td style="width:10%">{{registro.motivo_atencion}}</td>
-                  <td style="width:65%; white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
+                  <!-- <td style="width:65%; white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td> -->
+                  <td style="width:65%;">
+                    <p id="{{registro.id}}"></p>
+                    <script type="text/javascript">
+                        var registroCompleto = "{{ registro.descripcion_atencion|linebreaksbr|truncatechars_html:40 }}"
+                        var registroFinal = registroCompleto.concat("...")
+                        document.getElementById("{{ registro.id }}").innerHTML = registroFinal
+                    </script>
+                    <a href="{% url 'fichas:verRegistro' id_registro=registro.id %}">[Ver Registro Completo]</a>
+                  </td>
                   <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endif %}
@@ -297,8 +295,17 @@
                 <tr>
                   <td style="width:10%">{{registro.get_fecha}}</td>
                   <td style="width:10%">{{registro.motivo_atencion}}</td>
-                  <td style="width:65%; white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>
-                  <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
+                  <!-- <td style="width:65%; white-space:pre-wrap"><span id="dots1{{registro.id}}"></span><span id="more1{{registro.id}}" style="display: none;">{{registro.descripcion_atencion}}</span> <a onclick="readMore1({{registro.id}})" id="readMore1{{registro.id}}" style="color: #339fc3;">[Ver]</a></td>-->
+                  <td style="width:65%;">
+                    <p id="{{registro.id}}"></p>
+                    <script type="text/javascript">
+                        var registroCompleto = "{{ registro.descripcion_atencion|linebreaksbr|truncatechars_html:40 }}"
+                        var registroFinal = registroCompleto.concat("...")
+                        document.getElementById("{{ registro.id }}").innerHTML = registroFinal
+                    </script>
+                    <a href="{% url 'fichas:verRegistro' id_registro=registro.id %}">[Ver Registro Completo]</a>
+                  </td>
+                  <td style="width:25%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
