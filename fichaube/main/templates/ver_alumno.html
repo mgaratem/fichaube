@@ -133,7 +133,7 @@
               <div class="row">
                 <div class="col-sm-8">
                   <h6>Observaciones:</h6>
-                  <textarea name="inputObservaciones" rows="12" cols="150" required></textarea>
+                  <textarea id="inputObservaciones" name="inputObservaciones" rows="12" cols="150" onchange="trimObservaciones()" required></textarea>
                   <br>
                 </div>
               </div>
@@ -201,7 +201,7 @@
                       </div>
                     </div>
                   -->
-                  
+
                   </td>
                   <td style="width:15%">{{registro.profesional.nombre}} {{registro.profesional.apellidos}}</td>
                 </tr>
@@ -260,7 +260,7 @@
               <div class="row">
                 <div class="col-sm-8">
                   <h6>Observaciones:</h6>
-                  <textarea name="inputObservaciones" rows="12" cols="150" required></textarea>
+                  <textarea id="inputObservaciones" name="inputObservaciones" rows="12" cols="150" required></textarea>
                   <br>
                 </div>
               </div>
@@ -421,6 +421,7 @@
 
   {% endif %}
 
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
     function readMore1(id) {
       var dots = document.getElementById("dots1".concat(id));
@@ -453,6 +454,14 @@
         moreText.style.display = "inline";
       }
     }
+
+    // trimear input de Observaciones (borrar espacios y tabulados antes y despues del texto)
+    $(function(){
+      $('#inputObservaciones').change(function(){
+          this.value = $.trim(this.value);
+      });
+    });
+
   </script>
 
   {% endblock content %}
