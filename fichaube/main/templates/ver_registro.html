@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+
+
+{% block content %}
+
+<div class="col-sm-12 col-sm-offset-1">
+  <div class="header text-center">
+    <h2>Ver Registro</h2>
+  </div>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+{% if  message.tags == "error" %}
+<div class="alert alert-danger" role="alert">
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    {% endif %}
+    {{message}}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="col-sm-12 col-sm-offset-1">
+    <div class="card">
+      <div class="card-content">
+        <div class="cuadro-form">
+          <p style="white-space:pre-wrap"> {{ registro.descripcion_atencion }} </p>
+          <div class="row">
+            <div class="col-md-3 ml-md-auto">
+              <input type="button" value="Volver a Estudiante" onclick="javascript:history.go(-1);" class="btn btn-primary">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}

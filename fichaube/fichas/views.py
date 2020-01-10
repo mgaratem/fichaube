@@ -283,7 +283,7 @@ class ReporteExcel(View):
             ws['C1'].border = borde
             ws['B2'].border = borde
             ws['C2'].border = borde
-            
+
             #   tamaño de columnas
             ws.column_dimensions['B'].width = 15
             ws.column_dimensions['C'].width = 20
@@ -382,6 +382,23 @@ class ReporteExcel(View):
             response['Content-Disposition'] = content
             wb.save(response)
             return response
+
+
+
+def verRegistro(request, id_registro):
+
+    #PERMISOS
+    if request.user.groups.filter(name__in=['Mantenedor']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    elif request.user.groups.filter(name__in=['Administrativo']).exists():
+        return HttpResponseRedirect(reverse("home"))
+    else:
+
+        if request.method == 'GET':
+            # aqui deberia evaluarse si el profesional tiene permisos
+            template = "ver_registro.html"
+            registro = Registro.objects.get(id = id_registro)
+            return render(request, template, {'registro': registro})
 
 
 """
