@@ -1,9 +1,9 @@
 # Fichaube
 
-Repositorio del Proyecto de Título para optar al título profesional de Ingeniero de Ejecución en Informática: 
+Repository of the Title Project to qualify for the professional title of Computer Execution Engineer:
 
-SISTEMA DE GESTIÓN DE FICHAS CLÍNICAS EN LA UNIDAD DE BENEFICIOS ESTUDIANTILES DE LA DIRECCIÓN DE ASUNTOS ESTUDIANTILES DE LA PUCV 
+CLINICAL RECORDS MANAGEMENT SYSTEM IN THE STUDENT BENEFITS UNIT OF THE DIRECTORATE OF STUDENT AFFAIRS OF THE PUCV
 
-Fichaube es una aplicación web orientada a la gestión de fichas clínicas de la Unidad de Bienestar Estudiantil. Estos documentos son únicos para cada estudiante, y su contenido es confidencial, de modo que solo ciertas personas pueden acceder a este. Dado que la Pontificia Universidad Católica de Valparaíso (PUCV) presta un servicio médico y social a su estudiantado, la organización debe contar con dichas fichas, con tal de poder realizar un seguimiento a la situación de los alumnos y cumplir con las normativas de salud chilenas.
+Fichaube is a web application aimed at managing clinical records of the Student Welfare Unit. These documents are unique to each student, and their content is confidential, so only certain people can access it. Given that the Pontifical Catholic University of Valparaíso (PUCV) provides a medical and social service to its students, the organization must have these files, in order to be able to monitor the situation of the students and comply with Chilean health regulations. .
 
-Implementado y Diseñado por: Macarena Gárate Muñoz y Francisco Tapia Fontecilla.
+Implemented and Designed by: Macarena Gárate Muñoz and Francisco Tapia Fontecilla.
